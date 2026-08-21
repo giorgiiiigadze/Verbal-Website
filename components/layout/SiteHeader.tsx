@@ -10,6 +10,9 @@ import { Logo } from "@/components/ui/Logo";
  * the pill. Every page's first block therefore carries extra top padding to
  * clear it — see Hero, PageHeader and Prose.
  *
+ * Its max width tracks the hero's container. A pill narrower than the content
+ * it floats over reads as misaligned; wider reads as deliberate.
+ *
  * No hamburger and no client component: the wordmark drops below `sm` and the
  * four links tighten up, which fits them on a 375px phone in one row. A menu
  * button would mean shipping JavaScript for a site that otherwise needs none.
@@ -17,7 +20,7 @@ import { Logo } from "@/components/ui/Logo";
 export function SiteHeader() {
   return (
     <header className="fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-6 sm:pt-5">
-      <div className="mx-auto flex max-w-5xl items-center justify-between gap-3 rounded-full border border-line bg-card/85 px-4 py-2.5 shadow-[0_6px_24px_-8px_rgb(0_0_0/0.18)] backdrop-blur-md sm:gap-6 sm:px-6 sm:py-3">
+      <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 rounded-full border border-line bg-card/85 px-4 py-2.5 shadow-[0_6px_24px_-8px_rgb(0_0_0/0.18)] backdrop-blur-md sm:gap-6 sm:px-6 sm:py-3">
         <Link
           href="/"
           className="flex shrink-0 items-center gap-2 text-accent-text"

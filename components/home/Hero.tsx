@@ -12,7 +12,10 @@ import { QuotePreview } from "@/components/ui/QuotePreview";
 export function Hero() {
   return (
     <div className="border-b border-line bg-hero">
-      <Container className="grid items-center gap-16 pb-20 pt-28 sm:pb-28 sm:pt-36 lg:grid-cols-[1.15fr_1fr] lg:gap-12">
+      <Container
+          size="wide"
+          className="grid items-center gap-16 pb-20 pt-28 sm:pb-28 sm:pt-36 lg:grid-cols-[1.2fr_1fr] lg:gap-12"
+        >
         <div>
           <Link
             href="/how-it-works"
@@ -30,13 +33,13 @@ export function Hero() {
             </span>
           </Link>
 
-          <h1 className="mt-9 font-slab text-[2.75rem] leading-[1.02] tracking-tight sm:text-6xl lg:text-[4.25rem] xl:text-[5rem]">
+          <h1 className="mt-9 font-slab text-[clamp(2rem,12.2vw,2.875rem)] leading-[1.02] tracking-tight sm:text-[4rem] lg:text-[4.375rem] xl:text-[5.5rem]">
             Speak the job.
             <br />
             Send the quote.
           </h1>
 
-          <p className="mt-8 text-xl leading-snug text-muted sm:text-2xl">
+          <p className="mt-7 text-lg font-medium leading-snug text-muted sm:text-xl">
             Scope, line items and totals.
             <br />
             Without typing it up.
@@ -62,7 +65,7 @@ export function Hero() {
           so the hero is not half empty until it lands. Swapping it is one line
           — nothing else in the hero depends on what sits in this column.
         */}
-        <div className="lg:pl-4">
+        <div className="w-full max-w-md lg:max-w-none lg:pl-4">
           <QuotePreview />
           <p className="mt-4 text-center text-sm text-muted">
             One spoken sentence, thirty seconds ago.
