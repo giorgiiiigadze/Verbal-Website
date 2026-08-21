@@ -30,9 +30,15 @@ Reword the site by editing `content/`. Components take props and hold no copy.
 ## Things worth knowing before you change something
 
 **The design tokens are the app's.** The palette in `app/globals.css` is lifted
-from `Verbal/Assets.xcassets/*.colorset` in the app repo, light and dark values
-both. If a colour looks wrong, check it against the app rather than picking a
-new one.
+from `Verbal/Assets.xcassets/*.colorset` in the app repo. If a colour looks
+wrong, check it against the app rather than picking a new one.
+
+**The site is light-only.** There is no `prefers-color-scheme` block and no
+`dark:` variant anywhere — a visitor whose OS is dark still gets the white page.
+`viewport.colorScheme` in `app/layout.tsx` declares this in the head so there is
+no dark flash before the stylesheet lands. The app has its own dark mode; that
+is unrelated. If you ever reintroduce a dark theme here, every semantic token in
+`:root` needs a dark value, not just `--bg`.
 
 **The site claims the app has no tracking, and so does this site.** The privacy
 policy states Verbal contains "no analytics, no advertising, and no tracking of

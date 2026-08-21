@@ -6,8 +6,7 @@
 
    Lifted verbatim from the iOS app's asset catalog
    (~/Verbal/Verbal/Assets.xcassets/RoyalBlue*.colorset) so the site and the app
-   read as the same product. RoyalBlue 100-800 carry no dark variant in the app
-   either — they are the brand, not a surface, and they do not flip.
+   read as the same product.
 --------------------------------------------------------------------------- */
 @theme {
   --color-royal-100: #4a6fe3;
@@ -32,8 +31,11 @@
 /* ---------------------------------------------------------------------------
    Semantic surfaces and text.
 
-   These are the tokens that flip with the OS theme. Both columns come from the
-   app's own light/dark colorset values — nothing here is invented.
+   Values come from the light side of the app's colorsets — nothing here is
+   invented. The site is deliberately light-only: it is a page you read once,
+   not an app you live in at night, and a single theme means the version signed
+   off is the version every visitor gets. `color-scheme: light` below stops the
+   browser darkening form controls and scrollbars for dark-mode users.
 --------------------------------------------------------------------------- */
 :root {
   /* White, not the app's warm HomeBackground (#F9F9F7). On a phone that tint
@@ -50,9 +52,8 @@
   --tint-strong: #dde5f9; /* RoyalBlue50 */
   --border: rgb(0 0 0 / 0.08);
 
-  /* Filled controls. Split out from the raw brand blue because royal-600 sits
-     almost on top of the dark theme's surfaces — a primary button has to carry
-     more contrast than a brand swatch does. */
+  /* Filled controls, kept separate from the raw brand swatch so buttons can be
+     retuned without moving the brand. */
   --primary: #192868;
   --primary-hover: #21348a;
 
@@ -66,37 +67,6 @@
   --warning-fill: #faebdd;
 
   color-scheme: light;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #1c1c1e;
-    --bg-alt: #202022;
-    --surface: #2a2a2c;
-    --card: #2c2c2e;
-    --field: #323234;
-    --text: #eceae6;
-    --text-muted: #a5a29c;
-    --accent-text: #a9baf5;
-    --tint: #232a45;
-    --tint-strong: #2a3352;
-    --border: rgb(255 255 255 / 0.1);
-
-    /* royal-200/100: bright enough to read as a button against #1c1c1e. */
-    --primary: #3e60d8;
-    --primary-hover: #4a6fe3;
-
-    --accepted: #4dab9a;
-    --accepted-fill: #0f7b6c;
-    --sent: #529cca;
-    --sent-fill: #0b6e99;
-    --declined: #ff7369;
-    --declined-fill: #e03e3e;
-    --warning: #ffa344;
-    --warning-fill: #d9730d;
-
-    color-scheme: dark;
-  }
 }
 
 @theme inline {
@@ -143,8 +113,8 @@ h1, h2, h3, .font-slab {
   font-weight: 400;
 }
 
-/* Long-form legal prose. The typography plugin's defaults are tuned for a white
-   page; these re-point it at the theme tokens so it survives dark mode. */
+/* Long-form legal prose. Re-points the typography plugin at the theme tokens so
+   the policy pages use the same ink and rules as the rest of the site. */
 .prose-verbal {
   --tw-prose-body: var(--text);
   --tw-prose-headings: var(--text);

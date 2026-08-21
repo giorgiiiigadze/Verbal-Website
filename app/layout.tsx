@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Roboto_Slab } from "next/font/google";
 import "./globals.css";
 import { SiteHeader } from "@/components/layout/SiteHeader";
@@ -35,6 +35,13 @@ export const metadata: Metadata = {
     title: `${SITE_NAME} — ${TAGLINE}`,
     description: DESCRIPTION,
   },
+};
+
+/** The site is light-only. Declaring it here puts `color-scheme: light` in the
+ *  head, so a visitor whose OS is in dark mode does not get a dark canvas
+ *  flashed at them in the moment before the stylesheet lands. */
+export const viewport: Viewport = {
+  colorScheme: "light",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
