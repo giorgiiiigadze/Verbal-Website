@@ -36,7 +36,9 @@
    app's own light/dark colorset values — nothing here is invented.
 --------------------------------------------------------------------------- */
 :root {
-  --bg: #f9f9f7;          /* HomeBackground */
+  /* White, not the app's warm HomeBackground (#F9F9F7). On a phone that tint
+     reads as paper; on a large monitor it reads as a slightly dirty white. */
+  --bg: #ffffff;
   --bg-alt: #f7f7f5;      /* MainBackground */
   --surface: #f0efec;     /* Surface / QuoteCard */
   --card: #ffffff;        /* CardSurface */
