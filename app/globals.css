@@ -48,6 +48,7 @@
   --text: #37352f;        /* MainText */
   --text-muted: #6b6a67;  /* StatusMutedText */
   --accent-text: #192868; /* BlueAccentText */
+  --hero: #fafafa;        /* The near-white the hero sits on */
   --tint: #eef2fb;        /* RoyalBlue25 */
   --tint-strong: #dde5f9; /* RoyalBlue50 */
   --border: rgb(0 0 0 / 0.08);
@@ -78,6 +79,7 @@
   --color-text: var(--text);
   --color-muted: var(--text-muted);
   --color-accent-text: var(--accent-text);
+  --color-hero: var(--hero);
   --color-tint: var(--tint);
   --color-tint-strong: var(--tint-strong);
   --color-line: var(--border);
