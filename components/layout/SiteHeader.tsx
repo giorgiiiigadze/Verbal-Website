@@ -10,16 +10,17 @@ import { Logo } from "@/components/ui/Logo";
  * the pill. Every page's first block therefore carries extra top padding to
  * clear it — see Hero, PageHeader and Prose.
  *
- * Its contents line up with the page gutter, which takes some arranging. The
- * pill floats inside its own inset, so two things have to hold at once:
+ * Its outer edges line up with the hero content column. Two things have to
+ * hold at once:
  *
- *   1. header inset + pill padding === Container's GUTTER, so below the max
- *      width the logo sits on the same line as the hero text; and
- *   2. the pill's max width === Container's max width minus twice the pill
- *      padding, so above it the two boxes centre to the same left edge.
+ *   1. header inset === Container's GUTTER, so below the max width the pill
+ *      outer edge tracks the hero column edge; and
+ *   2. the pill's max width === Container's max width minus twice the GUTTER
+ *      (i.e. Container's content width), so above it the pill and hero centre
+ *      to the same left/right edge.
  *
- * Hence 12+12=24 below sm, 20+20=40 at sm and up, and 1280-40=1240 (77.5rem).
- * Change GUTTER and all three numbers move together.
+ * Hence 24 below sm, 40 at sm and up, and 1280−80=1200 (75rem). Change GUTTER
+ * and both numbers move together.
  *
  * No hamburger and no client component: the wordmark drops below `sm` and the
  * four links tighten up, which fits them on a 375px phone in one row. A menu
@@ -27,13 +28,13 @@ import { Logo } from "@/components/ui/Logo";
  */
 export function SiteHeader() {
   return (
-    <header className="fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-5 sm:pt-5">
-      <div className="mx-auto flex max-w-[77.5rem] items-center justify-between gap-3 rounded-full bg-card/85 ring-1 ring-line px-3 py-2.5 shadow-[0_6px_24px_-8px_rgb(0_0_0/0.18)] backdrop-blur-md sm:gap-6 sm:px-5 sm:py-3">
+    <header className="fixed inset-x-0 top-0 z-50 px-6 pt-3 sm:px-10 sm:pt-5">
+      <div className="mx-auto flex max-w-[75rem] items-center justify-between gap-3 rounded-full bg-card/85 ring-1 ring-line px-3 py-2.5 backdrop-blur-md sm:gap-6 sm:px-5 sm:py-3">
         <Link
           href="/"
-          className="flex shrink-0 items-center gap-2 text-accent-text"
+          className="flex shrink-0 items-center gap-1 text-accent-text"
         >
-          <Logo className="h-6 w-auto sm:h-7" />
+          <Logo className="h-4 w-auto sm:h-5" />
           <span className="hidden font-slab text-xl leading-none tracking-tight sm:inline">
             {SITE_NAME}
           </span>

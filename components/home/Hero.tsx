@@ -19,9 +19,9 @@ export function Hero() {
         <div>
           <Link
             href="/how-it-works"
-            className="group inline-flex items-center gap-2.5 rounded-full border border-line bg-card py-1.5 pl-1.5 pr-4 text-sm shadow-sm transition-colors hover:bg-bg"
+            className="group inline-flex items-center gap-2.5 rounded-full bg-[#F7F7F2] py-1.5 pl-1.5 pr-4 text-sm transition-colors hover:bg-[#ECECE4]"
           >
-            <span className="rounded-full bg-tint-strong px-2.5 py-1 text-xs font-semibold text-accent-text">
+            <span className="rounded-full bg-[#c3d0ef] px-2.5 py-1 text-xs font-semibold text-text">
               Coming soon
             </span>
             <span>Verbal for iPhone</span>
@@ -33,19 +33,19 @@ export function Hero() {
             </span>
           </Link>
 
-          <h1 className="mt-9 font-slab text-[clamp(2rem,12.2vw,2.875rem)] leading-[1.02] tracking-tight sm:text-[4rem] lg:text-[4.375rem] xl:text-[5.5rem]">
-            Speak the job.
+          <h1 className="mt-6 font-slab text-[clamp(1.875rem,11vw,2.625rem)] leading-[1.02] tracking-tight sm:text-[3.5rem] lg:text-[3.875rem] xl:text-[4.875rem]">
+            Speak the job on site.
             <br />
-            Send the quote.
+            Send the quote today.
           </h1>
 
-          <p className="mt-7 text-lg font-medium leading-snug text-muted sm:text-xl">
+          <p className="mt-5 text-lg font-normal leading-snug text-text sm:text-xl">
             Scope, line items and totals.
             <br />
             Without typing it up.
           </p>
 
-          <div className="mt-10 flex flex-wrap items-center gap-4">
+          <div className="mt-7 flex flex-wrap items-center gap-4">
             <Button href="/how-it-works" size="lg">
               See how it works
             </Button>
@@ -54,7 +54,7 @@ export function Hero() {
             </Button>
           </div>
 
-          <p className="mt-7 flex items-center gap-2.5 text-sm text-muted">
+          <p className="mt-5 flex items-center gap-2.5 text-sm text-muted">
             <AppleMark className="h-4 w-4" />
             Coming to iPhone. Two quotes a day, free.
           </p>
