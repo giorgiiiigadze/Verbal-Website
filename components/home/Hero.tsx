@@ -6,7 +6,7 @@ import { QuotePreview } from "@/components/ui/QuotePreview";
 export function Hero() {
   return (
     <div className="border-b border-line bg-tint">
-      <Container className="grid items-center gap-14 py-20 sm:py-28 lg:grid-cols-2 lg:gap-20">
+      <Container className="grid items-center gap-14 pb-20 pt-28 sm:pb-28 sm:pt-36 lg:grid-cols-2 lg:gap-20">
         <div>
           <p className="mb-4 inline-flex items-center gap-2 rounded-full border border-line bg-card px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-accent-text">
             For tradespeople

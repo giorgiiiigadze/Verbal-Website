@@ -12,7 +12,7 @@ export function PageHeader({
 }) {
   return (
     <div className="border-b border-line bg-tint">
-      <Container className="py-16 sm:py-20">
+      <Container className="pb-16 pt-28 sm:pb-20 sm:pt-32">
         {eyebrow ? (
           <p className="mb-3 text-xs font-semibold uppercase tracking-[0.14em] text-accent-text">
             {eyebrow}

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { FOOTER, SITE_NAME, SUPPORT_EMAIL, TAGLINE } from "@/content/site";
 import { Container } from "./Container";
+import { Logo } from "@/components/ui/Logo";
 
 export function SiteFooter() {
   return (
@@ -8,8 +9,11 @@ export function SiteFooter() {
       <Container>
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
           <div>
-            <p className="font-slab text-xl text-accent-text">{SITE_NAME}</p>
-            <p className="mt-2 max-w-xs text-sm text-muted">{TAGLINE}</p>
+            <div className="flex items-center gap-2 text-accent-text">
+              <Logo className="h-6 w-auto" />
+              <p className="font-slab text-xl leading-none">{SITE_NAME}</p>
+            </div>
+            <p className="mt-3 max-w-xs text-sm text-muted">{TAGLINE}</p>
           </div>
 
           {FOOTER.map((group) => (

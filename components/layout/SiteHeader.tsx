@@ -1,30 +1,40 @@
 import Link from "next/link";
 import { NAV, SITE_NAME } from "@/content/site";
-import { Container } from "./Container";
+import { Logo } from "@/components/ui/Logo";
 
 /**
- * No hamburger and no client component: four links fit on a phone if they are
- * allowed to sit under the wordmark instead of beside it. A menu button would
- * mean shipping JavaScript for a site that otherwise needs none.
+ * A pill that floats over the page rather than a bar that sits above it.
+ *
+ * The header is `fixed`, so it takes no space in the flow and the section
+ * beneath it runs to the top of the viewport and shows through the gap around
+ * the pill. Every page's first block therefore carries extra top padding to
+ * clear it — see Hero, PageHeader and Prose.
+ *
+ * No hamburger and no client component: the wordmark drops below `sm` and the
+ * four links tighten up, which fits them on a 375px phone in one row. A menu
+ * button would mean shipping JavaScript for a site that otherwise needs none.
  */
 export function SiteHeader() {
   return (
-    <header className="sticky top-0 z-50 border-b border-line bg-bg/85 backdrop-blur">
-      <Container className="flex flex-col items-center gap-3 py-3 sm:flex-row sm:justify-between sm:gap-6 sm:py-4">
+    <header className="fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-6 sm:pt-5">
+      <div className="mx-auto flex max-w-5xl items-center justify-between gap-3 rounded-full border border-line bg-card/85 px-4 py-2.5 shadow-[0_6px_24px_-8px_rgb(0_0_0/0.18)] backdrop-blur-md sm:gap-6 sm:px-6 sm:py-3">
         <Link
           href="/"
-          className="font-slab text-xl tracking-tight text-accent-text"
+          className="flex shrink-0 items-center gap-2 text-accent-text"
         >
-          {SITE_NAME}
+          <Logo className="h-6 w-auto sm:h-7" />
+          <span className="hidden font-slab text-xl leading-none tracking-tight sm:inline">
+            {SITE_NAME}
+          </span>
         </Link>
 
         <nav aria-label="Main">
-          <ul className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm">
+          <ul className="flex items-center gap-x-4 text-[13px] sm:gap-x-7 sm:text-sm">
             {NAV.map((item) => (
               <li key={item.href}>
                 <Link
                   href={item.href}
-                  className="text-muted transition-colors hover:text-text"
+                  className="whitespace-nowrap text-muted transition-colors hover:text-text"
                 >
                   {item.label}
                 </Link>
@@ -32,7 +42,7 @@ export function SiteHeader() {
             ))}
           </ul>
         </nav>
-      </Container>
+      </div>
     </header>
   );
 }
