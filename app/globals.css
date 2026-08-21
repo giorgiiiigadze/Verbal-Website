@@ -1,0 +1,181 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+/* ---------------------------------------------------------------------------
+   Brand palette.
+
+   Lifted verbatim from the iOS app's asset catalog
+   (~/Verbal/Verbal/Assets.xcassets/RoyalBlue*.colorset) so the site and the app
+   read as the same product. RoyalBlue 100-800 carry no dark variant in the app
+   either — they are the brand, not a surface, and they do not flip.
+--------------------------------------------------------------------------- */
+@theme {
+  --color-royal-100: #4a6fe3;
+  --color-royal-200: #3e60d8;
+  --color-royal-300: #3450c4;
+  --color-royal-400: #2a41a8;
+  --color-royal-500: #21348a;
+  --color-royal-600: #192868;
+  --color-royal-700: #111c48;
+  --color-royal-800: #0a1130;
+
+  --font-slab: var(--font-roboto-slab), ui-serif, Georgia, serif;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+
+  /* The app's corner radii. Cards are notably round; keeping that is most of
+     what makes a web page look like it belongs to this app. */
+  --radius-card: 18px;
+  --radius-chip: 12px;
+}
+
+/* ---------------------------------------------------------------------------
+   Semantic surfaces and text.
+
+   These are the tokens that flip with the OS theme. Both columns come from the
+   app's own light/dark colorset values — nothing here is invented.
+--------------------------------------------------------------------------- */
+:root {
+  --bg: #f9f9f7;          /* HomeBackground */
+  --bg-alt: #f7f7f5;      /* MainBackground */
+  --surface: #f0efec;     /* Surface / QuoteCard */
+  --card: #ffffff;        /* CardSurface */
+  --field: #f6f5f3;       /* FieldFill */
+  --text: #37352f;        /* MainText */
+  --text-muted: #6b6a67;  /* StatusMutedText */
+  --accent-text: #192868; /* BlueAccentText */
+  --tint: #eef2fb;        /* RoyalBlue25 */
+  --tint-strong: #dde5f9; /* RoyalBlue50 */
+  --border: rgb(0 0 0 / 0.08);
+
+  /* Filled controls. Split out from the raw brand blue because royal-600 sits
+     almost on top of the dark theme's surfaces — a primary button has to carry
+     more contrast than a brand swatch does. */
+  --primary: #192868;
+  --primary-hover: #21348a;
+
+  --accepted: #0f7b6c;
+  --accepted-fill: #ddedea;
+  --sent: #0b6e99;
+  --sent-fill: #ddebf1;
+  --declined: #e03e3e;
+  --declined-fill: #fbe4e4;
+  --warning: #d9730d;
+  --warning-fill: #faebdd;
+
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1c1c1e;
+    --bg-alt: #202022;
+    --surface: #2a2a2c;
+    --card: #2c2c2e;
+    --field: #323234;
+    --text: #eceae6;
+    --text-muted: #a5a29c;
+    --accent-text: #a9baf5;
+    --tint: #232a45;
+    --tint-strong: #2a3352;
+    --border: rgb(255 255 255 / 0.1);
+
+    /* royal-200/100: bright enough to read as a button against #1c1c1e. */
+    --primary: #3e60d8;
+    --primary-hover: #4a6fe3;
+
+    --accepted: #4dab9a;
+    --accepted-fill: #0f7b6c;
+    --sent: #529cca;
+    --sent-fill: #0b6e99;
+    --declined: #ff7369;
+    --declined-fill: #e03e3e;
+    --warning: #ffa344;
+    --warning-fill: #d9730d;
+
+    color-scheme: dark;
+  }
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-bg-alt: var(--bg-alt);
+  --color-surface: var(--surface);
+  --color-card: var(--card);
+  --color-field: var(--field);
+  --color-text: var(--text);
+  --color-muted: var(--text-muted);
+  --color-accent-text: var(--accent-text);
+  --color-tint: var(--tint);
+  --color-tint-strong: var(--tint-strong);
+  --color-line: var(--border);
+
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+
+  --color-accepted: var(--accepted);
+  --color-accepted-fill: var(--accepted-fill);
+  --color-sent: var(--sent);
+  --color-sent-fill: var(--sent-fill);
+  --color-declined: var(--declined);
+  --color-declined-fill: var(--declined-fill);
+  --color-warning: var(--warning);
+  --color-warning-fill: var(--warning-fill);
+}
+
+/* ---------------------------------------------------------------------------
+   Base
+--------------------------------------------------------------------------- */
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Roboto Slab is the app's only font, so it carries the brand here: wordmark,
+   headings, pull quotes. Body copy stays in the system sans — the legal pages
+   run past a thousand words and a slab serif at reading size is hard work. */
+h1, h2, h3, .font-slab {
+  font-family: var(--font-slab);
+  font-weight: 400;
+}
+
+/* Long-form legal prose. The typography plugin's defaults are tuned for a white
+   page; these re-point it at the theme tokens so it survives dark mode. */
+.prose-verbal {
+  --tw-prose-body: var(--text);
+  --tw-prose-headings: var(--text);
+  --tw-prose-bold: var(--text);
+  --tw-prose-links: var(--accent-text);
+  --tw-prose-counters: var(--text-muted);
+  --tw-prose-bullets: var(--text-muted);
+  --tw-prose-hr: var(--border);
+  --tw-prose-quotes: var(--text);
+  --tw-prose-quote-borders: var(--border);
+  --tw-prose-captions: var(--text-muted);
+  --tw-prose-th-borders: var(--border);
+  --tw-prose-td-borders: var(--border);
+  --tw-prose-code: var(--text);
+}
+
+.prose-verbal :is(h1, h2, h3) {
+  font-family: var(--font-slab);
+  font-weight: 400;
+}
+
+/* Legal pages carry one wide table (the sub-processor list). It scrolls in its
+   own box rather than pushing the page sideways on a phone. */
+.prose-verbal table {
+  display: block;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
