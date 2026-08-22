@@ -28,7 +28,7 @@ export function PrivacyBand() {
             >
               The recording is transcribed on the device by iOS. It is never
               uploaded, never stored, and gone the moment you stop talking. What
-              leaves your phone is the text — because that is what the quote
+              leaves your phone is the text, because that is what the quote
               gets built from.
             </p>
             <div data-reveal className="mt-8">

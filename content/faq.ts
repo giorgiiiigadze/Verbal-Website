@@ -23,7 +23,7 @@ export const FAQ: QA[] = [
   {
     q: "What happens if it gets a price wrong?",
     a:
-      "You fix it before you send it — every line is editable. Verbal is " +
+      "You fix it before you send it. Every line is editable, and Verbal is " +
       "built not to invent prices in the first place: anything you did not " +
       "price out loud and that is not on your rate card comes back flagged " +
       "rather than guessed. The quote is your document and your offer, so " +
@@ -42,7 +42,7 @@ export const FAQ: QA[] = [
     a:
       "No. Set up asks what you charge for the handful of jobs your trade " +
       "does most, and seeds your rate card from that. You can leave it empty " +
-      "and fill it in as you go — unpriced work just comes back flagged.",
+      "and fill it in as you go. Unpriced work just comes back flagged.",
     featured: true,
   },
   {
@@ -58,7 +58,7 @@ export const FAQ: QA[] = [
     a:
       "Set up offers electricians, plumbers, carpenters, tilers, painters, " +
       "plasterers, builders, roofers and landscapers by name. Any other " +
-      "trade can type its own — it still prices your call-out, hourly and " +
+      "trade can type its own. It still prices your call-out, hourly and " +
       "day rate, and learns the rest as you quote.",
   },
   {
@@ -66,7 +66,7 @@ export const FAQ: QA[] = [
     a:
       "No. It listens in whichever language and region you pick, from the " +
       "set your iPhone has a speech model for, and the language downloads " +
-      "once and then works offline. Region matters as much as language — " +
+      "once and then works offline. Region matters as much as language: " +
       "en-GB and en-US are different models, and the wrong one mis-hears a " +
       "word a sentence rather than failing outright.",
   },
@@ -96,7 +96,7 @@ export const FAQ: QA[] = [
     a:
       "Cancel the subscription in Settings → Apple ID → Subscriptions on " +
       "your device. Delete the account in Profile → Settings → Delete " +
-      "account in the app — it removes your quotes, rate card, transcripts, " +
+      "account in the app. It removes your quotes, rate card, transcripts, " +
       "customers and business details immediately, and cannot be undone. " +
       "The two are separate: deleting the app does not cancel the " +
       "subscription.",

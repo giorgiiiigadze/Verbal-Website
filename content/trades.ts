@@ -30,7 +30,7 @@ export const TRADES: Trade[] = [
   },
   {
     name: "Plumber",
-    blurb: "Bathrooms, rads and leaks — the jobs that get quoted on the spot.",
+    blurb: "Bathrooms, rads and leaks: the jobs that get quoted on the spot.",
     jobs: [
       { name: "Replace a toilet", unit: "each" },
       { name: "Fit a basin", unit: "each" },
@@ -63,7 +63,7 @@ export const TRADES: Trade[] = [
   },
   {
     name: "Painter",
-    blurb: "By the room, by the metre, or by the day — whichever you quote.",
+    blurb: "By the room, by the metre, or by the day, whichever you quote.",
     jobs: [
       { name: "Emulsion a room", unit: "job" },
       { name: "Paint walls", unit: "m²" },
@@ -85,7 +85,7 @@ export const TRADES: Trade[] = [
   },
   {
     name: "Builder",
-    blurb: "Big jobs with a lot of lines — spoken faster than they are typed.",
+    blurb: "Big jobs with a lot of lines, spoken faster than they are typed.",
     jobs: [
       { name: "Blockwork", unit: "m²" },
       { name: "Knock through with lintel", unit: "job" },
@@ -126,7 +126,7 @@ export const TRADES: Trade[] = [
 export const OTHER_TRADE = {
   name: "Something else",
   blurb:
-    "Locksmith, glazier, welder, joiner, groundworker — tell it your trade " +
+    "Locksmith, glazier, welder, joiner, groundworker. Tell it your trade " +
     "and it prices your call-out, your hourly and your day rate, then learns " +
     "the rest as you quote.",
   jobs: [

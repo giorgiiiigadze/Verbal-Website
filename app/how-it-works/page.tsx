@@ -49,7 +49,7 @@ export default function HowItWorksPage() {
             The whole loop takes about a minute.
           </h2>
           <p className="mt-5 text-lg text-muted">
-            Most of which is you reading it before it goes out — which is the
+            Most of which is you reading it before it goes out, which is the
             part that should take a minute.
           </p>
           <div className="mt-8 flex justify-center">

@@ -16,7 +16,7 @@ export const FEATURES: Feature[] = [
     title: "Your voice never leaves your phone",
     body:
       "Speech is transcribed on the device, by iOS itself. The recording is " +
-      "never uploaded and never saved — it exists while you are talking and " +
+      "never uploaded and never saved. It exists while you are talking and " +
       "is gone when you stop.",
     source: "docs/privacy/index.md",
   },
@@ -24,7 +24,7 @@ export const FEATURES: Feature[] = [
     title: "A rate card that fills itself in",
     body:
       "Set up asks what you charge for the jobs your trade actually does. " +
-      "After that, speaking one of them prices it — no typing, no lookup.",
+      "After that, speaking one of them prices it. No typing, no lookup.",
     source: "Views/Onboarding/TradePresets.swift",
   },
   {
@@ -39,7 +39,7 @@ export const FEATURES: Feature[] = [
     title: "Send a link, get an answer",
     body:
       "Share a quote as a web link. Your customer opens it on any phone and " +
-      "accepts or declines — no app, no account, no PDF attachment.",
+      "accepts or declines. No app, no account, no PDF attachment.",
     source: "Views/Quotes/ShareQuotePanel.swift",
   },
   {
@@ -54,7 +54,7 @@ export const FEATURES: Feature[] = [
     body:
       "Pick the language and the region you actually speak, and it downloads " +
       "once and works with no signal after that. A British accent is not " +
-      "handed to the American model by default — that is a mis-heard word " +
+      "handed to the American model by default. That is a mis-heard word " +
       "per sentence, and nothing on screen would tell you.",
     source: "Models/DictationLanguage.swift",
   },
@@ -68,8 +68,8 @@ export const FEATURES: Feature[] = [
   {
     title: "Your quotes work offline",
     body:
-      "Reading, and finding what you charged last time, works with no signal " +
-      "— which is where a lot of jobs are. Making a new one needs a connection.",
+      "Reading, and finding what you charged last time, works with no signal, " +
+      "which is where a lot of jobs are. Making a new one needs a connection.",
     source: "docs/terms/index.md",
   },
   {
@@ -99,7 +99,7 @@ export const STEPS: Step[] = [
       "Hold the button and talk, in whatever order it comes out. No form, " +
       "no dropdowns, no line-item grid to tab through with one hand. iOS " +
       "transcribes it on the device as you speak, so the audio never goes " +
-      "anywhere — and you can say it in any of the languages your phone " +
+      "anywhere, and you can say it in any of the languages your phone " +
       "already dictates in.",
   },
   {
@@ -110,7 +110,7 @@ export const STEPS: Step[] = [
       "What you said becomes a title, a summary, a scope list and priced " +
       "lines. Anything it could not price is marked rather than guessed, so " +
       "the gaps are obvious at a glance. Edit any line, add one you forgot, " +
-      "set the tax rate — it is a draft, not a verdict.",
+      "set the tax rate. It is a draft, not a verdict.",
   },
   {
     number: "03",

@@ -25,7 +25,7 @@ export type Testimonial = {
 export const FEATURED_TESTIMONIAL: Testimonial | null = {
   quote:
     "Quoted three jobs on the drive between calls. Used to be sat at the kitchen table until ten doing that.",
-  name: "Placeholder — replace before launch",
+  name: "Placeholder, replace before launch",
   role: "Electrician, Leeds",
   rating: 5,
 };

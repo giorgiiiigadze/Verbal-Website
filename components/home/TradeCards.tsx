@@ -16,6 +16,29 @@ import { Reveal } from "@/components/ui/Reveal";
  */
 const SHOWN = 6;
 
+/**
+ * Job chips are tinted, cycling through these four.
+ *
+ * Written out as whole class strings because Tailwind reads the source
+ * statically — a class built from a variable at runtime never gets generated.
+ *
+ * 25% is enough to separate the chips from the card without taking the label
+ * with it: the text stays `--text` rather than the hue, which keeps every chip
+ * near 8:1 whatever colour it lands on. Tinting the label to match would push
+ * the small type down to about 2.5:1.
+ *
+ * Three chips per card against four tones means the sequence walks by one card
+ * to the next, so no two cards start on the same colour until the fifth.
+ */
+const CHIP_TONES = [
+  "bg-[#0098F2]/25",
+  "bg-[#FF6363]/25",
+  "bg-[#5D9C06]/25",
+  "bg-[#6C56FC]/25",
+];
+
+const CHIPS_PER_CARD = 3;
+
 export function TradeCards() {
   const shown = TRADES.slice(0, SHOWN);
   const rest = TRADES.length - SHOWN;
@@ -38,7 +61,7 @@ export function TradeCards() {
         </div>
 
         <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {shown.map((trade) => (
+          {shown.map((trade, cardIndex) => (
             // Not <Card>: it hardcodes `bg-card`, and `cn` is a plain join with
             // no tailwind-merge, so a background passed alongside it would leave
             // two competing utilities and let stylesheet order decide. The rest
@@ -54,10 +77,15 @@ export function TradeCards() {
               </p>
 
               <ul className="mt-5 flex flex-wrap gap-2">
-                {trade.jobs.slice(0, 3).map((job) => (
+                {trade.jobs.slice(0, CHIPS_PER_CARD).map((job, jobIndex) => (
                   <li
                     key={job.name}
-                    className="rounded-[var(--radius-chip)] bg-field px-2.5 py-1 text-xs text-muted"
+                    className={`rounded-[var(--radius-chip)] px-2.5 py-1 text-xs ${
+                      CHIP_TONES[
+                        (cardIndex * CHIPS_PER_CARD + jobIndex) %
+                          CHIP_TONES.length
+                      ]
+                    }`}
                   >
                     {job.name} · {job.unit}
                   </li>
@@ -68,10 +96,10 @@ export function TradeCards() {
         </div>
 
         {rest > 0 ? (
-          <p data-reveal className="mt-10">
+          <p data-reveal className="mt-10 text-center">
             <Link
               href="/trades"
-              className="font-medium text-accent-text underline decoration-transparent underline-offset-4 transition-colors hover:decoration-current"
+              className="font-medium text-[#0098F2] underline decoration-transparent underline-offset-4 transition-colors hover:decoration-current"
             >
               {rest} more trades, and what happens if yours is not one of them →
             </Link>

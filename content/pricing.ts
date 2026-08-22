@@ -12,7 +12,7 @@ export const PRICING = {
     summary: "Two quotes a day, for as long as you like.",
     features: [
       "Two new quotes per day",
-      "Every quote you have already made stays readable, editable and sendable — always, subscription or not",
+      "Every quote you have already made stays readable, editable and sendable, subscription or not",
       "Your full rate card",
       "Clients and their history",
       "Shareable quote links your customer can accept or decline",

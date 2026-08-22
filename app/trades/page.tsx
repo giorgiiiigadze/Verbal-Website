@@ -9,7 +9,7 @@ export const metadata = pageMetadata({
   title: "Trades",
   description:
     "Electricians, plumbers, carpenters, tilers, painters, plasterers, " +
-    "builders, roofers, landscapers — and whatever else you do.",
+    "builders, roofers, landscapers, and whatever else you do.",
   path: "/trades",
 });
 

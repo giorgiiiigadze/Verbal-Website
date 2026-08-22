@@ -27,7 +27,7 @@ export default function SupportPage() {
           <Card>
             <h2 className="text-2xl">Get in touch</h2>
             <p className="mt-3 text-muted">
-              For anything at all — a bug, a quote that came back wrong, a
+              For anything at all: a bug, a quote that came back wrong, a
               refund question, a trade you want supported properly.
             </p>
             <div className="mt-6">
@@ -54,7 +54,7 @@ export default function SupportPage() {
                   Settings → Apple ID → Subscriptions
                 </strong>{" "}
                 on your device. Deleting the app does not cancel it, and refunds
-                are handled by Apple — we cannot issue them.
+                are handled by Apple, so we cannot issue them.
               </p>
             </Card>
 
@@ -78,7 +78,7 @@ export default function SupportPage() {
               <h2 className="text-lg">A quote came back wrong</h2>
               <p className="mt-3 text-sm leading-relaxed text-muted">
                 Every line is editable before you send. If something is priced
-                oddly, check the rate on your rate card first — the app prices
+                oddly, check the rate on your rate card first. The app prices
                 from your numbers, and will flag anything it has no number for
                 rather than guess one.
               </p>
@@ -88,7 +88,7 @@ export default function SupportPage() {
               <h2 className="text-lg">A copy of your data</h2>
               <p className="mt-3 text-sm leading-relaxed text-muted">
                 Email and ask. You can also ask us to correct it. Deletion is
-                built into the app and takes effect immediately — see the{" "}
+                built into the app and takes effect immediately. See the{" "}
                 <a href="/privacy" className="text-accent-text underline">
                   privacy policy
                 </a>{" "}

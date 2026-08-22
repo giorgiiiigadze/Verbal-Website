@@ -27,7 +27,7 @@ export default function PricingPage() {
         align="center"
         size="lg"
         title="Two quotes a day, free. Forever."
-        lead="Not a trial that runs out. The limit is on making new quotes — everything you have already made stays readable, editable and sendable whether you subscribe or not."
+        lead="Not a trial that runs out. The limit is on making new quotes. Everything you have already made stays readable, editable and sendable whether you subscribe or not."
       />
 
       <Section tone="bg">

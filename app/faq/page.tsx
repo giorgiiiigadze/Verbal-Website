@@ -35,7 +35,7 @@ export default function FaqPage() {
       <PageHeader
         eyebrow="Questions"
         title="Frequently asked questions"
-        lead="If the answer you want is not here, the answer is probably in the privacy policy or the terms — and if it is not, email and ask."
+        lead="If the answer you want is not here, the answer is probably in the privacy policy or the terms. If it is not, email and ask."
       />
 
       <Section tone="bg">

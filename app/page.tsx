@@ -1,11 +1,10 @@
 import { Hero } from "@/components/home/Hero";
 import { SocialProof } from "@/components/home/SocialProof";
-import { Problem } from "@/components/home/Problem";
 import { Steps } from "@/components/home/Steps";
 import { FeatureGrid } from "@/components/home/FeatureGrid";
 import { TradeCards } from "@/components/home/TradeCards";
+import { ShareBand } from "@/components/home/ShareBand";
 import { PrivacyBand } from "@/components/home/PrivacyBand";
-import { PricingTeaser } from "@/components/home/PricingTeaser";
 import { FaqPreview } from "@/components/home/FaqPreview";
 import { FinalCta } from "@/components/home/FinalCta";
 import { DESCRIPTION, SITE_NAME, SITE_URL } from "@/content/site";
@@ -37,7 +36,7 @@ export default function HomePage() {
         "@type": "Offer",
         price: "19",
         priceCurrency: "USD",
-        description: "Verbal Pro — unlimited quotes, billed monthly",
+        description: "Verbal Pro: unlimited quotes, billed monthly",
       },
     ],
   };
@@ -52,10 +51,9 @@ export default function HomePage() {
       <SocialProof />
       <Steps />
       <TradeCards />
-      <Problem />
+      <ShareBand />
       <FeatureGrid />
       <PrivacyBand />
-      <PricingTeaser />
       <FaqPreview />
       <FinalCta />
     </>
