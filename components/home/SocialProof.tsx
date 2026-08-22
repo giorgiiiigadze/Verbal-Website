@@ -62,7 +62,7 @@ export function SocialProof() {
         <Container>
           <p
             data-proof-reveal
-            className="text-center text-sm font-semibold uppercase tracking-[0.14em] text-accent-text"
+            className="text-center text-[16px] font-semibold capitalize text-[#8D8D8D]"
           >
             The work it already knows how to price
           </p>
@@ -102,11 +102,11 @@ export function SocialProof() {
           <Container>
             <figure
               data-proof-reveal
-              className="mt-14 rounded-[28px] bg-surface px-6 py-16 text-center sm:mt-20 sm:px-16 sm:py-24"
+              className="mx-auto mt-14 max-w-5xl rounded-[28px] bg-[#FAFAFA] px-6 py-16 text-center sm:mt-20 sm:px-16 sm:py-24"
             >
               <Stars rating={FEATURED_TESTIMONIAL.rating} />
 
-              <blockquote className="mx-auto mt-8 max-w-3xl font-slab text-2xl leading-tight tracking-tight sm:text-4xl sm:leading-tight">
+              <blockquote className="mx-auto mt-8 max-w-3xl font-sans text-2xl font-medium leading-tight tracking-tight text-black sm:text-4xl sm:leading-tight">
                 &ldquo;{FEATURED_TESTIMONIAL.quote}&rdquo;
               </blockquote>
 

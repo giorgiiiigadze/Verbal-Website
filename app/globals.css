@@ -30,7 +30,7 @@
   /* The social-proof strip. It slides exactly half the track's width, which is
      where the second, identical copy of the row starts — so the loop has no
      seam. Slow enough to be read on the way past rather than watched. */
-  --animate-marquee: marquee 60s linear infinite;
+  --animate-marquee: marquee 90s linear infinite;
 
   @keyframes marquee {
     to {

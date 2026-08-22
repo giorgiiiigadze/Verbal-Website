@@ -50,8 +50,8 @@ export default function HomePage() {
       />
       <Hero />
       <SocialProof />
-      <Problem />
       <Steps />
+      <Problem />
       <FeatureGrid />
       <PrivacyBand />
       <TradeStrip />
