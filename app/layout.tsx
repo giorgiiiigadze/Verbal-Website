@@ -47,7 +47,10 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${robotoSlab.variable} h-full antialiased`}>
-      <body className="flex min-h-full flex-col">
+      {/* Not a flex column any more: the footer is pinned behind `main` rather
+          than pushed below it, and `main` guarantees its own full-screen
+          minimum. See FooterReveal. */}
+      <body className="min-h-full">
         <a
           href="#main"
           className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-primary focus:px-4 focus:py-2 focus:text-white"
@@ -55,7 +58,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           Skip to content
         </a>
         <SiteHeader />
-        <main id="main" className="flex-1">
+        {/* The sheet the footer hides behind: opaque, one layer up, and never
+            shorter than the screen so there is always a page to slide away. */}
+        <main id="main" className="relative z-10 min-h-lvh bg-bg">
           {children}
         </main>
         <SiteFooter />

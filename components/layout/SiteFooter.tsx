@@ -1,11 +1,18 @@
 import Link from "next/link";
 import { FOOTER, SITE_NAME, SUPPORT_EMAIL, TAGLINE } from "@/content/site";
 import { Container } from "./Container";
+import { FooterReveal } from "./FooterReveal";
 import { Logo } from "@/components/ui/Logo";
 
+/**
+ * FooterReveal supplies the `<footer>` element and the curtain behaviour; what
+ * the footer looks like stays here. It needs an opaque background — the page
+ * scrolls up off this, so anything see-through would show the content sliding
+ * behind it.
+ */
 export function SiteFooter() {
   return (
-    <footer className="mt-auto border-t border-line bg-bg-alt py-14">
+    <FooterReveal className="border-t border-line bg-bg-alt py-14">
       <Container>
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
           <div>
@@ -50,6 +57,6 @@ export function SiteFooter() {
           </a>
         </div>
       </Container>
-    </footer>
+    </FooterReveal>
   );
 }

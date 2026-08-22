@@ -146,10 +146,27 @@ h1, h2, h3, .font-slab {
   white-space: nowrap;
 }
 
+/* The hero's entrance starts here rather than in JavaScript. The hero is
+   server rendered, so an element hidden after hydration would paint once and
+   then blink out; holding it here means it has never been visible. HeroReveal
+   writes an inline opacity that overrides this from its first frame — see the
+   note in that file about why the rule cannot be cleared afterwards. */
+[data-hero-reveal],
+[data-hero-phone] {
+  opacity: 0;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+
+  /* Belt and braces: HeroReveal also checks the query, but if its script never
+     runs the hero must not be left invisible. */
+  [data-hero-reveal],
+  [data-hero-phone] {
+    opacity: 1;
   }
 }

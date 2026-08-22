@@ -14,29 +14,42 @@ const styles = {
  *  `sm` up — at full size the two hero buttons do not fit one row on a 375px
  *  phone, and they wrap into a ragged stack. */
 const sizes = {
+  /** The header pill only — anything taller makes the bar grow around it. */
+  xs: "px-4 py-2 text-sm",
+  sm: "px-5 py-2.5 text-sm",
   md: "px-6 py-3 text-base",
   lg: "px-6 py-3 text-base sm:px-8 sm:py-4 sm:text-lg",
+} as const;
+
+/** Pills are the site's default shape, matching the header. `rect` uses the
+ *  app's own chip radius — a prop rather than a className override because
+ *  `cn` is a plain join and two border-radius utilities would race. */
+const shapes = {
+  pill: "rounded-full",
+  rect: "rounded-chip",
 } as const;
 
 export function Button({
   href,
   variant = "primary",
   size = "md",
+  shape = "pill",
   className,
   children,
 }: {
   href: string;
   variant?: keyof typeof styles;
   size?: keyof typeof sizes;
+  shape?: keyof typeof shapes;
   className?: string;
   children: React.ReactNode;
 }) {
   const external = href.startsWith("http") || href.startsWith("mailto:");
-  // Fully rounded, to match the header pill — the shape language of the site.
   const classes = cn(
-    "inline-flex items-center justify-center gap-2 rounded-full",
+    "inline-flex items-center justify-center gap-2",
     "font-semibold transition-colors",
     "focus-visible:outline-2 focus-visible:outline-offset-2",
+    shapes[shape],
     sizes[size],
     styles[variant],
     className,
