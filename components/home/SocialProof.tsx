@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Star } from "lucide-react";
 import { Container } from "@/components/layout/Container";
 import { SocialProofReveal } from "@/components/home/SocialProofReveal";
 import { FEATURED_TESTIMONIAL } from "@/content/testimonials";
@@ -58,11 +58,11 @@ export function SocialProof() {
 
   return (
     <SocialProofReveal>
-      <section className="overflow-clip bg-bg py-20 sm:py-28">
+      <section className="overflow-clip bg-bg pb-10 pt-20 sm:pb-14 sm:pt-28">
         <Container>
           <p
             data-proof-reveal
-            className="text-center text-[16px] font-semibold capitalize text-[#8D8D8D]"
+            className="text-center text-[16px] font-semibold capitalize text-[#3E60D8]"
           >
             The work it already knows how to price
           </p>
@@ -116,24 +116,17 @@ export function SocialProof() {
             </figure>
           </Container>
         ) : null}
-
-        <Container>
-          <p data-proof-reveal className="mt-14 text-center sm:mt-16">
-            <Link
-              href="/trades"
-              className="font-medium text-accent-text underline decoration-transparent underline-offset-4 transition-colors hover:decoration-current"
-            >
-              Is it built for your trade?
-            </Link>
-          </p>
-        </Container>
       </section>
     </SocialProofReveal>
   );
 }
 
 /** Filled stars only, one per point. An empty star is a mark against the
- *  product; five out of five simply draws five. */
+ *  product; five out of five simply draws five.
+ *
+ *  Lucide's star is drawn as a stroked outline, so it is filled with
+ *  `currentColor` here and the stroke left on — without it the points thin out
+ *  and the shape loses its edge at 20px. */
 function Stars({ rating }: { rating: number }) {
   return (
     <div
@@ -142,14 +135,7 @@ function Stars({ rating }: { rating: number }) {
       aria-label={`Rated ${rating} out of 5`}
     >
       {Array.from({ length: rating }, (_, i) => (
-        <svg
-          key={i}
-          viewBox="0 0 24 24"
-          aria-hidden="true"
-          className="h-5 w-5 fill-current"
-        >
-          <path d="M12 2.5l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5-5.8-3-5.8 3 1.1-6.5L2.6 9.3l6.5-.9L12 2.5z" />
-        </svg>
+        <Star key={i} aria-hidden="true" className="h-5 w-5 fill-current" />
       ))}
     </div>
   );

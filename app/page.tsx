@@ -3,7 +3,7 @@ import { SocialProof } from "@/components/home/SocialProof";
 import { Problem } from "@/components/home/Problem";
 import { Steps } from "@/components/home/Steps";
 import { FeatureGrid } from "@/components/home/FeatureGrid";
-import { TradeStrip } from "@/components/home/TradeStrip";
+import { TradeCards } from "@/components/home/TradeCards";
 import { PrivacyBand } from "@/components/home/PrivacyBand";
 import { PricingTeaser } from "@/components/home/PricingTeaser";
 import { FaqPreview } from "@/components/home/FaqPreview";
@@ -51,10 +51,10 @@ export default function HomePage() {
       <Hero />
       <SocialProof />
       <Steps />
+      <TradeCards />
       <Problem />
       <FeatureGrid />
       <PrivacyBand />
-      <TradeStrip />
       <PricingTeaser />
       <FaqPreview />
       <FinalCta />

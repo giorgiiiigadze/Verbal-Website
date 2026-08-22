@@ -12,7 +12,7 @@ import { Logo } from "@/components/ui/Logo";
  */
 export function SiteFooter() {
   return (
-    <FooterReveal className="border-t border-line bg-bg-alt py-14">
+    <FooterReveal className="border-t border-line bg-bg py-14">
       <Container>
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
           <div>

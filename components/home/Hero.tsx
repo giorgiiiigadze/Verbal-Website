@@ -15,6 +15,11 @@ import { APP_STORE_URL } from "@/content/site";
  * load, in the order they appear here. They are hooks for the timeline and
  * nothing else — the layout holds if the attributes are removed.
  */
+const REASSURANCES = [
+  "Two quotes a day, free",
+  "Your voice never leaves the phone",
+];
+
 export function Hero() {
   return (
     <HeroReveal>
@@ -29,7 +34,7 @@ export function Hero() {
               href="/how-it-works"
               className="group inline-flex items-center gap-2.5 rounded-full bg-[#F7F7F2] py-1.5 pl-1.5 pr-4 text-sm transition-colors hover:bg-[#ECECE4]"
             >
-              <span className="rounded-full bg-[#c3d0ef] px-2.5 py-1 text-xs font-semibold text-text">
+              <span className="rounded-full bg-[#0098F2] px-2.5 py-1 text-xs font-semibold text-white">
                 Coming soon
               </span>
               <span>Verbal for iPhone</span>
@@ -45,10 +50,8 @@ export function Hero() {
                 carry its own beat in the entrance. Wrapping is unchanged. */}
             <h1 className="mt-6 font-slab text-[clamp(1.875rem,11vw,2.625rem)] leading-[1.02] tracking-tight sm:text-[3.5rem] lg:text-[3.875rem] xl:text-[4.875rem]">
               <span data-hero-reveal className="block">
-                Speak the job on site.
-              </span>
-              <span data-hero-reveal className="block">
-                Send the quote today.
+                Speak the job <br />on site. <br />
+                Send the <br />quote today.
               </span>
             </h1>
 
@@ -86,13 +89,21 @@ export function Hero() {
               </Button>
             </div>
 
-            <p
+            {/* Things that are true rather than selling points: each one
+                traces to content/features.ts and to the pricing page, and
+                answers an objection a tradesperson actually has at this point
+                on the page — what it costs, and where the recording goes. */}
+            <ul
               data-hero-reveal
-              className="mt-5 flex items-center gap-2.5 text-sm text-muted"
+              className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-2.5 text-sm text-[#0098F2]"
             >
-              <AppleMark className="h-4 w-4" />
-              Coming to iPhone. Two quotes a day, free.
-            </p>
+              {REASSURANCES.map((point) => (
+                <li key={point} className="flex items-center gap-2">
+                  <CheckMark />
+                  {point}
+                </li>
+              ))}
+            </ul>
           </div>
 
           {/*
@@ -122,7 +133,7 @@ export function Hero() {
                 />
               </div>
             </div>
-            <div className="w-1/2 max-w-[280px] translate-y-10 sm:translate-y-14">
+            <div className="w-1/2 max-w-[280px] translate-y-6 sm:translate-y-8">
               <div data-hero-phone>
                 <PhoneFrame
                   src="/phone/screen-list.png"
@@ -136,5 +147,29 @@ export function Hero() {
         </Container>
       </div>
     </HeroReveal>
+  );
+}
+
+/** A filled tick. The disc takes its colour from the list around it via
+ *  `fill-current`, so the mark and its label can never drift apart. Solid
+ *  rather than outlined so it still reads at 16px, where a stroked circle
+ *  closes up. */
+function CheckMark() {
+  return (
+    <svg
+      viewBox="0 0 20 20"
+      aria-hidden="true"
+      className="h-4 w-4 shrink-0"
+    >
+      <circle cx="10" cy="10" r="10" className="fill-current" />
+      <path
+        d="m5.9 10.3 2.6 2.7 5.6-5.9"
+        fill="none"
+        stroke="#fff"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
   );
 }

@@ -2,14 +2,18 @@
 
 import { useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 /**
  * The hero's entrance.
  *
  * A wrapper rather than a rewrite of Hero: everything inside stays server
- * rendered, and this ships only the timeline. It animates two groups it finds
- * by attribute — `data-hero-reveal` for the text column, in DOM order, and
- * `data-hero-phone` for the device frames.
+ * rendered, and this ships only the timeline. It animates three groups it finds
+ * by attribute — `data-hero-reveal` for the text column, in DOM order,
+ * `data-hero-phone` for the device frames, and `data-hero-parallax` for the
+ * frames' drift as the hero scrolls away.
  *
  * The starting state lives in globals.css, not here. The markup arrives from
  * the server already painted, so anything JavaScript hid would show for a frame
@@ -53,6 +57,30 @@ export function HeroReveal({ children }: { children: React.ReactNode }) {
         // Absolute, not sequential: the frames rise alongside the copy instead
         // of waiting for it, and both groups settle on the same beat.
         0.15,
+      );
+
+      // The frames drift up a little faster than the page as the hero leaves,
+      // which reads as depth without moving anything in layout. The second one
+      // travels further than the first, so the gap between them opens on the
+      // way out rather than the pair sliding as a block.
+      //
+      // Upward on purpose: drifting them down would carry them over the band
+      // below, which is the same white and would look like a bleed.
+      const drift = [-30, -60];
+
+      self.selector!("[data-hero-parallax]").forEach(
+        (el: HTMLElement, i: number) => {
+          gsap.to(el, {
+            y: drift[i] ?? drift[drift.length - 1],
+            ease: "none",
+            scrollTrigger: {
+              trigger: root.current,
+              start: "top top",
+              end: "bottom top",
+              scrub: true,
+            },
+          });
+        },
       );
     }, root);
 

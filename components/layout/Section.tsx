@@ -35,14 +35,24 @@ export function Section({
 }
 
 /** The heading block that opens most sections. */
+/** The eyebrow's colour. A prop rather than a className override because `cn`
+ *  is a plain join and two text-colour utilities would race. `brand` is
+ *  RoyalBlue200, the lightest of the ramp that still holds on white. */
+const eyebrowTones = {
+  muted: "text-[#8D8D8D]",
+  brand: "text-royal-200",
+} as const;
+
 export function SectionHeading({
   eyebrow,
+  eyebrowTone = "muted",
   title,
   lead,
   align = "left",
   invert = false,
 }: {
   eyebrow?: string;
+  eyebrowTone?: keyof typeof eyebrowTones;
   title: string;
   lead?: string;
   align?: "left" | "center";
@@ -58,8 +68,8 @@ export function SectionHeading({
       {eyebrow ? (
         <p
           className={cn(
-            "mb-3 text-xs font-semibold uppercase tracking-[0.14em]",
-            invert ? "text-royal-100" : "text-accent-text",
+            "mb-3 text-[16px] font-semibold capitalize",
+            invert ? "text-royal-100" : eyebrowTones[eyebrowTone],
           )}
         >
           {eyebrow}

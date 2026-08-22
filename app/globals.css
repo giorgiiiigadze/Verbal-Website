@@ -65,9 +65,12 @@
   --border: rgb(0 0 0 / 0.08);
 
   /* Filled controls, kept separate from the raw brand swatch so buttons can be
-     retuned without moving the brand. */
-  --primary: #192868;
-  --primary-hover: #21348a;
+     retuned without moving the brand. The resting fill is RoyalBlue500 — what
+     used to be the hover — because RoyalBlue600 read as near-black on the page
+     rather than as the brand's blue. Hover keeps the same direction it always
+     had: one step lighter again. */
+  --primary: #21348a;
+  --primary-hover: #2a41a8;
 
   --accepted: #0f7b6c;
   --accepted-fill: #ddedea;
