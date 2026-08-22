@@ -44,7 +44,7 @@ function MarqueeRow({ items }: { items: string[] }) {
       {items.map((item) => (
         <span
           key={item}
-          className="whitespace-nowrap pr-10 text-lg text-muted sm:pr-14 sm:text-xl"
+          className="select-none whitespace-nowrap pr-10 text-lg text-muted sm:pr-14 sm:text-xl"
         >
           {item}
         </span>
@@ -58,7 +58,7 @@ export function SocialProof() {
 
   return (
     <SocialProofReveal>
-      <section className="overflow-clip bg-bg pb-10 pt-20 sm:pb-14 sm:pt-28">
+      <section className="overflow-clip bg-bg pb-8 pt-14 sm:pb-10 sm:pt-20">
         <Container>
           <p
             data-proof-reveal

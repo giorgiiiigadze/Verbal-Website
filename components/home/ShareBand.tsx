@@ -76,7 +76,7 @@ function PdfStack() {
     <div
       data-reveal
       aria-hidden="true"
-      className="relative mx-auto aspect-[4/3] w-full max-w-md"
+      className="relative mx-auto aspect-[4/3] w-full max-w-md select-none"
     >
       {pages.map((placement, i) => (
         <div

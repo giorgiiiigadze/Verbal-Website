@@ -22,19 +22,19 @@ const SHOWN = 6;
  * Written out as whole class strings because Tailwind reads the source
  * statically — a class built from a variable at runtime never gets generated.
  *
- * 25% is enough to separate the chips from the card without taking the label
- * with it: the text stays `--text` rather than the hue, which keeps every chip
- * near 8:1 whatever colour it lands on. Tinting the label to match would push
- * the small type down to about 2.5:1.
+ * Full strength, with the label in white. Dark text was tried and measures
+ * worse on every one of the four, purple worst at about 2.5:1; white runs
+ * 2.9:1 on the red to 4.8:1 on the purple. Three of the four are therefore
+ * under AA for 12px type, which is a known trade and not an oversight.
  *
  * Three chips per card against four tones means the sequence walks by one card
  * to the next, so no two cards start on the same colour until the fifth.
  */
 const CHIP_TONES = [
-  "bg-[#0098F2]/25",
-  "bg-[#FF6363]/25",
-  "bg-[#5D9C06]/25",
-  "bg-[#6C56FC]/25",
+  "bg-[#0098F2]",
+  "bg-[#FF6363]",
+  "bg-[#5D9C06]",
+  "bg-[#6C56FC]",
 ];
 
 const CHIPS_PER_CARD = 3;
@@ -80,7 +80,7 @@ export function TradeCards() {
                 {trade.jobs.slice(0, CHIPS_PER_CARD).map((job, jobIndex) => (
                   <li
                     key={job.name}
-                    className={`rounded-[var(--radius-chip)] px-2.5 py-1 text-xs ${
+                    className={`rounded-[var(--radius-chip)] px-2.5 py-1 text-xs font-medium text-white ${
                       CHIP_TONES[
                         (cardIndex * CHIPS_PER_CARD + jobIndex) %
                           CHIP_TONES.length

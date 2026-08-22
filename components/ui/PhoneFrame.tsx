@@ -29,7 +29,7 @@ export function PhoneFrame({
   className?: string;
 }) {
   return (
-    <div className={cn("relative", className)}>
+    <div className={cn("relative select-none", className)}>
       <Image
         src={src}
         alt={alt}

@@ -17,7 +17,7 @@ import { Reveal } from "@/components/ui/Reveal";
 export function FinalCta() {
   return (
     <Reveal>
-      <section className="overflow-clip bg-text py-20 sm:py-28">
+      <section className="overflow-clip bg-text py-14 sm:py-20">
         {/*
           Sized in `vw` rather than at breakpoints so it tracks the window
           continuously and keeps the same relationship to the gutter at every
@@ -33,7 +33,7 @@ export function FinalCta() {
           data-reveal
           role="img"
           aria-label={SITE_NAME}
-          className="flex items-end justify-center gap-[0.02em] px-6 text-[15vw] text-white sm:px-10"
+          className="flex select-none items-end justify-center gap-[0.02em] px-6 text-[15vw] text-white sm:px-10"
         >
           <Logo className="h-[0.6em] w-auto" />
           {/* `slice(1)` rather than a literal, so the two halves cannot drift

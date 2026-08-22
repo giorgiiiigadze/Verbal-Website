@@ -4,6 +4,7 @@ import { Steps } from "@/components/home/Steps";
 import { FeatureGrid } from "@/components/home/FeatureGrid";
 import { TradeCards } from "@/components/home/TradeCards";
 import { ShareBand } from "@/components/home/ShareBand";
+import { ClientsBand } from "@/components/home/ClientsBand";
 import { PrivacyBand } from "@/components/home/PrivacyBand";
 import { FaqPreview } from "@/components/home/FaqPreview";
 import { FinalCta } from "@/components/home/FinalCta";
@@ -52,6 +53,7 @@ export default function HomePage() {
       <Steps />
       <TradeCards />
       <ShareBand />
+      <ClientsBand />
       <FeatureGrid />
       <PrivacyBand />
       <FaqPreview />
