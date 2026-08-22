@@ -1,4 +1,5 @@
 import { Hero } from "@/components/home/Hero";
+import { SocialProof } from "@/components/home/SocialProof";
 import { Problem } from "@/components/home/Problem";
 import { Steps } from "@/components/home/Steps";
 import { FeatureGrid } from "@/components/home/FeatureGrid";
@@ -10,9 +11,10 @@ import { FinalCta } from "@/components/home/FinalCta";
 import { DESCRIPTION, SITE_NAME, SITE_URL } from "@/content/site";
 
 /**
- * Not rendered: a social-proof band of ratings and testimonials. The app has no
- * users yet, so every number in one would have to be made up. The slot is here
- * so real figures can go in after launch.
+ * The band under the hero is the social-proof slot. It carries no user count
+ * and no customer logos, because the app has no users yet and every figure in
+ * one would have to be made up — it shows the priced jobs instead. The one
+ * quote in it is a placeholder; see content/testimonials.ts before launch.
  */
 
 export default function HomePage() {
@@ -47,6 +49,7 @@ export default function HomePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <Hero />
+      <SocialProof />
       <Problem />
       <Steps />
       <FeatureGrid />
