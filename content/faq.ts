@@ -77,6 +77,13 @@ export const FAQ: QA[] = [
       "the day's rate when a job crosses a border.",
   },
   {
+    q: "Does it have a dark mode?",
+    a:
+      "Yes, and it follows your iPhone by default. Appearance in the app's " +
+      "settings has three options: System, which matches the phone, or Light " +
+      "or Dark held whatever the phone is doing.",
+  },
+  {
     q: "What happens to my customers' details?",
     a:
       "They are yours. They are stored so the app can show you a client's " +
