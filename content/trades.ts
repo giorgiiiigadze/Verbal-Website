@@ -1,9 +1,17 @@
 /**
  * The trades set up asks about, and the jobs it offers to price for each.
  *
- * Mirrored from Views/Onboarding/TradePresets.swift in the app repo. If that
- * table changes, change this one — the whole point of showing it is that it is
- * what you actually get.
+ * The first nine are mirrored from Views/Onboarding/TradePresets.swift in the
+ * app repo. If that table changes, change this one — the point of showing it is
+ * that it is what you actually get.
+ *
+ * The six after them are AHEAD OF THE APP: bricklayer through handyman are not
+ * in TradePresets yet, so today they fall through to the generic three lines
+ * (call-out, hourly, day rate) rather than the jobs listed here. They are here
+ * to widen the page, and they are written the way the app would write them, so
+ * adding the same six to the Swift table is a copy. Until that happens, note
+ * that content/faq.ts still names only the nine, because the FAQ is describing
+ * the app rather than this list.
  *
  * The names are how a British trade names them, same as in the app.
  */
@@ -150,6 +158,90 @@ export const TRADES: Trade[] = [
       { name: "Decking", unit: "m²" },
       { name: "Fencing", unit: "m" },
       { name: "Garden clearance", unit: "job" },
+    ],
+  },
+  {
+    slug: "bricklayer",
+    name: "Bricklayer",
+    spoken:
+      "Garden wall along the back, about eleven metres, rebuild the chimney, and repoint the side of the house.",
+    blurb: "Walls, chimneys and pointing, measured by the metre or the job.",
+    jobs: [
+      { name: "Brickwork", unit: "m²" },
+      { name: "Build a garden wall", unit: "m" },
+      { name: "Rebuild a chimney", unit: "job" },
+      { name: "Repointing", unit: "m²" },
+      { name: "Fit a lintel", unit: "each" },
+    ],
+  },
+  {
+    slug: "glazier",
+    name: "Glazier",
+    spoken:
+      "Two units blown in the front bay, pane out in the back door, and a splashback behind the hob.",
+    blurb: "Panes, units and splashbacks, priced by the opening.",
+    jobs: [
+      { name: "Replace a glazing unit", unit: "each" },
+      { name: "Replace a pane", unit: "each" },
+      { name: "Fit a glass splashback", unit: "each" },
+      { name: "Board up an opening", unit: "job" },
+      { name: "Fit a mirror", unit: "each" },
+    ],
+  },
+  {
+    slug: "locksmith",
+    name: "Locksmith",
+    spoken:
+      "Front door lock changed, deadbolt on the back, and rekey the two upstairs to the same key.",
+    blurb: "Call-outs and cylinders, where the job is priced before you set off.",
+    jobs: [
+      { name: "Change a lock", unit: "each" },
+      { name: "Fit a deadbolt", unit: "each" },
+      { name: "Rekey a cylinder", unit: "each" },
+      { name: "Emergency lockout", unit: "job" },
+      { name: "Security check", unit: "job" },
+    ],
+  },
+  {
+    slug: "heating-engineer",
+    name: "Heating engineer",
+    spoken:
+      "Service the boiler, power flush the system, smart stat in the hall, and balance the rads while I am there.",
+    blurb: "Boilers, systems and stats: long jobs with a short list of lines.",
+    jobs: [
+      { name: "Boiler service", unit: "job" },
+      { name: "Boiler replacement", unit: "job" },
+      { name: "Power flush", unit: "job" },
+      { name: "Fit a smart thermostat", unit: "each" },
+      { name: "Balance the radiators", unit: "job" },
+    ],
+  },
+  {
+    slug: "flooring-fitter",
+    name: "Flooring fitter",
+    spoken:
+      "Lift the old carpet through the whole downstairs, underlay, and laminate in the lounge and hall.",
+    blurb: "Square-metre work with the lift and the underlay counted separately.",
+    jobs: [
+      { name: "Lay laminate", unit: "m²" },
+      { name: "Fit carpet", unit: "m²" },
+      { name: "Vinyl and LVT", unit: "m²" },
+      { name: "Fit underlay", unit: "m²" },
+      { name: "Lift old flooring", unit: "m²" },
+    ],
+  },
+  {
+    slug: "handyman",
+    name: "Handyman",
+    spoken:
+      "Two wardrobes flat-packed, telly on the wall in the lounge, blinds in both bedrooms, bit of filling.",
+    blurb: "A list of small jobs, which is the hardest kind of quote to type up.",
+    jobs: [
+      { name: "Flat-pack assembly", unit: "hour" },
+      { name: "Hang a TV bracket", unit: "each" },
+      { name: "Fit blinds", unit: "each" },
+      { name: "Filling and touch up", unit: "hour" },
+      { name: "Odd jobs", unit: "day" },
     ],
   },
 ];

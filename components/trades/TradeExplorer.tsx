@@ -2,7 +2,7 @@
 
 import { useLayoutEffect, useRef, useState } from "react";
 import gsap from "gsap";
-import { Mic } from "lucide-react";
+import { Mic, Tag } from "lucide-react";
 import { TRADES } from "@/content/trades";
 
 /**
@@ -13,6 +13,14 @@ import { TRADES } from "@/content/trades";
  * product is a transformation, so the panel shows the transformation: the
  * sentence a trade would say on the left of the rule, the lines Verbal writes
  * from it underneath.
+ *
+ * The lower half is drawn as the app draws a rate card, checked against
+ * Views/RateCard/RateCardView.swift and Views/Quotes/LineItemsCard.swift: a
+ * header label in full ink over a divider, then rows carrying a small tinted
+ * plate with a tag glyph, the job name at callout weight, and "per each" set
+ * underneath it in the secondary tone. The unit sits under the name in the app
+ * because it qualifies the job rather than competing with the number, and the
+ * blue pills that were here before existed nowhere in the product.
  *
  * All nine panels are in the DOM and the inactive ones carry the `hidden`
  * attribute rather than being conditionally rendered, so every job name and
@@ -118,7 +126,7 @@ export function TradeExplorer() {
         </div>
       </div>
 
-      <div ref={panels} className="mt-8">
+      <div ref={panels} className="mt-6 sm:mt-8">
         {TRADES.map((trade, i) => (
           <div
             key={trade.slug}
@@ -129,41 +137,56 @@ export function TradeExplorer() {
             hidden={i !== active}
             className="mx-auto max-w-[720px] rounded-[var(--radius-card)] border border-line"
           >
-            <div className="p-6 sm:p-8">
+            <div className="px-6 pb-6 pt-6 sm:px-8 sm:pb-7 sm:pt-8">
               <p className="flex items-center gap-1.5 text-xs text-muted">
                 <Mic aria-hidden="true" className="h-3.5 w-3.5" />
                 You say
               </p>
 
-              {/* The height is reserved rather than measured: the sentences run
-                  to two lines on a laptop and three on a phone, and without a
-                  floor the panel jumps as you move along the row. */}
+              {/* The height is reserved rather than measured, and reserved per
+                  breakpoint, because the measure changes with the panel: the
+                  sentences run to two lines beside a 720px panel, three at
+                  `sm`, and four at 390px where the text column is 294px wide.
+                  One floor for all three either jumped on a phone or left a
+                  hole on a laptop. */}
               <p
                 data-spoken
-                className="mt-3 min-h-[5.25rem] font-slab text-[20px] leading-relaxed sm:min-h-[3.5rem]"
+                className="mt-3 min-h-[7.5rem] font-slab text-[18px] leading-relaxed sm:min-h-[6.5rem] sm:text-[20px] lg:min-h-[4.5rem]"
               >
                 &ldquo;{trade.spoken}&rdquo;
               </p>
             </div>
 
-            <div className="border-t border-line p-6 sm:p-8">
-              <p className="text-xs text-muted">Verbal writes</p>
+            {/* The app's LineItemsCard header: full ink, semibold, with a
+                divider under it doing the separating rather than a tint. */}
+            <p className="border-t border-line px-6 py-3 text-sm font-semibold sm:px-8">
+              Verbal writes
+            </p>
 
-              <ul className="mt-3">
-                {trade.jobs.map((job) => (
-                  <li
-                    key={job.name}
-                    data-line
-                    className="flex items-center justify-between gap-4 py-2"
+            <ul className="border-t border-line px-6 sm:px-8">
+              {trade.jobs.map((job) => (
+                <li
+                  key={job.name}
+                  data-line
+                  className="flex items-center gap-3 py-3.5"
+                >
+                  <span
+                    aria-hidden="true"
+                    className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[10px] border border-line bg-surface"
                   >
-                    <span>{job.name}</span>
-                    <span className="shrink-0 rounded-full bg-[#305CDE]/10 px-2.5 py-1 text-xs font-medium text-[#305CDE]">
-                      {job.unit}
+                    <Tag className="h-[15px] w-[15px]" />
+                  </span>
+                  <span className="block">
+                    <span className="block text-[15px] font-medium">
+                      {job.name}
                     </span>
-                  </li>
-                ))}
-              </ul>
-            </div>
+                    <span className="mt-0.5 block text-[13px] text-muted">
+                      per {job.unit}
+                    </span>
+                  </span>
+                </li>
+              ))}
+            </ul>
           </div>
         ))}
       </div>

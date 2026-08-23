@@ -36,7 +36,13 @@ export function Steps() {
           made raising the frame's max-width do nothing on a narrower window.
           The copy's `minmax(0, 36rem)` is what absorbs that instead.
         */}
-        <div className="grid gap-10 lg:grid-cols-[320px_minmax(0,36rem)] lg:items-center lg:justify-center lg:gap-x-24 lg:gap-y-12">
+        {/* `grid-rows-[auto_1fr]` is what keeps the heading and the steps together.
+            The frame spans both rows and is taller than the two of them stacked,
+            so with two auto rows its surplus height was shared out between them
+            and reappeared as a hole under the heading. Pinning row one to its
+            content sends all of that slack into row two instead, where the
+            steps sit at the top of it. */}
+        <div className="grid gap-10 lg:grid-cols-[320px_minmax(0,36rem)] lg:grid-rows-[auto_1fr] lg:justify-center lg:gap-x-24 lg:gap-y-12">
           <div data-steps-reveal className="lg:col-start-2 lg:row-start-1">
             <SectionHeading
               eyebrow="How sentance becomes a quote"
@@ -59,7 +65,7 @@ export function Steps() {
             />
           </div>
 
-          <ol className="space-y-10 lg:col-start-2 lg:row-start-2">
+          <ol className="space-y-10 lg:col-start-2 lg:row-start-2 lg:self-start">
             {STEPS.map((step) => (
               <li key={step.number} data-steps-reveal className="flex gap-5">
                 <span
