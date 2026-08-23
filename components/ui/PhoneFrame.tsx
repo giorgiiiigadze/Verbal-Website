@@ -14,20 +14,29 @@ import { cn } from "@/lib/cn";
  * The component fills the width it is given, so callers size it and pass a
  * matching `sizes` — without one Next assumes the full viewport and ships a
  * 1920px-wide screenshot into a box a quarter that size.
+ *
+ * `eager` is for a frame above the fold. It sets `loading` and `fetchPriority`
+ * rather than `preload`, on the docs' own advice: preload inserts a <link> in
+ * the head, and it is the wrong tool when several images could be the LCP
+ * depending on the viewport — the hero alone has four. (`priority`, which used
+ * to cover all of this, is deprecated as of Next 16.)
  */
 export function PhoneFrame({
   src,
   alt,
   sizes,
-  priority = false,
+  eager = false,
   className,
 }: {
   src: string;
   alt: string;
   sizes: string;
-  priority?: boolean;
+  eager?: boolean;
   className?: string;
 }) {
+  const loading = eager ? ("eager" as const) : ("lazy" as const);
+  const fetchPriority = eager ? ("high" as const) : ("auto" as const);
+
   return (
     <div className={cn("relative select-none", className)}>
       <Image
@@ -35,7 +44,8 @@ export function PhoneFrame({
         alt={alt}
         width={1320}
         height={2868}
-        priority={priority}
+        loading={loading}
+        fetchPriority={fetchPriority}
         sizes={sizes}
         style={{ borderRadius: "14.4% / 6.64%" }}
         className="absolute left-[4.91%] top-[2.2%] h-[95.6%] w-[90.18%] object-cover"
@@ -45,7 +55,8 @@ export function PhoneFrame({
         alt=""
         width={489}
         height={1000}
-        priority={priority}
+        loading={loading}
+        fetchPriority={fetchPriority}
         sizes={sizes}
         className="relative h-auto w-full"
       />

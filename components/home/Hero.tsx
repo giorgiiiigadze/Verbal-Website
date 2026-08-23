@@ -108,9 +108,14 @@ export function Hero() {
           {/*
             Two filled device frames, nothing behind them. The second sits
             lower than the first so the pair reads as a staggered pair rather
-            than a row. The screens are a quote and the list it came from, in
-            that order — the detail first, because it is the thing the headline
-            just promised.
+            than a row. The screens are a quote and the client it was made
+            for, in that order: the quote first, because it is the thing the
+            headline just promised, and the client second, because it is where
+            the answer to it ends up.
+
+            One light and one dark on purpose. The app follows the system
+            appearance, and showing both says so without a line of copy
+            claiming it.
 
             The standing offset is on the outer div and the entrance is on the
             inner one: both are transforms, and GSAP animating the same element
@@ -128,17 +133,17 @@ export function Hero() {
                   src="/phone/screen-quote.png"
                   alt="A quote open in Verbal, two of its line items still marked as needing a price."
                   sizes="280px"
-                  priority
+                  eager
                 />
               </div>
             </div>
             <div className="w-1/2 max-w-[280px] translate-y-6 sm:translate-y-8">
               <div data-hero-phone>
                 <PhoneFrame
-                  src="/phone/screen-list.png"
-                  alt="Verbal's quote list, showing the day's visits above quotes marked sent, viewed and unpriced."
+                  src="/phone/screen-client-detail.png"
+                  alt="A client's page in Verbal in dark mode: what they were quoted, what they accepted and what was declined, above the quotes themselves."
                   sizes="280px"
-                  priority
+                  eager
                 />
               </div>
             </div>

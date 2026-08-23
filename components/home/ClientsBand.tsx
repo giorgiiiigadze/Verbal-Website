@@ -1,6 +1,6 @@
 import { Section, SectionHeading } from "@/components/layout/Section";
 import { PhoneFrame } from "@/components/ui/PhoneFrame";
-import { ClientsReveal } from "@/components/home/ClientsReveal";
+import { Reveal } from "@/components/ui/Reveal";
 
 /**
  * The clients tab, said as the thing it actually is.
@@ -33,17 +33,17 @@ const POINTS = [
     title: "Who is worth chasing",
     body:
       "What you won, what is still waiting on an answer, and how often they " +
-      "say yes, split by status in one bar.",
+      "say yes, split by status in a single ring.",
   },
 ];
 
 export function ClientsBand() {
   return (
-    <ClientsReveal>
+    <Reveal stagger={0.08}>
       <Section id="clients" className="scroll-mt-24 border-y border-line">
         <div className="grid items-center gap-16 lg:grid-cols-[minmax(0,36rem)_320px] lg:justify-center lg:gap-24">
           <div>
-            <div data-clients-heading>
+            <div data-reveal>
               <SectionHeading
                 eyebrow="Your clients"
                 eyebrowTone="brand"
@@ -54,7 +54,7 @@ export function ClientsBand() {
 
             <dl className="mt-12 space-y-8">
               {POINTS.map((point) => (
-                <div key={point.title} data-clients-point>
+                <div key={point.title} data-reveal>
                   <dt className="text-xl">{point.title}</dt>
                   <dd className="mt-2 leading-relaxed text-muted">
                     {point.body}
@@ -64,23 +64,22 @@ export function ClientsBand() {
             </dl>
           </div>
 
-          {/* Placeholder screen until a capture of the clients tab exists: the
-              quote screen is at least the right app. Swap the src, and the
-              alt with it. */}
+          {/* The list itself, which is the claim: nobody was added to it. The
+              hero shows one client's page, so the two frames are not the same
+              picture. Dark, like the hero's second frame — the app follows the
+              system appearance and the site shows both. */}
           <div
-            data-clients-parallax
+            data-reveal
             className="mx-auto w-full max-w-[300px] lg:max-w-none"
           >
-            <div data-clients-phone>
-              <PhoneFrame
-                src="/phone/screen-list.png"
-                alt="A client in Verbal, with the quotes made for them listed underneath."
-                sizes="(min-width: 1024px) 320px, 300px"
-              />
-            </div>
+            <PhoneFrame
+              src="/phone/screen-client-list.png"
+              alt="Verbal's client list in dark mode, each client opened out to the quotes made for them, marked accepted, declined and expired."
+              sizes="(min-width: 1024px) 320px, 300px"
+            />
           </div>
         </div>
       </Section>
-    </ClientsReveal>
+    </Reveal>
   );
 }
