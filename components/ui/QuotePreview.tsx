@@ -4,6 +4,10 @@ import { cn } from "@/lib/cn";
  * A still of what comes back after you speak a job — the same shape as the
  * quote sheet the app renders, in the app's own status colours.
  *
+ * The panel is the soft grey the trade and pricing cards use, with no border:
+ * the section behind it is white, and a bordered white card on white read as
+ * an outline drawn around nothing.
+ *
  * The "Needs price" row is the point of this component, not decoration: it is
  * the app's most distinctive behaviour, and showing it is more convincing than
  * a sentence claiming it.
@@ -18,7 +22,7 @@ export function QuotePreview({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        "rounded-[var(--radius-card)] border border-line bg-card p-6 shadow-sm",
+        "rounded-[var(--radius-card)] bg-[#FAFAFA] p-6",
         className,
       )}
       aria-label="Example quote"

@@ -40,7 +40,7 @@ const POINTS = [
 export function ClientsBand() {
   return (
     <ClientsReveal>
-      <Section className="border-y border-line">
+      <Section id="clients" className="scroll-mt-24 border-y border-line">
         <div className="grid items-center gap-16 lg:grid-cols-[minmax(0,36rem)_320px] lg:justify-center lg:gap-24">
           <div>
             <div data-clients-heading>

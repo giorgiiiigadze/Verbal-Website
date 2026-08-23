@@ -3,6 +3,7 @@ import { PageHeader } from "@/components/layout/PageHeader";
 import { Section } from "@/components/layout/Section";
 import { Accordion } from "@/components/ui/Accordion";
 import { Button } from "@/components/ui/Button";
+import { Reveal } from "@/components/ui/Reveal";
 import { SUPPORT_EMAIL } from "@/content/site";
 import { pageMetadata } from "@/lib/metadata";
 
@@ -33,25 +34,39 @@ export default function FaqPage() {
       />
 
       <PageHeader
+        tone="plain"
+        align="center"
         eyebrow="Questions"
         title="Frequently asked questions"
         lead="If the answer you want is not here, the answer is probably in the privacy policy or the terms. If it is not, email and ask."
       />
 
-      <Section tone="bg">
-        <div className="mx-auto max-w-3xl">
-          <Accordion items={FAQ} />
+      <Reveal>
+        <Section tone="bg">
+          {/* Left and wide, the same list the home page's FAQ block shows: the
+              rows are ruled rather than boxed, so the questions start on the
+              page's own left edge instead of inside a panel. */}
+          <div data-reveal className="max-w-5xl">
+            <Accordion items={FAQ} />
+          </div>
 
-          <div className="mt-10 text-center">
-            <p className="text-muted">Still stuck?</p>
-            <div className="mt-4">
+          <div
+            data-reveal
+            className="mt-12 max-w-5xl rounded-[var(--radius-card)] bg-[#FAFAFA] p-8 sm:p-10"
+          >
+            <h2 className="font-sans text-xl">Still stuck?</h2>
+            <p className="mt-2 leading-relaxed text-muted">
+              If the answer is not up there, it is either in the privacy policy
+              or the terms. If it is in neither, ask and a person will answer.
+            </p>
+            <div className="mt-6">
               <Button href={`mailto:${SUPPORT_EMAIL}`} variant="secondary">
                 Email us
               </Button>
             </div>
           </div>
-        </div>
-      </Section>
+        </Section>
+      </Reveal>
     </>
   );
 }

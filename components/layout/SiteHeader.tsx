@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { APP_STORE_URL, NAV, SITE_NAME } from "@/content/site";
+import { FeaturesMenu } from "@/components/layout/FeaturesMenu";
 import { HeaderChrome } from "@/components/layout/HeaderChrome";
 import { AppleMark } from "@/components/ui/AppleMark";
 import { Button } from "@/components/ui/Button";
@@ -25,9 +26,11 @@ import { Logo } from "@/components/ui/Logo";
  * Hence 24 below sm, 40 at sm and up, and 1280−80=1200 (75rem). Change GUTTER
  * and both numbers move together.
  *
- * No hamburger: the wordmark drops below `sm` and the four links tighten up,
+ * No hamburger: the wordmark drops below `sm` and the four items tighten up,
  * which fits them on a 375px phone in one row. A menu button would mean more
- * JavaScript than this header earns.
+ * JavaScript than this header earns. The first of the four is the Features
+ * menu, which is why "How it works" is no longer a link of its own — a fifth
+ * item does not fit.
  *
  * The pill's hairline and shadow are not on the pill — HeaderChrome carries
  * them on an overlay so they can fade in on scroll. That overlay is the only
@@ -55,6 +58,7 @@ export function SiteHeader() {
 
         <nav aria-label="Main" className="justify-self-center">
           <ul className="flex items-center gap-x-4 text-[13px] sm:gap-x-7 sm:text-sm">
+            <FeaturesMenu />
             {NAV.map((item) => (
               <li key={item.href}>
                 <Link

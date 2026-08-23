@@ -81,6 +81,43 @@ export const FEATURES: Feature[] = [
   },
 ];
 
+/**
+ * The four the header's Features menu shows, and where each is explained.
+ *
+ * Short titles rather than the sentences above: a dropdown row is read at a
+ * glance and a full claim does not fit one line. Each still traces to an entry
+ * in FEATURES or to STEPS, and nothing here says anything they do not.
+ *
+ * `icon` is a key, not a component, so this file stays plain data — the menu
+ * maps it to a lucide icon.
+ */
+export const NAV_FEATURES = [
+  {
+    icon: "quote",
+    title: "It writes the quote",
+    body: "Speak the job and it comes back as a scope, priced line by line.",
+    href: "/how-it-works",
+  },
+  {
+    icon: "rates",
+    title: "A rate card that fills itself in",
+    body: "Set up asks what you charge for the jobs your trade does most.",
+    href: "/trades",
+  },
+  {
+    icon: "clients",
+    title: "The client list builds itself",
+    body: "Every customer keeps a thread: quoted, accepted, still outstanding.",
+    href: "/#clients",
+  },
+  {
+    icon: "share",
+    title: "Send a link, get an answer",
+    body: "Your customer opens it on any phone and accepts or declines.",
+    href: "/#share",
+  },
+] as const;
+
 /** The three-step spine of the product, used on the home page and expanded on
  *  /how-it-works. */
 export type Step = {

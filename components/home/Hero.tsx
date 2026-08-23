@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { AppleMark } from "@/components/ui/AppleMark";
+import { CheckMark } from "@/components/ui/CheckMark";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/layout/Container";
 import { HeroReveal } from "@/components/home/HeroReveal";
@@ -145,29 +146,5 @@ export function Hero() {
         </Container>
       </div>
     </HeroReveal>
-  );
-}
-
-/** A filled tick. The disc takes its colour from the list around it via
- *  `fill-current`, so the mark and its label can never drift apart. Solid
- *  rather than outlined so it still reads at 16px, where a stroked circle
- *  closes up. */
-function CheckMark() {
-  return (
-    <svg
-      viewBox="0 0 20 20"
-      aria-hidden="true"
-      className="h-4 w-4 shrink-0"
-    >
-      <circle cx="10" cy="10" r="10" className="fill-current" />
-      <path
-        d="m5.9 10.3 2.6 2.7 5.6-5.9"
-        fill="none"
-        stroke="#fff"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
   );
 }

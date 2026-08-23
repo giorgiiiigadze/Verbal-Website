@@ -38,8 +38,11 @@ export function PageHeader({
       <Container
         className={cn("pb-16 pt-28 sm:pb-20 sm:pt-32", centred && "text-center")}
       >
+        {/* The home page's eyebrow, exactly: 16px, capitalised, RoyalBlue200.
+            It used to be small uppercase in the dark accent, which was a
+            second eyebrow style on a site that only needs one. */}
         {eyebrow ? (
-          <p className="mb-3 text-xs font-semibold uppercase tracking-[0.14em] text-accent-text">
+          <p className="mb-3 text-[16px] font-semibold capitalize text-royal-200">
             {eyebrow}
           </p>
         ) : null}

@@ -25,8 +25,10 @@ export const SUPPORT_EMAIL = "gio.giorgigiorgadze20@gmail.com";
  */
 export const APP_STORE_URL: string | null = null;
 
+/** The header's plain links. "Features" is not among them: it is a menu, not
+ *  a page, and SiteHeader renders it ahead of these. "How it works" moved into
+ *  that menu's footer link — five items do not fit the pill on a phone. */
 export const NAV = [
-  { href: "/how-it-works", label: "How it works" },
   { href: "/pricing", label: "Pricing" },
   { href: "/trades", label: "Trades" },
   { href: "/faq", label: "FAQ" },
