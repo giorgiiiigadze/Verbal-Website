@@ -78,7 +78,6 @@ export function SiteHeader() {
           <Button
             href={APP_STORE_URL ?? "/how-it-works"}
             size="xs"
-            shape="rect"
           >
             <AppleMark className="h-4 w-4" />
             Download on iPhone

@@ -52,7 +52,6 @@ export function FinalCta() {
             href={APP_STORE_URL ?? "/how-it-works"}
             variant="ghostOnRoyal"
             size="md"
-            shape="rect"
           >
             <AppleMark className="h-4 w-4" />
             Coming soon to iPhone

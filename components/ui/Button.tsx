@@ -21,37 +21,30 @@ const sizes = {
   lg: "px-6 py-3 text-base sm:px-8 sm:py-4 sm:text-lg",
 } as const;
 
-/** Pills are the site's default shape, matching the header. `rect` is the
- *  softened rectangle the hero and header CTAs use — a little rounder than the
- *  app's 12px chip radius, which read as sharp at this size. A prop rather
- *  than a className override because `cn` is a plain join and two
- *  border-radius utilities would race. */
-const shapes = {
-  pill: "rounded-full",
-  rect: "rounded-2xl",
-} as const;
-
 export function Button({
   href,
   variant = "primary",
   size = "md",
-  shape = "pill",
   className,
   children,
 }: {
   href: string;
   variant?: keyof typeof styles;
   size?: keyof typeof sizes;
-  shape?: keyof typeof shapes;
   className?: string;
   children: React.ReactNode;
 }) {
   const external = href.startsWith("http") || href.startsWith("mailto:");
   const classes = cn(
     "inline-flex items-center justify-center gap-2",
-    "font-semibold transition-colors",
+    // Every button on the site is a pill. It was a prop for a while, so the
+    // hero and header CTAs could be softened rectangles instead, but nothing
+    // else ever used the other shape and the two readings sat badly together.
+    // Hardcoded rather than passed in because `cn` is a plain join with no
+    // tailwind-merge, so a second border-radius utility would only race this
+    // one and let stylesheet order decide.
+    "rounded-full font-semibold transition-colors",
     "focus-visible:outline-2 focus-visible:outline-offset-2",
-    shapes[shape],
     sizes[size],
     styles[variant],
     className,

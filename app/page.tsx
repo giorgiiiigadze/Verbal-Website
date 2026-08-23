@@ -1,7 +1,6 @@
 import { Hero } from "@/components/home/Hero";
 import { SocialProof } from "@/components/home/SocialProof";
 import { Steps } from "@/components/home/Steps";
-import { FeatureGrid } from "@/components/home/FeatureGrid";
 import { TradeCards } from "@/components/home/TradeCards";
 import { ShareBand } from "@/components/home/ShareBand";
 import { ClientsBand } from "@/components/home/ClientsBand";
@@ -54,7 +53,6 @@ export default function HomePage() {
       <TradeCards />
       <ShareBand />
       <ClientsBand />
-      <FeatureGrid />
       <PrivacyBand />
       <FaqPreview />
       <FinalCta />

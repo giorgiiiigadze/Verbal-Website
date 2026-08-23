@@ -74,7 +74,6 @@ export function Hero() {
               <Button
                 href={APP_STORE_URL ?? "/how-it-works"}
                 size="md"
-                shape="rect"
               >
                 <AppleMark className="h-4 w-4" />
                 Start recording on your own
@@ -83,7 +82,6 @@ export function Hero() {
                 href="/pricing"
                 variant="secondary"
                 size="md"
-                shape="rect"
               >
                 Pricing
               </Button>

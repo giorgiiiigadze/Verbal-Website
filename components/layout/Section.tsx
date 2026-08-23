@@ -43,10 +43,20 @@ const eyebrowTones = {
   brand: "text-royal-200",
 } as const;
 
+/** The title's face. Roboto Slab everywhere by default, since a bare h2 picks
+ *  it up from the base rule in globals.css. `sans` is for the sections that
+ *  want the plainer voice — a class rather than a wrapper because the base
+ *  rule targets the h2 itself and would win over anything inherited. */
+const titleFonts = {
+  slab: "",
+  sans: "font-sans",
+} as const;
+
 export function SectionHeading({
   eyebrow,
   eyebrowTone = "muted",
   title,
+  titleFont = "slab",
   lead,
   align = "left",
   invert = false,
@@ -54,6 +64,7 @@ export function SectionHeading({
   eyebrow?: string;
   eyebrowTone?: keyof typeof eyebrowTones;
   title: string;
+  titleFont?: keyof typeof titleFonts;
   lead?: string;
   align?: "left" | "center";
   invert?: boolean;
@@ -75,7 +86,9 @@ export function SectionHeading({
           {eyebrow}
         </p>
       ) : null}
-      <h2 className="text-3xl leading-tight sm:text-4xl">{title}</h2>
+      <h2 className={cn("text-3xl leading-tight sm:text-4xl", titleFonts[titleFont])}>
+        {title}
+      </h2>
       {lead ? (
         <p
           className={cn(

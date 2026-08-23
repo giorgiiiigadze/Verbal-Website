@@ -7,20 +7,22 @@ import { Reveal } from "@/components/ui/Reveal";
 export function FaqPreview() {
   return (
     <Reveal>
-      <Section tone="surface">
+      <Section tone="bg">
         <div data-reveal>
           <SectionHeading
             eyebrow="Questions"
             title="The ones people ask first"
-            align="center"
+            titleFont="sans"
           />
         </div>
 
-        <div className="mx-auto mt-12 max-w-3xl">
+        {/* Left, not centred: the heading above it starts at the container's
+            edge, and an `mx-auto` list sat a couple of rem inside that line. */}
+        <div className="mt-12 max-w-5xl">
           <div data-reveal>
             <Accordion items={FEATURED_FAQ} />
           </div>
-          <div data-reveal className="mt-8 text-center">
+          <div data-reveal className="mt-8">
             <Button href="/faq" variant="secondary">
               All questions
             </Button>
