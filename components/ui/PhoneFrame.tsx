@@ -15,11 +15,20 @@ import { cn } from "@/lib/cn";
  * matching `sizes` — without one Next assumes the full viewport and ships a
  * 1920px-wide screenshot into a box a quarter that size.
  *
- * `eager` is for a frame above the fold. It sets `loading` and `fetchPriority`
- * rather than `preload`, on the docs' own advice: preload inserts a <link> in
- * the head, and it is the wrong tool when several images could be the LCP
- * depending on the viewport — the hero alone has four. (`priority`, which used
- * to cover all of this, is deprecated as of Next 16.)
+ * `eager` is for a frame above the fold, and it governs the screenshot only.
+ * It sets `loading` and `fetchPriority` rather than `preload`, on the docs' own
+ * advice: preload inserts a <link> in the head, and it is the wrong tool when
+ * several images could be the LCP depending on the viewport — the hero alone
+ * has four. (`priority`, which used to cover all of this, is deprecated as of
+ * Next 16.)
+ *
+ * The frame art is always eager, whatever the caller asks for. Every frame on
+ * a page requests the identical URL, so after the first one it is a cache hit
+ * and eagerness costs nothing. It also settles a false warning: Next tracks
+ * images for its LCP check in a map keyed by that URL
+ * (shared/lib/get-img-props.js), so a later lazy frame overwrote the hero's
+ * eager entry and the console reported the hero's own frame as an unmarked
+ * LCP image.
  */
 export function PhoneFrame({
   src,
@@ -55,7 +64,7 @@ export function PhoneFrame({
         alt=""
         width={489}
         height={1000}
-        loading={loading}
+        loading="eager"
         fetchPriority={fetchPriority}
         sizes={sizes}
         className="relative h-auto w-full"

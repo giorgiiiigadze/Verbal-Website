@@ -11,6 +11,10 @@ import gsap from "gsap";
  * it floats over. Once the page moves it needs an edge to sit against the
  * content sliding underneath, and that edge arrives over ~0.4s.
  *
+ * Only from `lg`. Below that the header is a square bar with a hairline it
+ * keeps at every scroll position, and a rounded ring drawn over that would
+ * trace a pill that is no longer there.
+ *
  * Why a separate element: `ring` and `shadow` are both box-shadow, and a
  * box-shadow list cannot be tweened cleanly between "none" and two layers.
  * Fading one absolutely positioned overlay is one compositor-only property and
@@ -59,7 +63,7 @@ export function HeaderChrome() {
     <div
       ref={ref}
       aria-hidden="true"
-      className="pointer-events-none absolute inset-0 rounded-full opacity-0 shadow-[0_1px_2px_rgba(0,0,0,0.04),0_10px_30px_-12px_rgba(0,0,0,0.18)] ring-1 ring-line"
+      className="pointer-events-none absolute inset-0 hidden rounded-full opacity-0 shadow-[0_1px_2px_rgba(0,0,0,0.04),0_10px_30px_-12px_rgba(0,0,0,0.18)] ring-1 ring-line lg:block"
     />
   );
 }

@@ -1,4 +1,5 @@
 import { OTHER_TRADE, TRADES } from "@/content/trades";
+import { TradeExplorer } from "@/components/trades/TradeExplorer";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { Section } from "@/components/layout/Section";
 import { AppleMark } from "@/components/ui/AppleMark";
@@ -35,57 +36,33 @@ export default function TradesPage() {
       <PageHeader
         tone="plain"
         align="center"
+        divider={false}
+        tight
         eyebrow="Your trade"
         title="It knows what your trade sells before you tell it"
         lead="Setting up asks what you charge for the jobs your trade does most, and seeds your rate card from the answers. After that, speaking one of them prices it."
       />
 
-      {/* Nine cards, so the stagger is tightened — at the house 0.1 the last
-          one lands nearly a second after the first. */}
-      <Reveal stagger={0.05}>
-        <Section tone="bg">
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {TRADES.map((trade) => (
-              // Not <Card>: it hardcodes `bg-card` and a border, and `cn` is a
-              // plain join with no tailwind-merge, so a background passed
-              // alongside it would leave two competing utilities and let
-              // stylesheet order decide. The radius is Card's, kept by hand.
-              <div
-                key={trade.name}
-                data-reveal
-                className="flex flex-col rounded-[var(--radius-card)] bg-[#FAFAFA] p-6"
-              >
-                <h2 className="font-sans text-xl">{trade.name}</h2>
-                <p className="mt-2 text-sm leading-relaxed text-muted">
-                  {trade.blurb}
-                </p>
-
-                {/* Ruled rows rather than a bordered panel, the shape the FAQ
-                    and the billing notes take. The unit stays in its own
-                    column: this is a rate card, and the point of it is that
-                    each line is priced by something. */}
-                <ul className="mt-5 divide-y divide-line border-t border-line text-sm">
-                  {trade.jobs.map((job) => (
-                    <li
-                      key={job.name}
-                      className="flex justify-between gap-4 py-3"
-                    >
-                      <span>{job.name}</span>
-                      <span className="shrink-0 text-muted">
-                        per {job.unit}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
+      {/* The chips sit close under the banner rather than a section's width
+          below it: without the divider the two are one block, and the old gap
+          left the row floating between them. `pt-*` beats the `py-*` it is
+          overriding here because Tailwind emits padding-top after
+          padding-block, so the later rule wins — `cn` is a plain join and
+          settles nothing itself. */}
+      <Reveal>
+        <Section tone="bg" className="pt-0 sm:pt-0">
+          {/* One panel and a filter row, in place of nine cards. The grid ran
+              three screens and repeated a grey unit label forty-five times; it
+              sold a price list, when the thing being sold is what happens
+              between a sentence and a set of priced lines. */}
+          <div data-reveal>
+            <TradeExplorer />
           </div>
 
-          <p data-reveal className="mt-10 max-w-2xl text-sm text-muted">
-            These are the jobs the app offers to price during setup, named the
-            way a British trade names them. You can add, rename or re-price
-            anything on your rate card afterwards, and a job you have never
-            priced comes back flagged rather than guessed.
+          <p data-reveal className="mt-8 text-center text-sm text-muted">
+            {TRADES.length} trades ·{" "}
+            {TRADES.reduce((n, trade) => n + trade.jobs.length, 0)} job types ·
+            your own rates
           </p>
         </Section>
       </Reveal>

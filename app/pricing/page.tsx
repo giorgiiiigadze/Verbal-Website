@@ -1,11 +1,8 @@
 import { BILLING_NOTES, PRICING } from "@/content/pricing";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { Section, SectionHeading } from "@/components/layout/Section";
-import { AppleMark } from "@/components/ui/AppleMark";
-import { Button } from "@/components/ui/Button";
 import { CheckMark } from "@/components/ui/CheckMark";
 import { Reveal } from "@/components/ui/Reveal";
-import { APP_STORE_URL } from "@/content/site";
 import { pageMetadata } from "@/lib/metadata";
 
 export const metadata = pageMetadata({
@@ -31,7 +28,10 @@ export const metadata = pageMetadata({
  */
 const TONES = {
   light: {
-    card: "bg-[#FAFAFA]",
+    // The soft grey alone is barely a shade off the white band behind it, and
+    // the card read as nothing at all next to the charcoal one. The hairline
+    // is what gives it an edge to be a card at.
+    card: "border border-line bg-[#FAFAFA]",
     price: "text-text",
     cadence: "text-muted",
     summary: "text-muted",
@@ -61,7 +61,7 @@ export default function PricingPage() {
         align="center"
         size="lg"
         title="Two quotes a day, free. Forever."
-        lead="Not a trial that runs out. The limit is on making new quotes. Everything you have already made stays readable, editable and sendable whether you subscribe or not."
+        lead="Not a trial. The limit is on making new quotes: everything you have already made stays yours to read, edit and send."
       />
 
       <Reveal stagger={0.08}>
@@ -73,7 +73,7 @@ export default function PricingPage() {
               <div
                 key={tier.name}
                 data-reveal
-                className={`flex flex-col rounded-[var(--radius-card)] p-8 ${tier.tone.card}`}
+                className={`flex flex-col rounded-[var(--radius-card)] p-6 sm:p-8 ${tier.tone.card}`}
               >
                 <div className="flex items-center justify-between gap-3">
                   <h2 className="font-sans text-xl">{tier.name}</h2>
@@ -84,7 +84,7 @@ export default function PricingPage() {
                   ) : null}
                 </div>
 
-                <p className={`mt-6 font-slab text-6xl ${tier.tone.price}`}>
+                <p className={`mt-6 font-slab text-5xl sm:text-6xl ${tier.tone.price}`}>
                   {tier.price}
                   <span className={`text-lg ${tier.tone.cadence}`}>
                     {tier.cadence}
@@ -115,16 +115,6 @@ export default function PricingPage() {
                 </p>
               </div>
             ))}
-          </div>
-
-          {/* The hero's CTA, repeated. Points at the store the moment there is
-              one; until then it goes where the recording is explained, so it is
-              never a dead end. */}
-          <div data-reveal className="mt-12">
-            <Button href={APP_STORE_URL ?? "/how-it-works"} size="md">
-              <AppleMark className="h-4 w-4" />
-              Coming soon to iPhone
-            </Button>
           </div>
         </Section>
       </Reveal>

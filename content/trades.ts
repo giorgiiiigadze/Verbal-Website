@@ -9,16 +9,28 @@
  */
 
 export type Trade = {
+  /** Stable id for the /trades tablist. Never rendered. */
+  slug: string;
   name: string;
   /** One line on what the app does for this trade specifically. */
   blurb: string;
+  /**
+   * A job as this trade would actually say it out loud, on site: quantities,
+   * rooms, no punctuation fussiness. /trades sets this beside the priced lines
+   * it turns into, which is the only demonstration the page can make without a
+   * video. Every job named in a sentence appears in `jobs` below it.
+   */
+  spoken: string;
   /** Example priced jobs, verbatim from TradePresets. */
   jobs: { name: string; unit: string }[];
 };
 
 export const TRADES: Trade[] = [
   {
+    slug: "electrician",
     name: "Electrician",
+    spoken:
+      "Two double sockets in the kitchen, six downlights in the lounge, and swap the consumer unit.",
     blurb: "Boards, sockets, downlights and EV chargers, priced per point.",
     jobs: [
       { name: "Add a double socket", unit: "each" },
@@ -29,7 +41,10 @@ export const TRADES: Trade[] = [
     ],
   },
   {
+    slug: "plumber",
     name: "Plumber",
+    spoken:
+      "New toilet and basin in the downstairs loo, swap the rad in the hall, and the shower wants doing.",
     blurb: "Bathrooms, rads and leaks: the jobs that get quoted on the spot.",
     jobs: [
       { name: "Replace a toilet", unit: "each" },
@@ -40,7 +55,10 @@ export const TRADES: Trade[] = [
     ],
   },
   {
+    slug: "carpenter",
     name: "Carpenter",
+    spoken:
+      "Hang four doors upstairs, skirting right through the landing, and wood floor in the front room.",
     blurb: "Priced by the door, the metre of skirting, or the whole fit-out.",
     jobs: [
       { name: "Hang a door", unit: "each" },
@@ -51,7 +69,10 @@ export const TRADES: Trade[] = [
     ],
   },
   {
+    slug: "tiler",
     name: "Tiler",
+    spoken:
+      "Tile the bathroom walls and the floor, rip the old ones off first, and trim round the edges.",
     blurb: "Square-metre work, with the prep and the trim counted properly.",
     jobs: [
       { name: "Wall tiling", unit: "m²" },
@@ -62,7 +83,10 @@ export const TRADES: Trade[] = [
     ],
   },
   {
+    slug: "painter",
     name: "Painter",
+    spoken:
+      "Emulsion the two bedrooms, gloss the doors, paper on the chimney breast, bit of filling first.",
     blurb: "By the room, by the metre, or by the day, whichever you quote.",
     jobs: [
       { name: "Emulsion a room", unit: "job" },
@@ -73,7 +97,10 @@ export const TRADES: Trade[] = [
     ],
   },
   {
+    slug: "plasterer",
     name: "Plasterer",
+    spoken:
+      "Skim the ceiling and both walls in the back room, board the alcove, coving all the way round.",
     blurb: "Skimming, boarding and rendering, measured the way you measure it.",
     jobs: [
       { name: "Skim a wall", unit: "m²" },
@@ -84,7 +111,10 @@ export const TRADES: Trade[] = [
     ],
   },
   {
+    slug: "builder",
     name: "Builder",
+    spoken:
+      "Knock the kitchen wall through with a lintel, blockwork out the back, and strip the old lot out.",
     blurb: "Big jobs with a lot of lines, spoken faster than they are typed.",
     jobs: [
       { name: "Blockwork", unit: "m²" },
@@ -95,7 +125,10 @@ export const TRADES: Trade[] = [
     ],
   },
   {
+    slug: "roofer",
     name: "Roofer",
+    spoken:
+      "Re-roof the back, twenty odd tiles gone at the front, new guttering, and the chimney wants repointing.",
     blurb: "Quote it from the ground, before you have got the ladders down.",
     jobs: [
       { name: "Re-roof", unit: "m²" },
@@ -106,7 +139,10 @@ export const TRADES: Trade[] = [
     ],
   },
   {
+    slug: "landscaper",
     name: "Landscaper",
+    spoken:
+      "Turf the back garden, patio outside the door, decking down the side, and fence the whole lot.",
     blurb: "Turf, paving, decking and fencing, priced off the measure-up.",
     jobs: [
       { name: "Lay turf", unit: "m²" },

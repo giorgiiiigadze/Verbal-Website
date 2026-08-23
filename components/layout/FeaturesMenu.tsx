@@ -24,8 +24,9 @@ import { NAV_FEATURES } from "@/content/features";
  * tree and off the tab order while closed, with no unmount to animate around.
  */
 
-/** Icons live here rather than in content/features.ts, which is plain data. */
-const ICONS = {
+/** Icons live here rather than in content/features.ts, which is plain data.
+ *  Exported because the mobile menu lists the same four rows. */
+export const ICONS = {
   quote: FileText,
   rates: Tag,
   clients: Users,
@@ -36,7 +37,7 @@ const ICONS = {
  * The tiles cycle the four colours the trade chips use, in the same order.
  * Whole class strings because Tailwind reads the source statically.
  */
-const TILE_TONES = [
+export const TILE_TONES = [
   "bg-[#0098F2]",
   "bg-[#FF6363]",
   "bg-[#5D9C06]",
@@ -125,15 +126,9 @@ export function FeaturesMenu() {
         aria-expanded={open}
         aria-controls="features-menu"
         onClick={() => setOpen((v) => !v)}
-        className="flex items-center gap-1 whitespace-nowrap text-muted transition-colors hover:text-text aria-expanded:text-text"
+        className="whitespace-nowrap text-text"
       >
         Features
-        <span
-          aria-hidden="true"
-          className={`text-[10px] leading-none transition-transform ${open ? "rotate-180" : ""}`}
-        >
-          ▾
-        </span>
       </button>
 
       {/* `pt-4` rather than a margin: the padding is part of the item's hover

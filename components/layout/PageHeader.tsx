@@ -23,6 +23,8 @@ export function PageHeader({
   tone = "tint",
   align = "left",
   size = "md",
+  divider = true,
+  tight = false,
 }: {
   eyebrow?: string;
   title: string;
@@ -30,13 +32,23 @@ export function PageHeader({
   tone?: keyof typeof tones;
   align?: "left" | "center";
   size?: keyof typeof titleSizes;
+  /** The hairline under the banner. Off where the block below it opens with a
+   *  bordered panel of its own and the two rules stack up. */
+  divider?: boolean;
+  /** Halves the space under the banner, for a page whose first block is meant
+   *  to read as part of it rather than as the next thing down. */
+  tight?: boolean;
 }) {
   const centred = align === "center";
 
   return (
-    <div className={cn("border-b border-line", tones[tone])}>
+    <div className={cn(divider && "border-b border-line", tones[tone])}>
       <Container
-        className={cn("pb-16 pt-28 sm:pb-20 sm:pt-32", centred && "text-center")}
+        className={cn(
+          "pt-28 sm:pt-32",
+          tight ? "pb-8 sm:pb-10" : "pb-16 sm:pb-20",
+          centred && "text-center",
+        )}
       >
         {/* The home page's eyebrow, exactly: 16px, capitalised, RoyalBlue200.
             It used to be small uppercase in the dark accent, which was a
