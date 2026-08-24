@@ -1,9 +1,8 @@
 import { STEPS } from "@/content/features";
-import { PageHeader } from "@/components/layout/PageHeader";
 import { Section } from "@/components/layout/Section";
 import { AppleMark } from "@/components/ui/AppleMark";
 import { Button } from "@/components/ui/Button";
-import { QuotePreview } from "@/components/ui/QuotePreview";
+import { PhoneFrame } from "@/components/ui/PhoneFrame";
 import { Reveal } from "@/components/ui/Reveal";
 import { APP_STORE_URL } from "@/content/site";
 import { pageMetadata } from "@/lib/metadata";
@@ -19,13 +18,12 @@ export const metadata = pageMetadata({
 export default function HowItWorksPage() {
   return (
     <>
-      <PageHeader
-        tone="plain"
-        align="center"
-        eyebrow="How it works"
-        title="From a spoken sentence to a sent quote"
-        lead="There is no form to fill in. You describe the work the way you would describe it out loud, because that is the only part of quoting that is already fast."
-      />
+      {/* The banner is gone and the page opens straight on step 01, but a page
+          still needs one h1 and the steps below are all h2s. So the title is
+          kept and only hidden: it is what a screen reader announces the page
+          as, and what the outline is built from. It matches the page's
+          metadata title rather than inventing a second name for the page. */}
+      <h1 className="sr-only">How it works</h1>
 
       {STEPS.map((step, index) => {
         // Every band is white now, so the rhythm comes from the columns
@@ -35,7 +33,10 @@ export default function HowItWorksPage() {
 
         return (
           <Reveal key={step.number} stagger={0.12}>
-            <Section tone="bg">
+            {/* The header is fixed and takes no space in the flow, so with the
+                banner gone the first band has to clear it itself — the same
+                pt-28/32 PageHeader used to carry. */}
+            <Section tone="bg" className={index === 0 ? "pt-28 sm:pt-32" : ""}>
               <div className="grid gap-10 lg:grid-cols-[1fr_1.1fr] lg:items-center lg:gap-16">
                 <div data-reveal className={flip ? "lg:order-2" : ""}>
                   <span className="font-slab text-sm tracking-[0.2em] text-royal-200">
@@ -48,9 +49,23 @@ export default function HowItWorksPage() {
                   </p>
                 </div>
 
+                {/* The first two steps happen inside the app, so they are
+                    shown as the app: the empty recording sheet, then the quote
+                    it comes back as. The third is what the customer opens in a
+                    browser, which is not an app screen and is not drawn as one. */}
                 <div data-reveal className={flip ? "lg:order-1" : ""}>
-                  {index === 0 ? <SpokenJob /> : null}
-                  {index === 1 ? <QuotePreview /> : null}
+                  {index === 0 ? (
+                    <StepPhone
+                      src="/phone/screen-record.png"
+                      alt="Verbal's recording sheet on an iPhone, open and empty: an untitled quote, the prompt to tap the mic and describe the job in your own words, a mic button, a timer at 00:00 and a Generate button."
+                    />
+                  ) : null}
+                  {index === 1 ? (
+                    <StepPhone
+                      src="/phone/screen-quote-review.png"
+                      alt="The quote that came back: a bathroom renovation for Marina Kapanadze, with a summary, a five-line scope of work, line items priced from the rate card, three of them marked as needing a price, and a total of $2,755.00 that says it excludes those three."
+                    />
+                  ) : null}
                   {index === 2 ? <SharedLink /> : null}
                 </div>
               </div>
@@ -94,38 +109,22 @@ export default function HowItWorksPage() {
   );
 }
 
-/** What you say, as the app hears it. */
-function SpokenJob() {
+/**
+ * A step's screenshot, framed.
+ *
+ * Sized here rather than by the grid: the picture column is the wider of the
+ * two, and a phone given all of it would stand taller than the paragraph it is
+ * explaining. `sizes` matches the max-widths — without one Next assumes the
+ * full viewport and ships a 1920px-wide screenshot into a 300px box.
+ */
+function StepPhone({ src, alt }: { src: string; alt: string }) {
   return (
-    <div className="rounded-[var(--radius-card)] bg-[#FAFAFA] p-7">
-      <div className="flex items-center gap-3">
-        <span className="flex h-11 w-11 items-center justify-center rounded-full bg-[#0098F2] text-white">
-          <svg
-            viewBox="0 0 24 24"
-            aria-hidden="true"
-            className="h-5 w-5 fill-current"
-          >
-            <path d="M12 14a3 3 0 0 0 3-3V5a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3Zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.93V21h2v-3.07A7 7 0 0 0 19 11h-2Z" />
-          </svg>
-        </span>
-        <div className="flex items-end gap-1" aria-hidden="true">
-          {[10, 22, 16, 30, 24, 14, 26, 18, 8].map((h, i) => (
-            <span
-              key={i}
-              style={{ height: `${h}px` }}
-              className="w-1 rounded-full bg-[#0098F2]/35"
-            />
-          ))}
-        </div>
-      </div>
-      <p className="mt-6 font-slab text-xl leading-relaxed">
-        &ldquo;Replace the consumer unit, add two double sockets in the kitchen,
-        chase in a spur for the oven, and six fire-rated downlights in the
-        hallway.&rdquo;
-      </p>
-      <p className="mt-4 text-sm text-muted">
-        Transcribed on the device. The audio is never uploaded and never saved.
-      </p>
+    <div className="mx-auto w-full max-w-[260px] sm:max-w-[300px]">
+      <PhoneFrame
+        src={src}
+        alt={alt}
+        sizes="(min-width: 640px) 300px, 260px"
+      />
     </div>
   );
 }
