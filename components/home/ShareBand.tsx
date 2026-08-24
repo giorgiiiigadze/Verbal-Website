@@ -1,6 +1,6 @@
 import { Link2, Mail, MessageSquare } from "lucide-react";
 import { Section } from "@/components/layout/Section";
-import { Reveal } from "@/components/ui/Reveal";
+import { ShareReveal } from "@/components/home/ShareReveal";
 
 /**
  * The share claim, said once and large.
@@ -20,22 +20,40 @@ const CHANNELS = [
   { label: "Copy link", Icon: Link2 },
 ];
 
+/**
+ * The headline, split here rather than in the browser.
+ *
+ * ShareReveal lands it a word at a time, and the split has to exist in the
+ * markup for that: rewriting a heading into spans after hydration means the
+ * server's HTML and the client's disagree, and it is the one line on the page
+ * most likely to be read by something that never runs the script.
+ *
+ * The spaces are their own text nodes, between the spans rather than inside
+ * them — a trailing space in an inline-block is collapsed away, and the words
+ * would set solid.
+ */
+const HEADLINE = ["Share", "your", "quotes", "anywhere"];
+
 export function ShareBand() {
   return (
-    <Reveal stagger={0.07}>
+    <ShareReveal>
       <Section id="share" className="scroll-mt-24">
         <div className="grid items-center gap-16 lg:grid-cols-2 lg:gap-12">
           <div className="max-w-3xl">
-            <h2
-              data-reveal
-              className="font-slab text-5xl leading-[1.05] tracking-tight sm:text-7xl"
-            >
-              Share your quotes anywhere
+            <h2 className="font-slab text-5xl leading-[1.05] tracking-tight sm:text-7xl">
+              {HEADLINE.map((word, i) => (
+                <span key={word}>
+                  {i > 0 ? " " : null}
+                  <span data-share-word className="inline-block">
+                    {word}
+                  </span>
+                </span>
+              ))}
             </h2>
 
             <ul className="mt-10 flex flex-wrap gap-3">
               {CHANNELS.map(({ label, Icon }) => (
-                <li key={label} data-reveal>
+                <li key={label} data-share-chip>
                   <span className="inline-flex items-center gap-2 rounded-2xl bg-text px-5 py-3 text-sm font-semibold text-white">
                     <Icon aria-hidden="true" className="h-4 w-4 text-white/70" />
                     {label}
@@ -48,7 +66,7 @@ export function ShareBand() {
           <PdfStack />
         </div>
       </Section>
-    </Reveal>
+    </ShareReveal>
   );
 }
 
@@ -59,6 +77,14 @@ export function ShareBand() {
  * over the other two. `origin-bottom` is what makes the outer pair pivot like
  * paper spread on a table rather than swing around their own centres.
  *
+ * Each page is two elements. The outer one holds where the page sits and the
+ * angle it rests at, both as classes, so the fan is the stylesheet's and
+ * survives with no script. The inner one is the animated element and starts
+ * turned the other way, cancelling its parent — see ShareReveal. Rotating one
+ * element from both sides is what that split avoids: Tailwind's angle and
+ * GSAP's would be two declarations racing, and which won would come down to
+ * whether the utility compiled to `rotate` or to `transform`.
+ *
  * The ruled lines inside are deliberately obvious as a skeleton: this is
  * scaffolding to be replaced by real screenshots, and it should not be mistaken
  * for a finished illustration in the meantime.
@@ -67,22 +93,26 @@ function PdfStack() {
   // The outer pair sits lower as well as rotated, so the centre page reads as
   // the one on top of the pile rather than one of three in a row.
   const pages = [
-    "left-0 top-10 -rotate-6 origin-bottom",
-    "right-0 top-10 rotate-6 origin-bottom",
+    "left-0 top-10 -rotate-6",
+    "right-0 top-10 rotate-6",
     "left-1/2 top-0 z-10 -translate-x-1/2",
   ];
 
   return (
     <div
-      data-reveal
+      data-share-stack
       aria-hidden="true"
       className="relative mx-auto aspect-[4/3] w-full max-w-md select-none"
     >
       {pages.map((placement, i) => (
         <div
           key={i}
-          className={`absolute h-full w-[52%] border border-line bg-card p-4 ${placement}`}
+          className={`absolute h-full w-[52%] origin-bottom ${placement}`}
         >
+          <div
+            data-share-page
+            className="h-full w-full origin-bottom border border-line bg-card p-4"
+          />
         </div>
       ))}
     </div>

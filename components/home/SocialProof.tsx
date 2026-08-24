@@ -85,15 +85,21 @@ export function SocialProof() {
           data-proof-strip
           className="relative mt-10 [mask-image:linear-gradient(to_right,transparent,#000_6%,#000_94%,transparent)]"
         >
-          <div
-            data-proof-marquee
-            className="flex w-max animate-marquee will-change-transform"
-          >
-            <MarqueeRow items={items} />
-            {/* The duplicate is scenery, not content: it must not be read out
-                twice, and it is not in the tab or find-in-page order. */}
-            <div aria-hidden="true" className="flex">
+          {/* The scroll-linked push lives on this wrapper rather than on the
+              track itself: the track's own loop is a CSS animation writing
+              `transform`, and GSAP writing the same property on the same
+              element would stop one of the two dead. */}
+          <div data-proof-drift>
+            <div
+              data-proof-marquee
+              className="flex w-max animate-marquee will-change-transform"
+            >
               <MarqueeRow items={items} />
+              {/* The duplicate is scenery, not content: it must not be read out
+                  twice, and it is not in the tab or find-in-page order. */}
+              <div aria-hidden="true" className="flex">
+                <MarqueeRow items={items} />
+              </div>
             </div>
           </div>
         </div>

@@ -2,6 +2,7 @@ import { STEPS } from "@/content/features";
 import { Section, SectionHeading } from "@/components/layout/Section";
 import { PhoneFrame } from "@/components/ui/PhoneFrame";
 import { StepsReveal } from "@/components/home/StepsReveal";
+import { Parallax } from "@/components/ui/Parallax";
 
 /**
  * How the app works, third on the page: a phone on the left, the three steps
@@ -45,8 +46,8 @@ export function Steps() {
         <div className="grid gap-10 lg:grid-cols-[320px_minmax(0,36rem)] lg:grid-rows-[auto_1fr] lg:justify-center lg:gap-x-24 lg:gap-y-12">
           <div data-steps-reveal className="lg:col-start-2 lg:row-start-1">
             <SectionHeading
-              eyebrow="How sentance becomes a quote"
-              eyebrowTone="brand"
+              eyebrow="How a sentence becomes a quote"
+              eyebrowVariant="pill"
               title="Three steps, one of them optional"
               lead="You talk, you check the numbers, you send it. The checking is the only part that is really up to you."
             />
@@ -54,16 +55,24 @@ export function Steps() {
 
           {/* Spanning both rows is what keeps the frame centred against the
               heading and the steps together, rather than against either one. */}
-          <div
-            data-steps-phone
+          {/* The drift is small and slow on purpose: three steps are read one
+              after another beside a frame that is not moving in layout, and a
+              frame that held perfectly still through all of that would read as
+              pasted on. The grid placement moves to the Parallax, which is now
+              the element the grid sees. */}
+          <Parallax
+            from={26}
+            to={-26}
             className="mx-auto w-full max-w-[260px] sm:max-w-[300px] lg:col-start-1 lg:row-span-2 lg:row-start-1 lg:max-w-none lg:self-center"
           >
-            <PhoneFrame
-              src="/phone/screen-quote.png"
-              alt="A quote in Verbal, priced line by line, with two items marked as needing a price."
-              sizes="(min-width: 1024px) 320px, (min-width: 640px) 300px, 260px"
-            />
-          </div>
+            <div data-steps-phone>
+              <PhoneFrame
+                src="/phone/screen-quote.png"
+                alt="A quote in Verbal, priced line by line, with two items marked as needing a price."
+                sizes="(min-width: 1024px) 320px, (min-width: 640px) 300px, 260px"
+              />
+            </div>
+          </Parallax>
 
           <ol className="space-y-10 lg:col-start-2 lg:row-start-2 lg:self-start">
             {STEPS.map((step) => (

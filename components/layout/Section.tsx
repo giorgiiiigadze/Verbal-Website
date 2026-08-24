@@ -55,6 +55,7 @@ const titleFonts = {
 export function SectionHeading({
   eyebrow,
   eyebrowTone = "muted",
+  eyebrowVariant = "text",
   title,
   titleFont = "slab",
   lead,
@@ -63,6 +64,10 @@ export function SectionHeading({
 }: {
   eyebrow?: string;
   eyebrowTone?: keyof typeof eyebrowTones;
+  /** `pill` is the hero's announcement badge, borrowed for a section that
+   *  should open with something to look at rather than a line of small type.
+   *  `eyebrowTone` does not apply to it — the pill carries its own colour. */
+  eyebrowVariant?: "text" | "pill";
   title: string;
   titleFont?: keyof typeof titleFonts;
   lead?: string;
@@ -77,14 +82,35 @@ export function SectionHeading({
       )}
     >
       {eyebrow ? (
-        <p
-          className={cn(
-            "mb-3 text-[16px] font-semibold capitalize",
-            invert ? "text-royal-100" : eyebrowTones[eyebrowTone],
-          )}
-        >
-          {eyebrow}
-        </p>
+        eyebrowVariant === "pill" ? (
+          // The light blue at a tenth, with the full-strength blue on top —
+          // the same wash MobileMenu fills its sheet with, rather than a new
+          // colour. Tinted rather than solid on purpose: a filled blue pill
+          // this size sits where a heading is about to start and reads as a
+          // button that does not respond. The `p` keeps the block-level
+          // spacing and the centring, so only the span is the badge.
+          <p className={cn("mb-5", align === "center" && "text-center")}>
+            <span
+              className={cn(
+                "inline-flex items-center rounded-full px-3.5 py-1.5 text-sm font-semibold capitalize",
+                invert
+                  ? "bg-white/15 text-white"
+                  : "bg-[#0098F2]/10 text-[#0098F2]",
+              )}
+            >
+              {eyebrow}
+            </span>
+          </p>
+        ) : (
+          <p
+            className={cn(
+              "mb-3 text-[16px] font-semibold capitalize",
+              invert ? "text-royal-100" : eyebrowTones[eyebrowTone],
+            )}
+          >
+            {eyebrow}
+          </p>
+        )
       ) : null}
       <h2 className={cn("text-3xl leading-tight sm:text-4xl", titleFonts[titleFont])}>
         {title}

@@ -1,5 +1,6 @@
 import { Section, SectionHeading } from "@/components/layout/Section";
 import { PhoneFrame } from "@/components/ui/PhoneFrame";
+import { Parallax } from "@/components/ui/Parallax";
 import { Reveal } from "@/components/ui/Reveal";
 
 /**
@@ -46,7 +47,7 @@ export function ClientsBand() {
             <div data-reveal>
               <SectionHeading
                 eyebrow="Your clients"
-                eyebrowTone="brand"
+                eyebrowVariant="pill"
                 title="The client list builds itself"
                 lead="You never add anyone to it. Everyone you have quoted is already there, with everything you quoted them."
               />
@@ -68,16 +69,22 @@ export function ClientsBand() {
               hero shows one client's page, so the two frames are not the same
               picture. Dark, like the hero's second frame — the app follows the
               system appearance and the site shows both. */}
-          <div
-            data-reveal
+          <Parallax
+            from={32}
+            to={-32}
             className="mx-auto w-full max-w-[300px] lg:max-w-none"
           >
-            <PhoneFrame
-              src="/phone/screen-client-list.png"
-              alt="Verbal's client list in dark mode, each client opened out to the quotes made for them, marked accepted, declined and expired."
-              sizes="(min-width: 1024px) 320px, 300px"
-            />
-          </div>
+            {/* The entrance is on the inner element and the drift on the
+                Parallax around it. One element cannot carry both: they would be
+                two tweens writing `y`, and the scrubbed one would win. */}
+            <div data-reveal>
+              <PhoneFrame
+                src="/phone/screen-client-list.png"
+                alt="Verbal's client list in dark mode, each client opened out to the quotes made for them, marked accepted, declined and expired."
+                sizes="(min-width: 1024px) 320px, 300px"
+              />
+            </div>
+          </Parallax>
         </div>
       </Section>
     </Reveal>

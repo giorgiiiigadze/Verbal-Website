@@ -27,12 +27,16 @@ export function SocialProofReveal({ children }: { children: React.ReactNode }) {
     if (!band) return;
 
     const ctx = gsap.context((self) => {
+      const reduced = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      ).matches;
+
       const parts = self.selector!("[data-proof-reveal]");
       const [marquee] = self.selector!("[data-proof-marquee]") as HTMLElement[];
 
       // The strip is a CSS animation and stops itself under the OS setting (see
       // globals.css); only the scroll-driven part is skipped here.
-      if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      if (!reduced) {
         gsap.fromTo(
           parts,
           { opacity: 0, y: 24 },
@@ -49,6 +53,32 @@ export function SocialProofReveal({ children }: { children: React.ReactNode }) {
               // bottom edge where it would be missed.
               start: "top 80%",
               once: true,
+            },
+          },
+        );
+      }
+
+      // The strip is pushed along by the scroll on top of its own loop, so the
+      // row answers to the finger as well as to the clock: scrolling down runs
+      // it a little further, and the whole thing stops being wallpaper on a
+      // timer. Small, and hidden at both ends by the mask, so nothing is seen
+      // arriving or leaving early.
+      const [drift] = self.selector!("[data-proof-drift]") as HTMLElement[];
+
+      if (drift && !reduced) {
+        gsap.fromTo(
+          drift,
+          { x: 70 },
+          {
+            x: -70,
+            // Linear: scroll position is the playhead, `scrub` smooths it.
+            ease: "none",
+            scrollTrigger: {
+              trigger: band,
+              start: "top bottom",
+              end: "bottom top",
+              scrub: 0.5,
+              invalidateOnRefresh: true,
             },
           },
         );

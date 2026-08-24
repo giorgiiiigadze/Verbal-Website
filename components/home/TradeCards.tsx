@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { TRADES } from "@/content/trades";
 import { Section, SectionHeading } from "@/components/layout/Section";
-import { Reveal } from "@/components/ui/Reveal";
+import { TradeCardsReveal } from "@/components/home/TradeCardsReveal";
 
 /**
  * Who the app is for, as six trades rather than a claim.
@@ -44,13 +44,12 @@ export function TradeCards() {
   const rest = TRADES.length - SHOWN;
 
   return (
-    // Six cards, so the stagger is tightened the way FeatureGrid's is.
-    <Reveal stagger={0.06}>
+    <TradeCardsReveal>
       <Section>
         {/* The heading is centred and set black. The colour rides on the wrapper
             rather than the h2 because SectionHeading takes no class for it — the
             eyebrow and lead set their own colours, so only the title inherits. */}
-        <div data-reveal className="text-black">
+        <div data-trade-head className="text-black">
           <SectionHeading
             align="center"
             eyebrow="Who it is for"
@@ -68,7 +67,7 @@ export function TradeCards() {
             // of the shape is Card's, kept in step by hand.
             <div
               key={trade.name}
-              data-reveal
+              data-trade-card
               className="rounded-[var(--radius-card)] bg-[#FAFAFA] p-6"
             >
               <h3 className="font-sans text-xl">{trade.name}</h3>
@@ -80,6 +79,7 @@ export function TradeCards() {
                 {trade.jobs.slice(0, CHIPS_PER_CARD).map((job, jobIndex) => (
                   <li
                     key={job.name}
+                    data-trade-chip
                     className={`rounded-[var(--radius-chip)] px-2.5 py-1 text-xs font-medium text-white ${
                       CHIP_TONES[
                         (cardIndex * CHIPS_PER_CARD + jobIndex) %
@@ -96,7 +96,7 @@ export function TradeCards() {
         </div>
 
         {rest > 0 ? (
-          <p data-reveal className="mt-10 text-center">
+          <p data-trade-foot className="mt-10 text-center">
             <Link
               href="/trades"
               className="font-medium text-[#0098F2] underline decoration-transparent underline-offset-4 transition-colors hover:decoration-current"
@@ -106,6 +106,6 @@ export function TradeCards() {
           </p>
         ) : null}
       </Section>
-    </Reveal>
+    </TradeCardsReveal>
   );
 }

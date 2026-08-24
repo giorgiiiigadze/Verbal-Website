@@ -2,7 +2,7 @@ import { APP_STORE_URL, SITE_NAME } from "@/content/site";
 import { AppleMark } from "@/components/ui/AppleMark";
 import { Button } from "@/components/ui/Button";
 import { Logo } from "@/components/ui/Logo";
-import { Reveal } from "@/components/ui/Reveal";
+import { FinalCtaReveal } from "@/components/home/FinalCtaReveal";
 
 /**
  * The last block on the page: the mark at the size of the page, and one button
@@ -16,7 +16,7 @@ import { Reveal } from "@/components/ui/Reveal";
  */
 export function FinalCta() {
   return (
-    <Reveal>
+    <FinalCtaReveal>
       <section className="overflow-clip bg-text py-14 sm:py-20">
         {/*
           Sized in `vw` rather than at breakpoints so it tracks the window
@@ -30,7 +30,7 @@ export function FinalCta() {
           pair announce as one word, and everything inside it presentational.
         */}
         <div
-          data-reveal
+          data-cta-mark
           role="img"
           aria-label={SITE_NAME}
           className="flex select-none items-end justify-center gap-[0.02em] px-6 text-[15vw] text-white sm:px-10"
@@ -47,7 +47,7 @@ export function FinalCta() {
             fallback — it points at the store the moment there is one, and until
             then at the page that explains the recording, so it is never a dead
             link. */}
-        <div data-reveal className="mt-12 flex justify-center px-6 sm:px-10">
+        <div data-cta-action className="mt-12 flex justify-center px-6 sm:px-10">
           <Button
             href={APP_STORE_URL ?? "/how-it-works"}
             variant="ghostOnRoyal"
@@ -58,6 +58,6 @@ export function FinalCta() {
           </Button>
         </div>
       </section>
-    </Reveal>
+    </FinalCtaReveal>
   );
 }

@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/Button";
+import { Parallax } from "@/components/ui/Parallax";
 import { Section } from "@/components/layout/Section";
 import { Reveal } from "@/components/ui/Reveal";
 
@@ -13,9 +14,13 @@ export function PrivacyBand() {
       <Section tone="royal">
         <div className="grid gap-10 lg:grid-cols-[1.2fr_1fr] lg:items-center lg:gap-16">
           <div>
+            {/* The house eyebrow, exactly as SectionHeading sets it: 16px and
+                capitalised, in RoyalBlue100 because the band is dark. This was
+                the last small-uppercase eyebrow on the site — a second eyebrow
+                style the site does not need. */}
             <p
               data-reveal
-              className="mb-3 text-xs font-semibold uppercase tracking-[0.14em] text-royal-100"
+              className="mb-3 text-[16px] font-semibold capitalize text-royal-100"
             >
               Privacy
             </p>
@@ -38,25 +43,31 @@ export function PrivacyBand() {
             </div>
           </div>
 
-          <ul className="space-y-4 text-white/80">
-            {[
-              "No analytics SDK, in the app or on this website.",
-              "No advertising identifier, and no cross-app tracking.",
-              "Your customers' details are never sent to the AI provider.",
-              "Delete your account in the app and it is gone immediately.",
-            ].map((line) => (
-              <li
-                key={line}
-                data-reveal
-                className="flex gap-3 border-b border-white/15 pb-4 last:border-0"
-              >
-                <span aria-hidden="true" className="text-royal-100">
-                  —
-                </span>
-                {line}
-              </li>
-            ))}
-          </ul>
+          {/* The list drifts a little against the claim on the left, which is
+              still. The band is one flat colour with nothing in it to move, and
+              the two columns passing at different speeds is the only depth it
+              gets. Small numbers: the lines are being read on the way past. */}
+          <Parallax from={22} to={-22}>
+            <ul className="space-y-4 text-white/80">
+              {[
+                "No analytics SDK, in the app or on this website.",
+                "No advertising identifier, and no cross-app tracking.",
+                "Your customers' details are never sent to the AI provider.",
+                "Delete your account in the app and it is gone immediately.",
+              ].map((line) => (
+                <li
+                  key={line}
+                  data-reveal
+                  className="flex gap-3 border-b border-white/15 pb-4 last:border-0"
+                >
+                  <span aria-hidden="true" className="text-royal-100">
+                    —
+                  </span>
+                  {line}
+                </li>
+              ))}
+            </ul>
+          </Parallax>
         </div>
       </Section>
     </Reveal>
