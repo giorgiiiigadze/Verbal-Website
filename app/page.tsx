@@ -1,5 +1,6 @@
 import { Hero } from "@/components/home/Hero";
-import { SocialProof } from "@/components/home/SocialProof";
+import { SpeakSend } from "@/components/home/SpeakSend";
+import { PhoneTravel } from "@/components/home/PhoneTravel";
 import { Steps } from "@/components/home/Steps";
 import { TradeCards } from "@/components/home/TradeCards";
 import { BlueBand } from "@/components/home/BlueBand";
@@ -11,10 +12,9 @@ import { FinalCta } from "@/components/home/FinalCta";
 import { DESCRIPTION, SITE_NAME, SITE_URL } from "@/content/site";
 
 /**
- * The band under the hero is the social-proof slot. It carries no user count
- * and no customer logos, because the app has no users yet and every figure in
- * one would have to be made up — it shows the priced jobs instead. The one
- * quote in it is a placeholder; see content/testimonials.ts before launch.
+ * Hero and the "Effortless quotes" block are wrapped together in PhoneTravel:
+ * it lifts the hero's quote phone down into the block on scroll, which is why
+ * the two sit inside one wrapper rather than as loose siblings.
  */
 
 export default function HomePage() {
@@ -48,8 +48,10 @@ export default function HomePage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <Hero />
-      <SocialProof />
+      <PhoneTravel>
+        <Hero />
+        <SpeakSend />
+      </PhoneTravel>
       <Steps />
       <TradeCards />
       <BlueBand />

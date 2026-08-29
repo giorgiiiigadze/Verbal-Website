@@ -127,8 +127,15 @@ export function Hero() {
               above a phone. Narrower viewports fall under it and scale with
               `w-1/2`. Growing the frames means growing all three numbers. */}
           <div className="flex w-full max-w-xl items-start justify-center gap-4 lg:max-w-none">
+            {/* The left frame is the travel anchor, not part of the hero's own
+                phone entrance: PhoneTravel lifts a fixed copy of it down into
+                the section below on scroll, so this one has to hold a still
+                resting position for that copy to start from. It carries no
+                `data-hero-phone`, and on desktop PhoneTravel hides it and lets
+                the travelling copy stand in; on mobile, reduced-motion, or with
+                no script it simply shows as itself. */}
             <div className="w-1/2 max-w-[280px]">
-              <div data-hero-phone>
+              <div data-travel-anchor="hero">
                 <PhoneFrame
                   src="/phone/screen-quote.png"
                   alt="A quote open in Verbal, two of its line items still marked as needing a price."

@@ -48,8 +48,8 @@ Slab is self-hosted by `next/font` for exactly this reason — the page makes no
 request to Google. Keep it that way, or amend the policy first.
 
 **There are no invented numbers.** No user counts, no star ratings, no
-testimonials — the app has not shipped, so there are none to report. `app/page.tsx`
-has a note marking where real ones go after launch.
+testimonials — the app has not shipped, so there are none to report. Keep it that
+way until there are real ones to show.
 
 **The App Store link does not exist yet.** `APP_STORE_URL` in `content/site.ts`
 is `null`, and `<AppStoreBadge />` renders "Coming soon to iPhone" while it is.

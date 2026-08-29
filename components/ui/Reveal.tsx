@@ -9,9 +9,9 @@ gsap.registerPlugin(ScrollTrigger);
 /**
  * The house scroll entrance, for sections that need nothing bespoke.
  *
- * Same arrangement as the hero and social-proof reveals — a wrapper, so
- * everything inside stays server rendered and only the timeline ships. It
- * animates every `data-reveal` descendant it finds, in DOM order.
+ * Same arrangement as the hero reveal — a wrapper, so everything inside stays
+ * server rendered and only the timeline ships. It animates every `data-reveal`
+ * descendant it finds, in DOM order.
  *
  * The from-state is written here at hydration rather than in globals.css. That
  * is safe because everything using this is below the fold, and it means a

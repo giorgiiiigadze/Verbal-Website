@@ -14,10 +14,9 @@ gsap.registerPlugin(ScrollTrigger);
  * finds by attribute: `data-steps-phone` for the frame and `data-steps-reveal`
  * for the copy beside it, in DOM order.
  *
- * The from-states are set here rather than in globals.css, as with the
- * social-proof band: this section is below the fold, so `fromTo` writing them
- * at hydration is early enough, and nothing is left invisible if the script
- * never runs. `fromTo` renders its from-state immediately even though the
+ * The from-states are set here rather than in globals.css: this section is
+ * below the fold, so `fromTo` writing them at hydration is early enough, and
+ * nothing is left invisible if the script never runs. `fromTo` renders its from-state immediately even though the
  * timeline waits on a ScrollTrigger — that is what stops the section showing
  * and then blinking out when it is scrolled to.
  *

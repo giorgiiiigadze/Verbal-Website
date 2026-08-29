@@ -26,17 +26,6 @@
      what makes a web page look like it belongs to this app. */
   --radius-card: 18px;
   --radius-chip: 12px;
-
-  /* The social-proof strip. It slides exactly half the track's width, which is
-     where the second, identical copy of the row starts — so the loop has no
-     seam. Slow enough to be read on the way past rather than watched. */
-  --animate-marquee: marquee 90s linear infinite;
-
-  @keyframes marquee {
-    to {
-      transform: translateX(-50%);
-    }
-  }
 }
 
 /* ---------------------------------------------------------------------------
@@ -182,17 +171,5 @@ h1, h2, h3, .font-slab {
   [data-hero-reveal],
   [data-hero-phone] {
     opacity: 1;
-  }
-
-  /* The blanket rule above would leave the strip looping every hundredth of a
-     millisecond rather than stopping it. It stands still instead, and the row
-     becomes something you can push sideways yourself, so the whole list is
-     still reachable without anything moving on its own. */
-  [data-proof-marquee] {
-    animation: none !important;
-  }
-
-  [data-proof-strip] {
-    overflow-x: auto;
   }
 }

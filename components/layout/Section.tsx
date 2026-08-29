@@ -1,16 +1,21 @@
 import { cn } from "@/lib/cn";
-import { Container } from "./Container";
+import { Container, type ContainerSize } from "./Container";
 
 /** A vertical band of the page. `tone` picks the background from the theme
- *  tokens so sections alternate without each one inventing its own colour. */
+ *  tokens so sections alternate without each one inventing its own colour;
+ *  `size` is the Container width, so a section that has to line up with the
+ *  hero and the header pill can ask for `wide` rather than rebuilding the
+ *  gutter by hand. */
 export function Section({
   tone = "bg",
+  size = "default",
   className,
   containerClassName,
   children,
   id,
 }: {
   tone?: "bg" | "alt" | "surface" | "tint" | "royal" | "ink" | "blue";
+  size?: ContainerSize;
   className?: string;
   containerClassName?: string;
   children: React.ReactNode;
@@ -37,7 +42,9 @@ export function Section({
       id={id}
       className={cn("py-14 sm:py-20", tones[tone], className)}
     >
-      <Container className={containerClassName}>{children}</Container>
+      <Container size={size} className={containerClassName}>
+        {children}
+      </Container>
     </section>
   );
 }
