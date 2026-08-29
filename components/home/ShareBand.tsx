@@ -37,7 +37,7 @@ const HEADLINE = ["Share", "your", "quotes", "anywhere"];
 export function ShareBand() {
   return (
     <ShareReveal>
-      <Section id="share" className="scroll-mt-24">
+      <Section id="share" tone="ink" className="scroll-mt-24">
         <div className="grid items-center gap-16 lg:grid-cols-2 lg:gap-12">
           <div className="max-w-3xl">
             <h2 className="font-slab text-5xl leading-[1.05] tracking-tight sm:text-7xl">
@@ -54,8 +54,8 @@ export function ShareBand() {
             <ul className="mt-10 flex flex-wrap gap-3">
               {CHANNELS.map(({ label, Icon }) => (
                 <li key={label} data-share-chip>
-                  <span className="inline-flex items-center gap-2 rounded-2xl bg-text px-5 py-3 text-sm font-semibold text-white">
-                    <Icon aria-hidden="true" className="h-4 w-4 text-white/70" />
+                  <span className="inline-flex items-center gap-2 rounded-2xl bg-white px-5 py-3 text-sm font-semibold text-text">
+                    <Icon aria-hidden="true" className="h-4 w-4 text-text/60" />
                     {label}
                   </span>
                 </li>
@@ -111,7 +111,7 @@ function PdfStack() {
         >
           <div
             data-share-page
-            className="h-full w-full origin-bottom border border-line bg-card p-4"
+            className="h-full w-full origin-bottom border border-black/5 bg-card p-4"
           />
         </div>
       ))}

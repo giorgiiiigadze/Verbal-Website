@@ -2,6 +2,7 @@ import { Hero } from "@/components/home/Hero";
 import { SocialProof } from "@/components/home/SocialProof";
 import { Steps } from "@/components/home/Steps";
 import { TradeCards } from "@/components/home/TradeCards";
+import { BlueBand } from "@/components/home/BlueBand";
 import { ShareBand } from "@/components/home/ShareBand";
 import { ClientsBand } from "@/components/home/ClientsBand";
 import { PrivacyBand } from "@/components/home/PrivacyBand";
@@ -51,6 +52,7 @@ export default function HomePage() {
       <SocialProof />
       <Steps />
       <TradeCards />
+      <BlueBand />
       <ShareBand />
       <ClientsBand />
       <PrivacyBand />
