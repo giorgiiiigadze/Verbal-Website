@@ -30,7 +30,6 @@ export const APP_STORE_URL: string | null = null;
  *  that menu's footer link — five items do not fit the pill on a phone. */
 export const NAV = [
   { href: "/pricing", label: "Pricing" },
-  { href: "/trades", label: "Trades" },
   { href: "/faq", label: "FAQ" },
 ] as const;
 
@@ -40,7 +39,6 @@ export const FOOTER = [
     links: [
       { href: "/how-it-works", label: "How it works" },
       { href: "/pricing", label: "Pricing" },
-      { href: "/trades", label: "Trades" },
     ],
   },
   {

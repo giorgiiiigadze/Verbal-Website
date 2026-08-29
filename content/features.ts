@@ -102,7 +102,7 @@ export const NAV_FEATURES = [
     icon: "rates",
     title: "A rate card that fills itself in",
     body: "Set up asks what you charge for the jobs your trade does most.",
-    href: "/trades",
+    href: "/how-it-works",
   },
   {
     icon: "clients",

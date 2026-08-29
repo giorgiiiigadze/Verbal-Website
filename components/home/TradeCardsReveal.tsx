@@ -72,12 +72,6 @@ export function TradeCardsReveal({ children }: { children: React.ReactNode }) {
           { opacity: 0, y: 10, scale: 0.9 },
           { opacity: 1, y: 0, scale: 1, duration: 0.45, stagger: 0.02 },
           0.4,
-        )
-        .fromTo(
-          self.selector!("[data-trade-foot]"),
-          { opacity: 0, y: 20 },
-          { opacity: 1, y: 0, duration: 0.7 },
-          "-=0.25",
         );
     }, root);
 

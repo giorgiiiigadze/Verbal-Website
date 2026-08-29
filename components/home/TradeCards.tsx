@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { TRADES } from "@/content/trades";
 import { Section, SectionHeading } from "@/components/layout/Section";
 import { TradeCardsReveal } from "@/components/home/TradeCardsReveal";
@@ -7,8 +6,7 @@ import { TradeCardsReveal } from "@/components/home/TradeCardsReveal";
  * Who the app is for, as six trades rather than a claim.
  *
  * Six because it is two clean rows of three and stays one row per breakpoint
- * step; the rest of the list lives on /trades and the link at the foot counts
- * what is missing, so adding a trade to content/trades.ts needs no edit here.
+ * step.
  *
  * The jobs under each name are the real presets from the app's onboarding —
  * that is the whole argument of the section. A card that only carried a trade
@@ -41,7 +39,6 @@ const CHIPS_PER_CARD = 3;
 
 export function TradeCards() {
   const shown = TRADES.slice(0, SHOWN);
-  const rest = TRADES.length - SHOWN;
 
   return (
     <TradeCardsReveal>
@@ -94,17 +91,6 @@ export function TradeCards() {
             </div>
           ))}
         </div>
-
-        {rest > 0 ? (
-          <p data-trade-foot className="mt-10 text-center">
-            <Link
-              href="/trades"
-              className="font-medium text-[#0098F2] underline decoration-transparent underline-offset-4 transition-colors hover:decoration-current"
-            >
-              {rest} more trades, and what happens if yours is not one of them →
-            </Link>
-          </p>
-        ) : null}
       </Section>
     </TradeCardsReveal>
   );
