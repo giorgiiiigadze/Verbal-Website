@@ -41,7 +41,11 @@ const POINTS = [
 export function ClientsBand() {
   return (
     <Reveal stagger={0.08}>
-      <Section id="clients" className="scroll-mt-24 border-y border-line">
+      {/* A bottom rule only. The top one was drawn when this band followed the
+          charcoal share band, where it fell on a dark ground and was never
+          seen; with the features band above it now, it landed as a line across
+          white between two sections that are meant to run together. */}
+      <Section id="clients" className="scroll-mt-24 border-b border-line">
         <div className="grid items-center gap-16 lg:grid-cols-[minmax(0,36rem)_320px] lg:justify-center lg:gap-24">
           <div>
             <div data-reveal>

@@ -8,6 +8,11 @@ const styles = {
     "bg-card text-text border border-line hover:bg-surface focus-visible:outline-primary",
   ghostOnRoyal:
     "bg-white text-primary hover:bg-tint focus-visible:outline-white",
+  // The dark band's own colour, for a button on white that wants to weigh as
+  // much as the band does. Hover lifts to MainText, which is the one colour on
+  // the site a shade lighter than charcoal and already in the palette.
+  charcoal:
+    "bg-charcoal text-white hover:bg-text focus-visible:outline-charcoal",
 } as const;
 
 /** `lg` is the hero CTA; everything else uses the default. It only grows from
@@ -43,7 +48,9 @@ export function Button({
     // Hardcoded rather than passed in because `cn` is a plain join with no
     // tailwind-merge, so a second border-radius utility would only race this
     // one and let stylesheet order decide.
-    "rounded-full font-semibold transition-colors",
+    // Medium, not semibold. At the sizes these are set the heavier weight read
+    // as shouting next to the page's own copy, which is set at 400.
+    "rounded-full font-medium transition-colors",
     "focus-visible:outline-2 focus-visible:outline-offset-2",
     sizes[size],
     styles[variant],

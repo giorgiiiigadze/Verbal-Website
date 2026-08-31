@@ -64,15 +64,17 @@ export function BlueBand() {
             at `sm` and the box inside asked for `60vh - 7rem`, so the band came
             out 48px taller than the 60vh it was aiming at.
 
-            py-12 is headroom for the drift, not spacing. The quote is centred in
-            this box and the parallax moves it 96px each way; with the section's
-            own padding that clears 96 at every width, and without it the drift
-            would carry the quote out of the band and over the white sections
-            either side. */}
+            py-4 is headroom for the drift, not spacing, and it is most of what
+            the band has beyond the padding every other section on the site
+            carries. It was py-12, sized to clear the parallax's 96px on its
+            own — which was over-cautious: the drift only reaches its extremes
+            as the band is leaving the window, by which point the edge it would
+            have crossed is off screen. What is left is the small amount the
+            quote needs mid-scroll. */}
         <Parallax
           from={96}
           to={-96}
-          className="flex items-center justify-center py-12"
+          className="flex items-center justify-center py-4"
         >
           <div className="w-full max-w-4xl text-center">
             <p

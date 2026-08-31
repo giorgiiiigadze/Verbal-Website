@@ -5,6 +5,7 @@ import { Steps } from "@/components/home/Steps";
 import { TradeCards } from "@/components/home/TradeCards";
 import { BlueBand } from "@/components/home/BlueBand";
 import { ShareBand } from "@/components/home/ShareBand";
+import { FeaturesBand } from "@/components/home/FeaturesBand";
 import { ClientsBand } from "@/components/home/ClientsBand";
 import { PrivacyBand } from "@/components/home/PrivacyBand";
 import { FaqPreview } from "@/components/home/FaqPreview";
@@ -56,6 +57,7 @@ export default function HomePage() {
       <Steps />
       <TradeCards />
       <ShareBand />
+      <FeaturesBand />
       <ClientsBand />
       <PrivacyBand />
       <FaqPreview />

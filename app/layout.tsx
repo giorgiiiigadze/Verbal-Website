@@ -10,7 +10,7 @@ import { DESCRIPTION, SITE_NAME, SITE_URL, TAGLINE } from "@/content/site";
 const robotoSlab = Roboto_Slab({
   variable: "--font-roboto-slab",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600"],
+  weight: ["400", "500", "600"],
   display: "swap",
 });
 
