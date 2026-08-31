@@ -3,7 +3,13 @@
 import Link from "next/link";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import gsap from "gsap";
-import { FileText, Link2, Tag, Users } from "lucide-react";
+import {
+  ClientMark,
+  DocumentMark,
+  LinkMark,
+  type Mark,
+  TagMark,
+} from "@/components/ui/marks";
 import { NAV_FEATURES } from "@/content/features";
 
 /**
@@ -25,24 +31,18 @@ import { NAV_FEATURES } from "@/content/features";
  */
 
 /** Icons live here rather than in content/features.ts, which is plain data.
- *  Exported because the mobile menu lists the same four rows. */
-export const ICONS = {
-  quote: FileText,
-  rates: Tag,
-  clients: Users,
-  share: Link2,
-} as const;
-
-/**
- * The tiles cycle the four colours the trade chips use, in the same order.
- * Whole class strings because Tailwind reads the source statically.
- */
-export const TILE_TONES = [
-  "bg-[#0098F2]",
-  "bg-[#FF6363]",
-  "bg-[#5D9C06]",
-  "bg-[#6C56FC]",
-];
+ *  Exported because the mobile menu lists the same four rows.
+ *
+ *  Two of these are the marks the home page already uses for the same claims —
+ *  the tag on "it never invents a price" and the link on "send a link, get an
+ *  answer" — so the menu and the section agree rather than each having its own
+ *  picture of the idea. */
+export const ICONS: Record<string, Mark> = {
+  quote: DocumentMark,
+  rates: TagMark,
+  clients: ClientMark,
+  share: LinkMark,
+};
 
 /** Milliseconds the panel stays open after the pointer leaves it. */
 const CLOSE_DELAY = 140;
@@ -141,7 +141,7 @@ export function FeaturesMenu() {
       >
         <div className="rounded-[var(--radius-card)] border border-line bg-card p-2 shadow-[0_1px_2px_rgba(0,0,0,0.04),0_18px_40px_-16px_rgba(0,0,0,0.28)]">
           <ul>
-            {NAV_FEATURES.map((feature, i) => {
+            {NAV_FEATURES.map((feature) => {
               const Icon = ICONS[feature.icon];
               return (
                 <li key={feature.title}>
@@ -150,11 +150,14 @@ export function FeaturesMenu() {
                     onClick={() => setOpen(false)}
                     className="flex gap-3 rounded-[14px] p-3 transition-colors hover:bg-[#FAFAFA]"
                   >
+                    {/* No tile under the mark. The slot stays at 36px because
+                        it is what holds the four rows to one left edge, and the
+                        drawing grew into the room the tile was taking. */}
                     <span
                       aria-hidden="true"
-                      className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-[10px] text-white ${TILE_TONES[i % TILE_TONES.length]}`}
+                      className="flex h-9 w-9 shrink-0 items-center justify-center"
                     >
-                      <Icon className="h-[18px] w-[18px]" />
+                      <Icon className="h-7 w-7" />
                     </span>
                     <span className="block">
                       <span className="block text-sm font-semibold text-text">

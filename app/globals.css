@@ -46,6 +46,9 @@
   --card: #ffffff;        /* CardSurface */
   --field: #f6f5f3;       /* FieldFill */
   --text: #37352f;        /* MainText */
+  /* The dark band. Flatter and a shade cooler than MainText, which is a text
+     colour turned into a background and carries a brown cast at full width. */
+  --charcoal: #292929;
   --text-muted: #6b6a67;  /* StatusMutedText */
   --accent-text: #192868; /* BlueAccentText */
   --hero: #ffffff;        /* The near-white the hero sits on */
@@ -80,6 +83,7 @@
   --color-card: var(--card);
   --color-field: var(--field);
   --color-text: var(--text);
+  --color-charcoal: var(--charcoal);
   --color-muted: var(--text-muted);
   --color-accent-text: var(--accent-text);
   --color-hero: var(--hero);

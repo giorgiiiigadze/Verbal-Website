@@ -4,10 +4,9 @@ import Link from "next/link";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import gsap from "gsap";
-import { Menu, X } from "lucide-react";
 import { NAV_FEATURES } from "@/content/features";
 import { NAV } from "@/content/site";
-import { ICONS, TILE_TONES } from "@/components/layout/FeaturesMenu";
+import { ICONS } from "@/components/layout/FeaturesMenu";
 
 /**
  * The header's small-screen half: a burger, and the sheet it opens.
@@ -33,6 +32,46 @@ import { ICONS, TILE_TONES } from "@/components/layout/FeaturesMenu";
  * being clipped to a strip the height of the header with all of its content
  * pushed out of sight.
  */
+/**
+ * The trigger's two states, drawn here rather than pulled from an icon set.
+ *
+ * They are not marks: the drawn set is black raster line art, and this is a
+ * control that has to sit on `currentColor`, stay crisp at 20px and read as a
+ * button rather than as a picture. Three strokes and two, in `currentColor`,
+ * is the whole of it.
+ */
+function BarsIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+      strokeLinecap="round"
+      className={className}
+    >
+      <path d="M4 7h16M4 12h16M4 17h16" />
+    </svg>
+  );
+}
+
+function CloseIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+      strokeLinecap="round"
+      className={className}
+    >
+      <path d="M6 6l12 12M18 6L6 18" />
+    </svg>
+  );
+}
+
 export function MobileMenu() {
   const [open, setOpen] = useState(false);
   const sheet = useRef<HTMLDivElement>(null);
@@ -103,9 +142,9 @@ export function MobileMenu() {
         className="flex h-9 w-9 items-center justify-center rounded-full text-text lg:hidden"
       >
         {open ? (
-          <X aria-hidden="true" className="h-5 w-5" />
+          <CloseIcon className="h-5 w-5" />
         ) : (
-          <Menu aria-hidden="true" className="h-5 w-5" />
+          <BarsIcon className="h-5 w-5" />
         )}
       </button>
 
@@ -127,7 +166,7 @@ export function MobileMenu() {
               </p>
 
               <ul className="space-y-1">
-                {NAV_FEATURES.map((feature, i) => {
+                {NAV_FEATURES.map((feature) => {
                   const Icon = ICONS[feature.icon];
                   return (
                     <li key={feature.title} data-menu-item>
@@ -138,9 +177,9 @@ export function MobileMenu() {
                       >
                         <span
                           aria-hidden="true"
-                          className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-[10px] text-white ${TILE_TONES[i % TILE_TONES.length]}`}
+                          className="flex h-9 w-9 shrink-0 items-center justify-center"
                         >
-                          <Icon className="h-[18px] w-[18px]" />
+                          <Icon className="h-7 w-7" />
                         </span>
                         <span className="block">
                           <span className="block font-semibold text-text">

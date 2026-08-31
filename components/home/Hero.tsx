@@ -25,9 +25,19 @@ export function Hero() {
   return (
     <HeroReveal>
       <div className="bg-hero">
+        {/* The bottom padding is much shorter than the top on purpose. The
+            hero and the block below it are both on white with no edge between
+            them, so their two paddings used to stack into about 190px of empty
+            page — the hero's own pb-28 plus the section's py-20. Trimmed here
+            rather than on the section, which is padded like every other
+            section on the site and should stay that way.
+
+            It does not go lower than this: the right-hand phone is pushed down
+            by `translate-y-8`, and the padding is what keeps that frame off the
+            headline of the block underneath. */}
         <Container
           size="wide"
-          className="grid items-center gap-16 pb-20 pt-28 sm:pb-28 sm:pt-36 lg:grid-cols-2 lg:gap-12"
+          className="grid items-center gap-16 pb-6 pt-28 sm:pb-10 sm:pt-36 lg:grid-cols-2 lg:gap-12"
         >
           <div>
             <Link

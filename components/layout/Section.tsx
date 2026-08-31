@@ -14,7 +14,7 @@ export function Section({
   children,
   id,
 }: {
-  tone?: "bg" | "alt" | "surface" | "tint" | "royal" | "ink" | "blue";
+  tone?: "bg" | "alt" | "surface" | "tint" | "royal" | "charcoal";
   size?: ContainerSize;
   className?: string;
   containerClassName?: string;
@@ -27,14 +27,12 @@ export function Section({
     surface: "bg-surface",
     tint: "bg-tint",
     royal: "bg-royal-600 text-white",
-    // MainText, the colour the body copy is set in, used the other way round
-    // as a full-width band. Anything inside it that was drawn for white has to
-    // be inverted by hand — see ShareBand's chips.
-    ink: "bg-text text-white",
-    // The bright accent, the one the chips and links already carry, at full
-    // width. Written out rather than a token because that is how #0098F2 is
-    // spelled everywhere else in the codebase.
-    blue: "bg-[#0098F2] text-white",
+    // The site's one dark band, used by every full-width dark section. It was
+    // MainText (#37352f) turned into a background, which carried that colour's
+    // brown cast across a whole band; #292929 is flatter and a shade cooler.
+    // Anything inside it that was drawn for white has to be inverted by hand —
+    // see ShareBand's chips.
+    charcoal: "bg-charcoal text-white",
   } as const;
 
   return (

@@ -52,9 +52,9 @@ export default function HomePage() {
         <Hero />
         <SpeakSend />
       </PhoneTravel>
+      <BlueBand />
       <Steps />
       <TradeCards />
-      <BlueBand />
       <ShareBand />
       <ClientsBand />
       <PrivacyBand />

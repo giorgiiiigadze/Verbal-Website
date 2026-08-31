@@ -37,7 +37,7 @@ const HEADLINE = ["Share", "your", "quotes", "anywhere"];
 export function ShareBand() {
   return (
     <ShareReveal>
-      <Section id="share" tone="ink" className="scroll-mt-24">
+      <Section id="share" tone="charcoal" className="scroll-mt-24">
         <div className="grid items-center gap-16 lg:grid-cols-2 lg:gap-12">
           <div className="max-w-3xl">
             <h2 className="font-slab text-5xl leading-[1.05] tracking-tight sm:text-7xl">

@@ -17,7 +17,7 @@ import { FinalCtaReveal } from "@/components/home/FinalCtaReveal";
 export function FinalCta() {
   return (
     <FinalCtaReveal>
-      <section className="overflow-clip bg-text py-14 sm:py-20">
+      <section className="overflow-clip bg-charcoal py-14 sm:py-20">
         {/*
           Sized in `vw` rather than at breakpoints so it tracks the window
           continuously and keeps the same relationship to the gutter at every

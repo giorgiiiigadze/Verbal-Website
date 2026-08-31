@@ -1,8 +1,26 @@
+import {
+  type Mark,
+  StepOneMark,
+  StepThreeMark,
+  StepTwoMark,
+} from "@/components/ui/marks";
 import { STEPS } from "@/content/features";
 import { Section, SectionHeading } from "@/components/layout/Section";
 import { PhoneFrame } from "@/components/ui/PhoneFrame";
 import { StepsReveal } from "@/components/home/StepsReveal";
 import { Parallax } from "@/components/ui/Parallax";
+
+/**
+ * The drawn numerals, keyed by the number in `content/features` so a step
+ * without one falls back to its own typed figure rather than to a hole. All
+ * three are drawn now; the fallback stays for a fourth step arriving before
+ * its figure does.
+ */
+const STEP_MARKS: Record<string, Mark | undefined> = {
+  "01": StepOneMark,
+  "02": StepTwoMark,
+  "03": StepThreeMark,
+};
 
 /**
  * How the app works, third on the page: a phone on the left, the three steps
@@ -75,20 +93,33 @@ export function Steps() {
           </Parallax>
 
           <ol className="space-y-10 lg:col-start-2 lg:row-start-2 lg:self-start">
-            {STEPS.map((step) => (
-              <li key={step.number} data-steps-reveal className="flex gap-5">
-                <span
-                  aria-hidden="true"
-                  className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-line bg-card font-slab text-sm text-royal-200"
-                >
-                  {step.number}
-                </span>
-                <div>
-                  <h3 className="text-2xl">{step.title}</h3>
-                  <p className="mt-2 leading-relaxed text-muted">{step.body}</p>
-                </div>
-              </li>
-            ))}
+            {STEPS.map((step) => {
+              const NumberMark = STEP_MARKS[step.number];
+              return (
+                <li key={step.number} data-steps-reveal className="flex gap-5">
+                  {/* No ring, no fill: the numerals are drawings and a circle
+                    around one reads as a badge printed over a sketch. The slot
+                    is what is left of the old chip — it keeps the three rows on
+                    one left edge whatever shape each figure turns out to be. */}
+                  <span
+                    aria-hidden="true"
+                    className="flex h-12 w-12 shrink-0 items-center justify-center font-slab text-sm text-royal-200"
+                  >
+                    {NumberMark ? (
+                      <NumberMark className="h-10 w-10" />
+                    ) : (
+                      step.number
+                    )}
+                  </span>
+                  <div>
+                    <h3 className="text-2xl">{step.title}</h3>
+                    <p className="mt-2 leading-relaxed text-muted">
+                      {step.body}
+                    </p>
+                  </div>
+                </li>
+              );
+            })}
           </ol>
         </div>
       </Section>
