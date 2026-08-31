@@ -41,6 +41,8 @@ export const TagMark = drawnMark("/icons/tag.png");
 export const LinkMark = drawnMark("/icons/link.png");
 export const DocumentMark = drawnMark("/icons/document.png");
 export const ClientMark = drawnMark("/icons/client.png");
+export const MailMark = drawnMark("/icons/mail.png");
+export const MessageMark = drawnMark("/icons/message.png");
 
 /**
  * The accordion's two states. Cropped at one shared scale rather than each to

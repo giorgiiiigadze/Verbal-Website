@@ -3,73 +3,94 @@ import { Reveal } from "@/components/ui/Reveal";
 import { Section } from "@/components/layout/Section";
 
 /**
- * The recording claim, cut to five words on a full-width charcoal band.
+ * What you actually say, on a full-width charcoal band.
  *
- * "Say the job out loud" rather than "say it": the pronoun was empty, and the
- * job is the thing a reader has to picture themselves describing. Five words
- * is the ceiling — this is a line to be read at a glance from across the
- * scroll, not a sentence to be worked through.
+ * This was the line "Say the job out loud." — an instruction, with no example
+ * of the thing it was instructing. Every other section on the page describes
+ * the app talking to you; nowhere did a visitor see the one input the whole
+ * product is built on, which is a tradesperson talking the way they talk.
  *
- * One line, centred, and nothing else. The band used to hold the text in the
- * first of two columns with the second kept empty for whatever went beside it
- * later; centring spends that slot, so anything added here now has to be
- * arranged around the line rather than next to it.
+ * So the band carries a transcript instead. It is deliberately unpolished and
+ * in no particular order — it opens on "Right", doubles back on itself, and
+ * ends by refusing to price something. That is the argument: the app takes the
+ * sentence as it comes out, and step 01 in `content/features` promises exactly
+ * that ("the way you would to the customer standing there", "in whatever order
+ * it comes out").
  *
- * Nothing is claimed here about where the audio goes. That is PrivacyBand's
+ * The job is an electrician's, and every part of it is a real preset from
+ * `content/trades` — consumer unit, double sockets, EV charger — so the
+ * example is the app's own vocabulary rather than something invented to read
+ * well.
+ *
+ * The EV charger left unpriced is the point of the last clause. It is the
+ * behaviour SpeakSend claims two sections above — "It never invents a price.
+ * It flags the gaps." — said here by the tradesperson rather than by us.
+ *
+ * Nothing is claimed about where the audio goes. That is PrivacyBand's
  * sentence further down, and saying it twice would spend the surprise of it.
  *
- * The size is set to fill the band rather than to clear a contrast floor:
- * white on #292929 measures about 14.5:1, where the #0098F2 this was set on
- * measured about 3:1 and cleared AA for large text and nothing smaller. It
- * clamps to 10rem against a `max-w-5xl` measure, which breaks the five words
- * across two lines on a desktop and puts roughly two thirds of the band's
- * height under them. Bigger than this and the line breaks a third time and
- * starts running out of the band on a short window; the `13vw` middle term is
- * what keeps it from doing that on the way down to a phone.
- *
- * The min-height is what holds the band open; five words would not fill it.
+ * Set at a third of what the old line was: a transcript is read, not glanced
+ * at, and at 10rem three sentences of speech would have been a wall. White on
+ * #292929 measures about 14.5:1 and the caption under it about 6:1, so neither
+ * is anywhere near a contrast floor.
  */
+const TRANSCRIPT =
+  "Right — consumer unit needs doing, six double sockets in the kitchen, " +
+  "two of them behind the units. And she’s asking about an EV charger, but " +
+  "leave that one, I’ll price it after.";
+
 export function BlueBand() {
   return (
-    // Two motions, because one of them ends. Reveal is the house entrance —
-    // a fade and a short rise, once, as the band comes up the window — and
+    // Two motions, because one of them ends. Reveal is the house entrance — a
+    // fade and a short rise, once, as the band comes up the window — and
     // Parallax is the drift that keeps going for as long as the band is on
-    // screen, scrubbed against scroll position rather than played. Both bow
-    // out entirely under prefers-reduced-motion.
+    // screen, scrubbed against scroll position rather than played. Both bow out
+    // entirely under prefers-reduced-motion.
     //
-    // They do not fight: Reveal writes `y` on the `p`, Parallax writes it on
-    // its own inner wrapper, so the two transforms compose instead of racing
-    // for one element. Reveal is the outer of the two on purpose — its
-    // ScrollTrigger measures its own root, and a root inside the parallax
-    // would be a trigger being translated by the tween that is reading it.
+    // They do not fight: Reveal writes `y` on the elements it is given,
+    // Parallax writes it on its own inner wrapper, so the two transforms
+    // compose instead of racing for one element. Reveal is the outer of the two
+    // on purpose — its ScrollTrigger measures its own root, and a root inside
+    // the parallax would be a trigger being translated by the tween that is
+    // reading it.
     <Reveal>
-      <Section tone="charcoal" className="min-h-[60vh]">
-        {/* py-16 is headroom for the drift, not spacing. The line is centred
-            in this box and the parallax moves it 96px each way; on a short
-            window the box collapses to the height of the text itself, and
-            without the padding the drift carries the line out of the band and
-            over the white sections either side. 64px here plus the section's
-            own 80px clears the 96 with room to spare. */}
+      <Section tone="charcoal">
+        {/* The band is as tall as what is in it. It used to be held open to
+            60vh, which was the right call for a five-word line set at 10rem and
+            the wrong one for a transcript a third that size — 60vh of charcoal
+            around three lines of speech reads as a gap rather than as a band.
+
+            The two heights were also fighting: the section pads itself by 10rem
+            at `sm` and the box inside asked for `60vh - 7rem`, so the band came
+            out 48px taller than the 60vh it was aiming at.
+
+            py-12 is headroom for the drift, not spacing. The quote is centred in
+            this box and the parallax moves it 96px each way; with the section's
+            own padding that clears 96 at every width, and without it the drift
+            would carry the quote out of the band and over the white sections
+            either side. */}
         <Parallax
           from={96}
           to={-96}
-          className="flex min-h-[calc(60vh-7rem)] items-center justify-center py-16"
+          className="flex items-center justify-center py-12"
         >
-          {/* Full width: the measure was capped at max-w-5xl, which held the
-              line 48px short of the column on either side for no reason once
-              it was centred. It still breaks in two — 21 characters at 10rem
-              want about 1700px and there are 1072 — but each line now runs the
-              whole column.
-
-              leading-[1.08], not the 1.02 it was set at: 1.02 is under Roboto
-              Slab's own ascender-to-descender height, so at this size the
-              descenders of the first line ran into the second. */}
-          <p
-            data-reveal
-            className="w-full text-center font-slab text-[clamp(3.5rem,13vw,10rem)] leading-[1.08] tracking-tight"
-          >
-            Say the job out loud.
-          </p>
+          <div className="w-full max-w-4xl text-center">
+            <p
+              data-reveal
+              className="font-slab text-[clamp(1.75rem,4.2vw,3.25rem)] leading-[1.25] tracking-tight"
+            >
+              {`“${TRANSCRIPT}”`}
+            </p>
+            {/* The caption, not an eyebrow: it lands after the quote because it
+                is the point of it, and a label above would have been read
+                before there was anything to label. */}
+            <p
+              data-reveal
+              className="mt-8 text-[15px] font-medium text-white/60 sm:text-base"
+            >
+              No form. No line items. No order to say it in.
+            </p>
+          </div>
         </Parallax>
       </Section>
     </Reveal>

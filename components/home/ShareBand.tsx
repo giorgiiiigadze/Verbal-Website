@@ -1,4 +1,4 @@
-import { Link2, Mail, MessageSquare } from "lucide-react";
+import { LinkMark, MailMark, MessageMark } from "@/components/ui/marks";
 import { Section } from "@/components/layout/Section";
 import { ShareReveal } from "@/components/home/ShareReveal";
 
@@ -15,9 +15,9 @@ import { ShareReveal } from "@/components/home/ShareReveal";
  * and none of them is a destination on this website.
  */
 const CHANNELS = [
-  { label: "Messages", Icon: MessageSquare },
-  { label: "Email", Icon: Mail },
-  { label: "Copy link", Icon: Link2 },
+  { label: "Messages", Icon: MessageMark },
+  { label: "Email", Icon: MailMark },
+  { label: "Copy link", Icon: LinkMark },
 ];
 
 /**
@@ -54,8 +54,13 @@ export function ShareBand() {
             <ul className="mt-10 flex flex-wrap gap-3">
               {CHANNELS.map(({ label, Icon }) => (
                 <li key={label} data-share-chip>
-                  <span className="inline-flex items-center gap-2 rounded-2xl bg-white px-5 py-3 text-sm font-semibold text-text">
-                    <Icon aria-hidden="true" className="h-4 w-4 text-text/60" />
+                  {/* A full pill, and the white it is drawn on is what the
+                      marks need: they are black ink and cannot be inverted for
+                      the charcoal band behind them. At 20px rather than the 16
+                      the stroked icons sat at — these are loose drawings and
+                      the smaller size lost their line. */}
+                  <span className="inline-flex items-center gap-2 rounded-full bg-white px-5 py-3 text-sm font-semibold text-text">
+                    <Icon className="h-5 w-5" />
                     {label}
                   </span>
                 </li>

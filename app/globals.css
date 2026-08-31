@@ -122,6 +122,55 @@ h1, h2, h3, .font-slab {
   font-weight: 400;
 }
 
+/* ---------------------------------------------------------------------------
+   The trades marquee
+--------------------------------------------------------------------------- */
+
+/* Two identical copies of a row sit in one track, and the track is moved by
+   exactly half its own width — so the second copy arrives where the first
+   started and the loop has no seam.
+
+   That only holds if every chip contributes the same width, gap included,
+   which is why the chips carry a right margin rather than the track carrying
+   `gap`: with `gap` the track is two copies plus an odd number of gaps, half
+   of it lands half a gap out, and the row visibly jumps once per lap. */
+@keyframes trade-marquee {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
+}
+
+.trade-track {
+  animation: trade-marquee var(--trade-duration, 50s) linear infinite;
+}
+
+/* The opposite direction, run by playing the same keyframes backwards rather
+   than by writing a second pair of them. */
+.trade-track-reverse {
+  animation-direction: reverse;
+}
+
+/* The section's left and right edges. A mask rather than two gradient blocks
+   painted in the background colour: the rows have to fade out over whatever is
+   behind them, and a block would have to be told the background.
+
+   The fade reaches a fifth of the way in from each side. Percentages, not a
+   fixed length, so it stays proportional — 200px of fade is a soft edge on a
+   desktop and most of the row on a phone. */
+.trade-fade {
+  -webkit-mask-image: linear-gradient(
+    to right, transparent, #000 20%, #000 80%, transparent
+  );
+  mask-image: linear-gradient(
+    to right, transparent, #000 20%, #000 80%, transparent
+  );
+}
+
+/* A marquee is motion the reader did not ask for and cannot stop, so it is the
+   first thing to go when they have asked for less of it. */
+@media (prefers-reduced-motion: reduce) {
+  .trade-track { animation: none; }
+}
+
 /* Long-form legal prose. Re-points the typography plugin at the theme tokens so
    the policy pages use the same ink and rules as the rest of the site. */
 .prose-verbal {

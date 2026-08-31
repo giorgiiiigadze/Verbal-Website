@@ -119,14 +119,20 @@ export function SpeakSend() {
       <Section tone="bg" size="wide">
         <div className="grid items-center gap-16 lg:grid-cols-2 lg:gap-12">
           <Parallax from={40} to={-40} className="max-w-xl">
-            {/* Padded by the same 24px the rows are, so the headline starts on
+            {/* Light, and with the `!` it needs to get there: globals.css sets
+                `h1, h2, h3, .font-slab` to weight 400 outside any cascade
+                layer, and unlayered CSS beats every Tailwind utility whatever
+                its specificity. 300 is loaded in layout.tsx alongside the other
+                three purely for this line.
+
+                Padded by the same 24px the rows are, so the headline starts on
                 the list's inner edge instead of 24px to the left of the marks.
                 The spine still runs at 0, which puts the heading inside the
                 column the rules are drawn across rather than hanging off the
                 front of it. */}
             <h2
               data-speak-reveal
-              className="pl-6 font-slab text-3xl leading-[1.08] tracking-tight sm:text-5xl"
+              className="pl-6 font-slab text-3xl leading-[1.22] font-light! tracking-tight sm:text-5xl"
             >
               Effortless quotes,
               <br />
