@@ -22,18 +22,38 @@ const STEP_MARKS: Record<string, Mark | undefined> = {
 };
 
 /**
- * The screen each step is talking about, in step order.
+ * The screen each step is talking about, in step order. Indexed against STEPS,
+ * so the two arrays have to stay the same length and the same order.
  *
- * All three are rendered, stacked on top of each other, and StepsReveal fades
- * between them as the reader moves down the list. The first is the one in
- * normal flow and so the one that sets the stack's height; the other two are
- * laid over it and start at zero.
+ * Both arrangements read from here, and only one of them is ever displayed.
  *
- * That is also the state a reader gets with no JavaScript, or having asked for
- * reduced motion: the recording screen, beside all three steps at full
- * strength. The two behind it are `aria-hidden` in the markup for the same
- * reason — a screen reader would otherwise read three long descriptions of
- * screens, two of which are invisible.
+ * At `lg` all three are stacked on top of each other in the left column and
+ * StepsReveal fades between them as the reader moves down the list. The first
+ * is the one in normal flow and so the one that sets the stack's height; the
+ * other two are laid over it and start at zero. That is also the state a reader
+ * gets with no JavaScript, or having asked for reduced motion: the recording
+ * screen, beside all three steps at full strength. The two behind it are
+ * `aria-hidden` in the markup for the same reason — a screen reader would
+ * otherwise read three long descriptions of screens, two of which are invisible.
+ *
+ * Below `lg` the stack is `hidden` and each step carries its own screen
+ * instead, in a row that is swiped rather than a column that is scrolled.
+ *
+ * The crossfade cannot work on a phone. The shared frame is 532px tall against
+ * three steps that come to 410px, so the two are never in the window at the
+ * same time and every screen change happened above the reader's head. Nor can
+ * it be fixed by shrinking the frame: three steps and a screen only fit one
+ * window together if the screen is about 147px wide, and these are dense app
+ * screens — a scope list, priced line items, a total — that stop reading as
+ * anything at that size.
+ *
+ * So each step takes its own screen. Stacked vertically that ran the section to
+ * 1910px, the tallest on the page by a wide margin, for three one-line steps.
+ * Side by side it is the height of one card, and all three screens stay at a
+ * size that still reads. That is the whole reason for the row.
+ *
+ * `hidden` is display:none, so exactly one of the two sets is in the
+ * accessibility tree at any width and no alt text is read twice.
  */
 const SCREENS = [
   {
@@ -59,17 +79,31 @@ const SCREENS = [
  * on the numbered list itself, which is the only part a reader was going to
  * read anyway.
  *
- * That leaves the section without a name, so `id="how"` is the only thing the
- * header's "How it works" link and the /how-it-works page have to land on. It
- * has to stay.
+ * That leaves the section without a name, so `id="how"` is the only thing
+ * every "How it works" link on the site has to land on. There is no longer a
+ * page behind that phrase — the footer, the mobile menu, the features menu and
+ * all four "Download on iPhone" CTAs resolve to `/#how`, which is this section.
+ * It has to stay.
  *
- * On a phone the frame comes first and the steps follow, which is DOM order.
- * At `lg` the two are placed explicitly into columns rather than reordered, so
- * the frame sits beside the steps rather than above them.
+ * At `lg` the frame and the steps are placed explicitly into two columns, the
+ * frame on the left, and the list is an ordinary vertical stack.
  *
- * Only `body` is used here. Each step's longer `detail` is the /how-it-works
- * page's job; repeating it on the home page would make this a wall rather than
- * a summary.
+ * Below `lg` the shared frame is dropped and the same `ol` becomes a swiped
+ * row: one card per step, each with its own screen. See the note on SCREENS for
+ * why a phone cannot hold the one-frame arrangement. Nothing is reordered at
+ * either width — the frame is simply not displayed on the small one.
+ *
+ * The row is full bleed, pulled back out through the Container's gutter the
+ * way TradeCards' marquee is, and for the same reason: a row that stops at the
+ * gutter reads as a widget sitting on the page rather than as something that
+ * carries on past the edge. The gutter is given back as the scroller's own
+ * padding, so the first card still starts on the page's line and the last one
+ * can be scrolled clear of the edge.
+ *
+ * Only `body` is used here. Each step's longer `detail` was the deleted
+ * /how-it-works page's job and is now unused copy kept in `content/features`;
+ * putting it back on the home page would make this a wall rather than a
+ * summary.
  */
 export function Steps() {
   return (
@@ -134,7 +168,7 @@ export function Steps() {
 
               The frame is first in the DOM, so on a phone it is met before the
               steps; at `lg` the explicit column puts it back on the left. */}
-          <div className="mx-auto w-full max-w-[260px] sm:max-w-[300px] lg:col-start-1 lg:w-[min(420px,42svh)] lg:max-w-none lg:translate-y-10">
+          <div className="mx-auto hidden lg:col-start-1 lg:block lg:w-[min(420px,42svh)] lg:translate-y-10">
             {/* The three screens, stacked. The first is in normal flow and sets
                 the height; the other two are laid over it and start at zero. */}
             <div data-steps-phone className="relative">
@@ -148,43 +182,89 @@ export function Steps() {
                   <PhoneFrame
                     src={screen.src}
                     alt={screen.alt}
-                    sizes="(min-width: 1024px) 420px, (min-width: 640px) 300px, 260px"
+                    sizes="420px"
                   />
                 </div>
               ))}
             </div>
           </div>
 
-          <ol className="space-y-10 lg:col-start-2">
-            {STEPS.map((step) => {
+          {/* Below `lg` this is the section: a snapped, full-bleed row. The
+              negative margin and the matching padding are the bleed; `snap-x`
+              with `snap-start` on the cards is what makes a swipe land on a
+              card rather than between two. `tabIndex` because a scroll
+              container has to be reachable by keyboard, and the label because
+              it is then an element a screen reader announces.
+
+              At `lg` every one of those is turned off and it is the vertical
+              list it was: `block` restores it, `space-y-10` its spacing.
+
+              The scrollbar is hidden on all three engines. It is a swiped row
+              on a touch screen and the bar only sits under the cards. */}
+          <ol
+            tabIndex={0}
+            aria-label="The three steps, side by side"
+            className="-mx-6 flex snap-x snap-mandatory gap-4 overflow-x-auto px-6 pb-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:-mx-10 sm:px-10 lg:col-start-2 lg:mx-0 lg:block lg:space-y-10 lg:overflow-visible lg:p-0">
+            {STEPS.map((step, index) => {
               const NumberMark = STEP_MARKS[step.number];
+              const stepScreen = SCREENS[index];
               return (
                 // Two elements, and the nesting is the point. StepsReveal
                 // dims the `li` to mark which step is being read, and its
                 // entrance fades the `div` inside; putting both on one element
                 // would have the entrance overwrite the dim the moment the
                 // section arrived. Nested, the two opacities simply multiply.
-                <li key={step.number} data-step>
-                  <div data-steps-reveal className="flex gap-5">
-                    {/* No ring, no fill: the numerals are drawings and a circle
-                      around one reads as a badge printed over a sketch. The slot
-                      is what is left of the old chip — it keeps the three rows on
-                      one left edge whatever shape each figure turns out to be. */}
-                    <span
-                      aria-hidden="true"
-                      className="flex h-12 w-12 shrink-0 items-center justify-center font-slab text-sm text-royal-200"
-                    >
-                      {NumberMark ? (
-                        <NumberMark className="h-10 w-10" />
-                      ) : (
-                        step.number
-                      )}
-                    </span>
-                    <div>
-                      <h3 className="text-2xl">{step.title}</h3>
-                      <p className="mt-2 leading-relaxed text-muted">
-                        {step.body}
-                      </p>
+                <li
+                  key={step.number}
+                  data-step
+                  className="w-[78vw] max-w-[300px] shrink-0 snap-start lg:w-auto lg:max-w-none lg:shrink"
+                >
+                  {/* A column below `lg` so the screen can be pushed to the
+                      card's foot. The cards are flex items and so already share
+                      a height; bottom-aligning the screens means the three of
+                      them line up across a swipe whatever their copy does,
+                      rather than each starting wherever its own body stopped.
+                      `lg:block` puts it back to an ordinary box in the list. */}
+                  <div data-steps-reveal className="flex h-full flex-col lg:block">
+                    <div className="flex gap-5">
+                      {/* No ring, no fill: the numerals are drawings and a
+                          circle around one reads as a badge printed over a
+                          sketch. The slot is what is left of the old chip — it
+                          keeps the three rows on one left edge whatever shape
+                          each figure turns out to be. */}
+                      <span
+                        aria-hidden="true"
+                        className="flex h-12 w-12 shrink-0 items-center justify-center font-slab text-sm text-royal-200"
+                      >
+                        {NumberMark ? (
+                          <NumberMark className="h-10 w-10" />
+                        ) : (
+                          step.number
+                        )}
+                      </span>
+                      <div>
+                        <h3 className="text-2xl">{step.title}</h3>
+                        <p className="mt-2 leading-relaxed text-muted">
+                          {step.body}
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* This step's own screen, below `lg` only. Centred in the
+                        card: the copy above it is indented past the numeral, and
+                        hanging the screen off that same indent left it sitting
+                        against the card's right edge with the whole numeral
+                        column empty beside it. 210px is what a 300px card holds
+                        with air either side, and it is the widest these screens
+                        can be while three of them still fit one card's height. */}
+                    <div className="mt-auto pt-5 lg:hidden">
+                      <div className="mx-auto w-full max-w-[210px]">
+                        <PhoneFrame
+                          src={stepScreen.src}
+                          alt={stepScreen.alt}
+                          sizes="210px"
+                        />
+                      </div>
                     </div>
                   </div>
                 </li>

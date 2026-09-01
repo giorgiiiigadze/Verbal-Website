@@ -34,13 +34,21 @@ gsap.registerPlugin(ScrollTrigger);
  * a window of scrolling per step. Longer and the page feels stuck; shorter and
  * the last step is gone before it has been read.
  *
- * Pinning is conditional. A pinned element taller than the window is one
- * whose bottom can never be scrolled to — which is why the frame is sized in
- * `svh` rather than pixels, so the block fits whatever window it is given and
- * the height threshold can be a floor rather than a guess at laptop sizes.
- * Below `lg`, or on a window too short for the layout to be worth holding at
- * all, the sequence still runs but the page is never held: the same three
- * phases are read off the section's own travel through the window instead.
+ * The whole sequence is `lg` and up. It exists to point a single shared frame
+ * at whichever step is being read, and below `lg` there is no shared frame to
+ * point — Steps gives each step its own screen there, so there is nothing to
+ * crossfade and nothing the dimming could be tracking. Running it anyway is
+ * worse than not: on a phone the section is about 1600px of steps read against
+ * a scrub divided into equal thirds, so a reader would meet steps greyed to 30%
+ * with no way to tell what had greyed them.
+ *
+ * Pinning is conditional within that. A pinned element taller than the window
+ * is one whose bottom can never be scrolled to — which is why the frame is
+ * sized in `svh` rather than pixels, so the block fits whatever window it is
+ * given and the height threshold can be a floor rather than a guess at laptop
+ * sizes. On a window wide enough but too short to be worth holding, the
+ * sequence still runs and the page is never held: the same three phases are
+ * read off the section's own travel through the window instead.
  *
  * Reduced motion opts out of both and leaves the state the server sent: three
  * steps at full strength and the first screen. Nothing here ever holds a
@@ -101,14 +109,18 @@ export function StepsReveal({ children }: { children: React.ReactNode }) {
     mm.add(
       {
         motion: "(prefers-reduced-motion: no-preference)",
+        // The sequence's own floor: below this there is no shared frame for it
+        // to drive. `roomy` is the narrower question of whether to pin.
+        wide: "(min-width: 1024px)",
         roomy: "(min-width: 1024px) and (min-height: 640px)",
       },
       (context) => {
-        const { motion, roomy } = context.conditions as {
+        const { motion, wide, roomy } = context.conditions as {
           motion: boolean;
+          wide: boolean;
           roomy: boolean;
         };
-        if (!motion) return;
+        if (!motion || !wide) return;
 
         const steps = gsap.utils.toArray<HTMLElement>(
           section.querySelectorAll("[data-step]"),

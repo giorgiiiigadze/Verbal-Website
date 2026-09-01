@@ -49,7 +49,7 @@ export function FinalCta() {
             link. */}
         <div data-cta-action className="mt-12 flex justify-center px-6 sm:px-10">
           <Button
-            href={APP_STORE_URL ?? "/how-it-works"}
+            href={APP_STORE_URL ?? "/#how"}
             variant="ghostOnRoyal"
             size="md"
           >

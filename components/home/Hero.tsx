@@ -42,7 +42,7 @@ export function Hero() {
           <div>
             <Link
               data-hero-reveal
-              href="/how-it-works"
+              href="/#how"
               className="group inline-flex items-center gap-2.5 rounded-full bg-[#F7F7F2] py-1.5 pl-1.5 pr-4 text-sm transition-colors hover:bg-[#ECECE4]"
             >
               <span className="rounded-full bg-[#0098F2] px-2.5 py-1 text-xs font-semibold text-white">
@@ -83,7 +83,7 @@ export function Hero() {
                   goes where the recording is actually explained, so the CTA is
                   never a dead end. Same rule as AppStoreBadge. */}
               <Button
-                href={APP_STORE_URL ?? "/how-it-works"}
+                href={APP_STORE_URL ?? "/#how"}
                 size="md"
               >
                 <AppleMark className="h-4 w-4" />

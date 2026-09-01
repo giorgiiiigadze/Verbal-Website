@@ -198,7 +198,7 @@ export function MobileMenu() {
               {/* The pages, set large. On a phone these are the thing being
                   reached for, so they get the size the feature rows do not. */}
               <ul className="mt-10 space-y-1 border-t border-line pt-6">
-                {[{ href: "/how-it-works", label: "How it works" }, ...NAV].map(
+                {[{ href: "/#how", label: "How it works" }, ...NAV].map(
                   (item) => (
                     <li key={item.href} data-menu-item>
                       <Link

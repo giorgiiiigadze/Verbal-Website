@@ -174,7 +174,7 @@ export function FeaturesMenu() {
           </ul>
 
           <Link
-            href="/how-it-works"
+            href="/#how"
             onClick={() => setOpen(false)}
             className="mt-1 block border-t border-line px-3 pb-1 pt-3 text-[13px] font-medium text-[#0098F2]"
           >

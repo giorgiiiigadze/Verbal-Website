@@ -20,10 +20,23 @@ import { APP_STORE_URL } from "@/content/site";
  * in `content/features`, and neither is said anywhere else on the page.
  *
  * The line is broken by hand rather than left to wrap: it is two clauses and
- * the break belongs at the comma, not wherever the measure runs out. At 6.5rem
- * each of them runs about 1065px, which is why the section is on the wide
- * container: the default one leaves 1072px and the lines would have had
- * nothing to spare.
+ * the break belongs at the comma, not wherever the measure runs out. Holding
+ * that break is what sets the size, and it is why the size is a clamp rather
+ * than the two-step it used to be.
+ *
+ * "Works where you work," is the longer clause: 10.76em wide once tracking-tight
+ * has taken 0.025em off each of its 21 characters. So it needs a measure of
+ * 10.76 x the font size, and 8vw keeps it inside the gutter at every width —
+ * 323px of the 327px a 375px phone leaves, 551px of 560px at the sm breakpoint
+ * where the gutter widens to px-10, 1101px of the 1152px max-w-6xl allows.
+ * The 6.5rem ceiling is the size the block was drawn at and is reached around
+ * 1300px, by which point the container is at its own maximum anyway.
+ *
+ * The step it replaces was broken in the middle: sm:text-[6.5rem] applied from
+ * 640px, where 104px type wants 1118px and the container gives 560px, so every
+ * width from a small tablet up to a laptop wrapped the two clauses into four or
+ * five ragged lines. Below sm, text-5xl was 542px of line in 327px of phone,
+ * which lost the comma break the same way.
  *
  * Black rather than MainText. #37352f is a warm near-black drawn for paragraphs
  * and it goes grey when there is this much of it at once — the same reason the
@@ -56,7 +69,7 @@ export function FeaturesBand() {
 
           <h2
             data-reveal
-            className="font-slab text-5xl leading-[1.02] tracking-tight text-black sm:text-[6.5rem]"
+            className="font-slab text-[clamp(1.75rem,8vw,6.5rem)] leading-[1.02] tracking-tight text-black"
           >
             Works where you work,
             <br />
@@ -72,7 +85,7 @@ export function FeaturesBand() {
                 where the app is actually explained, so the CTA is never a dead
                 end. Same rule as the hero's and AppStoreBadge's. */}
             <Button
-              href={APP_STORE_URL ?? "/how-it-works"}
+              href={APP_STORE_URL ?? "/#how"}
               variant="charcoal"
               size="lg"
             >

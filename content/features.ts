@@ -96,13 +96,13 @@ export const NAV_FEATURES = [
     icon: "quote",
     title: "It writes the quote",
     body: "Speak the job and it comes back as a scope, priced line by line.",
-    href: "/how-it-works",
+    href: "/#how",
   },
   {
     icon: "rates",
     title: "A rate card that fills itself in",
     body: "Set up asks what you charge for the jobs your trade does most.",
-    href: "/how-it-works",
+    href: "/#how",
   },
   {
     icon: "clients",
@@ -118,8 +118,9 @@ export const NAV_FEATURES = [
   },
 ] as const;
 
-/** The three-step spine of the product, used on the home page and expanded on
- *  /how-it-works. */
+/** The three-step spine of the product, used on the home page. `detail` is
+ *  unused since /how-it-works was deleted — the copy is kept because it is
+ *  written, not because anything renders it. */
 export type Step = {
   number: string;
   title: string;

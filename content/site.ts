@@ -27,7 +27,8 @@ export const APP_STORE_URL: string | null = null;
 
 /** The header's plain links. "Features" is not among them: it is a menu, not
  *  a page, and SiteHeader renders it ahead of these. "How it works" moved into
- *  that menu's footer link — five items do not fit the pill on a phone. */
+ *  that menu's footer link — five items do not fit the pill on a phone. It is
+ *  the `/#how` anchor on this page, not a page of its own. */
 export const NAV = [
   { href: "/pricing", label: "Pricing" },
   { href: "/faq", label: "FAQ" },
@@ -37,7 +38,7 @@ export const FOOTER = [
   {
     heading: "Product",
     links: [
-      { href: "/how-it-works", label: "How it works" },
+      { href: "/#how", label: "How it works" },
       { href: "/pricing", label: "Pricing" },
     ],
   },

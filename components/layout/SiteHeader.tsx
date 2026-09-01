@@ -92,7 +92,7 @@ export function SiteHeader() {
             pill holding only an Apple mark reads as an icon button rather than
             a call to action. */}
         <div className="flex items-center gap-1.5 justify-self-end sm:gap-2">
-          <Button href={APP_STORE_URL ?? "/how-it-works"} size="xs">
+          <Button href={APP_STORE_URL ?? "/#how"} size="xs">
             <AppleMark className="h-4 w-4" />
             <span className="hidden sm:inline">Download on iPhone</span>
             <span className="sm:hidden">Get it</span>
