@@ -66,8 +66,11 @@ GitHub Pages; moving it would break those links.
 
 ## Before launch
 
-- [ ] Pick a domain and set `NEXT_PUBLIC_SITE_URL` (it feeds canonical URLs, OG
-      tags, `sitemap.xml` and `robots.txt`; the placeholder is `verbal.app`)
+- [ ] Set `NEXT_PUBLIC_SITE_URL` in the host's environment (it feeds canonical
+      URLs, OG tags, `sitemap.xml` and `robots.txt`). The domain is
+      `theverbal.app`, which is also the fallback in `content/site.ts`, so
+      leaving it unset is correct rather than merely harmless. Set it only to
+      serve the site from some other origin
 - [ ] Point the app at it — in `Verbal/Verbal/AppInfo.swift`, set
       `privacyPolicyURL` and `termsURL` to the new domain. Leave
       `shareURL(token:)` alone.

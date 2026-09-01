@@ -3,10 +3,18 @@
  * Components import from here; no copy is hard-coded in a component.
  */
 
-/** Domain is not chosen yet. Every canonical URL, OG tag and sitemap entry
- *  reads this, so switching it later is one env var. */
+/** The site's origin. Every canonical URL, OG tag and sitemap entry reads this.
+ *
+ *  The fallback is the real domain, not a placeholder: `.env.example` is
+ *  documentation and is never loaded, so on a host where the variable was not
+ *  set this literal is what ships. It being correct is what stops an unset
+ *  variable from advertising the wrong domain to every crawler.
+ *
+ *  The variable is therefore not required in production any more. It is there
+ *  so the site can be served from some other origin — a staging domain, a
+ *  preview meant to be crawled as itself — without editing this file. */
 export const SITE_URL = (
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://verbal.app"
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://theverbal.app"
 ).replace(/\/$/, "");
 
 export const SITE_NAME = "Verbal";
