@@ -10,11 +10,27 @@
  *  set this literal is what ships. It being correct is what stops an unset
  *  variable from advertising the wrong domain to every crawler.
  *
- *  The variable is therefore not required in production any more. It is there
- *  so the site can be served from some other origin — a staging domain, a
- *  preview meant to be crawled as itself — without editing this file. */
+ *  The variable is therefore not required in production. It is there so the
+ *  site can be served from some other origin — a staging domain, a preview
+ *  meant to be crawled as itself — without editing this file.
+ *
+ *  Empty counts as absent. A variable created in a host's dashboard and left
+ *  without a value arrives as "", and `??` does not catch it: an empty string
+ *  is neither null nor undefined, so it went straight through to
+ *  `new URL("")` in the root layout, which throws ERR_INVALID_URL and fails
+ *  the build for every route at once. `||` is the whole fix.
+ *
+ *  A bare domain counts as https for the same reason. `new URL("theverbal.app")`
+ *  throws just as hard, and a host's environment field is exactly where someone
+ *  types a domain without a scheme. */
+const configured = process.env.NEXT_PUBLIC_SITE_URL?.trim();
+
 export const SITE_URL = (
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://theverbal.app"
+  configured
+    ? /^https?:\/\//.test(configured)
+      ? configured
+      : `https://${configured}`
+    : "https://theverbal.app"
 ).replace(/\/$/, "");
 
 export const SITE_NAME = "Verbal";
