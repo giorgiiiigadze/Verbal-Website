@@ -165,6 +165,11 @@ export function MobileMenu() {
                 Features
               </p>
 
+              {/* The pressed row deepens the sheet's own blue rather than
+                  taking `--surface`: that token is an opaque warm grey, and on
+                  a translucent blue sheet it landed as a grey slab. The
+                  negative margin plus matching padding lets the highlight run
+                  out to the sheet's gutter without moving the text. */}
               <ul className="space-y-1">
                 {NAV_FEATURES.map((feature) => {
                   const Icon = ICONS[feature.icon];
@@ -173,7 +178,7 @@ export function MobileMenu() {
                       <Link
                         href={feature.href}
                         onClick={() => setOpen(false)}
-                        className="flex gap-3 rounded-[14px] py-2.5 transition-colors active:bg-surface"
+                        className="-mx-3 flex gap-3 rounded-[14px] px-3 py-2.5 transition-colors active:bg-[#0098F2]/20"
                       >
                         <span
                           aria-hidden="true"

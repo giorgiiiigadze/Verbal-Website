@@ -3,6 +3,7 @@ import { Roboto_Slab } from "next/font/google";
 import "./globals.css";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { SiteFooter } from "@/components/layout/SiteFooter";
+import { ChromeGate } from "@/components/layout/ChromeGate";
 import { DESCRIPTION, SITE_NAME, SITE_URL, TAGLINE } from "@/content/site";
 
 /** The app's only font. Self-hosted at build time by next/font, so the page
@@ -51,19 +52,25 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           than pushed below it, and `main` guarantees its own full-screen
           minimum. See FooterReveal. */}
       <body className="min-h-full">
-        <a
-          href="#main"
-          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-primary focus:px-4 focus:py-2 focus:text-white"
-        >
-          Skip to content
-        </a>
-        <SiteHeader />
+        {/* Chrome is gated so the shared quote pages under /q render as a bare
+            receipt, without the site nav, CTA or footer. See ChromeGate. */}
+        <ChromeGate>
+          <a
+            href="#main"
+            className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-primary focus:px-4 focus:py-2 focus:text-white"
+          >
+            Skip to content
+          </a>
+          <SiteHeader />
+        </ChromeGate>
         {/* The sheet the footer hides behind: opaque, one layer up, and never
             shorter than the screen so there is always a page to slide away. */}
         <main id="main" className="relative z-10 min-h-lvh bg-bg">
           {children}
         </main>
-        <SiteFooter />
+        <ChromeGate>
+          <SiteFooter />
+        </ChromeGate>
       </body>
     </html>
   );

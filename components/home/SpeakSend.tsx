@@ -60,10 +60,17 @@ const EMPTY_ROWS = 2;
  * push the rules off the line it is drawn on, and it could not carry the
  * gradient. Because it takes no space, the rows' `inset-x-0` rules still start
  * exactly on it and the two meet as a corner.
+ *
+ * `lg` and up only. Below that the phone drops under the column and the list
+ * runs the full width of the page, where a vertical rule down the left is no
+ * longer the inner edge of a two-column block — it is a line down the side of
+ * the whole screen. Every `pl-6` that clears it is gated to `lg` with it, so on
+ * a phone the headline and the rows start on the section's own gutter rather
+ * than 24px inside a column that is not being drawn.
  */
 const SPINE =
-  "before:absolute before:inset-y-0 before:left-0 before:w-px " +
-  "before:bg-[linear-gradient(to_bottom,rgba(0,0,0,0.1)_0%,rgba(0,0,0,0.1)_50%,transparent_100%)]";
+  "lg:before:absolute lg:before:inset-y-0 lg:before:left-0 lg:before:w-px " +
+  "lg:before:bg-[linear-gradient(to_bottom,rgba(0,0,0,0.1)_0%,rgba(0,0,0,0.1)_50%,transparent_100%)]";
 
 const POINTS: { text: string; Icon: Mark }[] = [
   {
@@ -125,14 +132,15 @@ export function SpeakSend() {
                 line was carrying `font-light!` — the `!` being what it took to
                 win — and 400 is the step up from it.
 
-                Padded by the same 24px the rows are, so the headline starts on
-                the list's inner edge instead of 24px to the left of the marks.
-                The spine still runs at 0, which puts the heading inside the
-                column the rules are drawn across rather than hanging off the
-                front of it. */}
+                Padded by the same 24px the rows are, wherever they are padded
+                at all, so the headline starts on the list's inner edge instead
+                of 24px to the left of the marks. The spine still runs at 0,
+                which puts the heading inside the column the rules are drawn
+                across rather than hanging off the front of it. Below `lg` there
+                is no spine and no indent — see SPINE. */}
             <h2
               data-speak-reveal
-              className="pl-6 font-slab text-3xl leading-[1.22] tracking-tight sm:text-5xl"
+              className="font-slab text-3xl leading-[1.22] tracking-tight sm:text-5xl lg:pl-6"
             >
               Effortless quotes,
               <br />
@@ -148,7 +156,7 @@ export function SpeakSend() {
                 <li
                   key={text}
                   data-speak-reveal
-                  className={`relative flex items-center gap-4 py-6 pl-6 ${RULE}`}
+                  className={`relative flex items-center gap-4 py-6 lg:pl-6 ${RULE}`}
                 >
                   {/* No fill behind the mark — the lock is line art on nothing
                       and a tile would box it. The 48px slot stays, empty:
@@ -195,7 +203,7 @@ export function SpeakSend() {
                   key={`rule-${i}`}
                   aria-hidden="true"
                   data-speak-reveal
-                  className={`relative flex items-center gap-4 py-6 pl-6 ${RULE}`}
+                  className={`relative flex items-center gap-4 py-6 lg:pl-6 ${RULE}`}
                 >
                   <span className="block h-12 w-12 shrink-0" />
                 </li>
