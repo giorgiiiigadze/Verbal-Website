@@ -68,12 +68,30 @@ export function FooterReveal({
             // smoothing. An ease on top would fight the finger.
             ease: "none",
             scrollTrigger: {
-              // The reveal is exactly the last footer-height of the document.
-              // Measured as functions so a resize or a late-loading image
-              // re-derives them instead of animating against stale numbers.
+              // The reveal is the last footer-height of the document, and it
+              // finishes a quarter of the way before the end of it.
+              //
+              // That quarter is the whole reason this is not a bug: the start
+              // and end are absolute scroll positions, so being a few pixels
+              // short of the bottom used to mean being a few percent short of
+              // revealed — on a footer that is already fully in view, because
+              // it is sticky. Landing near the bottom rather than exactly on it
+              // is the normal result of a fast flick, and it left the footer
+              // sitting there dimmed and shifted. Finishing early costs
+              // nothing: the part of the footer that is still covered at that
+              // point is behind `main`, which is opaque, so the reader cannot
+              // see what it is being spent on.
+              //
+              // Measured as functions so a refresh re-derives them instead of
+              // animating against stale numbers.
               start: () => ScrollTrigger.maxScroll(window) - footer.offsetHeight,
-              end: () => ScrollTrigger.maxScroll(window),
-              scrub: 0.6,
+              end: () =>
+                ScrollTrigger.maxScroll(window) - footer.offsetHeight * 0.25,
+              // Short enough that a flick to the bottom settles in a blink,
+              // long enough to still smooth a scroll wheel. At 0.6 a hard
+              // scroll landed on a footer that then took most of a second to
+              // arrive, which reads as the page still loading.
+              scrub: 0.35,
               invalidateOnRefresh: true,
             },
           },
@@ -89,8 +107,45 @@ export function FooterReveal({
     apply();
     window.addEventListener("resize", apply);
 
+    /*
+      The other half of the same bug, and the half that made it stick.
+
+      Both ends of the reveal are absolute scroll positions derived from the
+      document height, and the document is not done growing when this is set
+      up: a font swaps in and every paragraph re-wraps, an image below the fold
+      arrives as the reader reaches it. ScrollTrigger refreshes itself on
+      `load` and on resize, and neither of those fires for that. So the reader
+      flicks to what is the bottom, the page grows underneath them, and the
+      reveal's window is now somewhere below where they are standing — leaving
+      the footer uncovered, sticky, and frozen at the 0.35 opacity it starts
+      from. It never resolves, because nothing else moves.
+
+      Watching the document's own box catches every cause of it at once, and
+      the debounce keeps a run of changes to one refresh: ScrollTrigger.refresh
+      re-measures every trigger on the page, so it is not a thing to do on each
+      of thirty layout ticks.
+    */
+    let queued = 0;
+    let lastHeight = document.documentElement.scrollHeight;
+    const growth = new ResizeObserver(() => {
+      // Height only. A ResizeObserver fires on width too, and width is already
+      // the `resize` listener's business; more to the point, refreshing inside
+      // an observer that a refresh could itself trip is how a loop starts.
+      // Nothing here pins, so it does not today — this is what keeps that true
+      // if something later does.
+      const height = document.documentElement.scrollHeight;
+      if (height === lastHeight) return;
+      lastHeight = height;
+
+      window.clearTimeout(queued);
+      queued = window.setTimeout(() => ScrollTrigger.refresh(), 150);
+    });
+    growth.observe(document.body);
+
     return () => {
       window.removeEventListener("resize", apply);
+      growth.disconnect();
+      window.clearTimeout(queued);
       tween?.scrollTrigger?.kill();
       tween?.kill();
       gsap.set(inner, { clearProps: "all" });
