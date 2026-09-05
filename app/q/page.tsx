@@ -14,8 +14,10 @@ import { useCallback, useEffect, useRef, useState } from "react";
  * run in the browser. That is the whole reason the page is a client component.
  *
  * NOTE: the edge function's CORS currently allows only the old GitHub origin.
- * Loading a quote from this domain will fail until `theverbal.app` is added to
- * the function's allowed origins.
+ * Loading a quote from this domain, or from localhost, will fail until those
+ * origins are added to the function's allowed list. That is the fix; there is
+ * deliberately no local stand-in for the function any more, because the only
+ * quotes this site should ever render are real ones.
  */
 
 const API =

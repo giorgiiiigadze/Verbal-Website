@@ -7,12 +7,12 @@ const nextConfig: NextConfig = {
   // them up.
   pageExtensions: ["ts", "tsx", "md", "mdx"],
 
-  // The JSON endpoints are machinery, not pages. `app/robots.ts` already tells
-  // a well-behaved crawler not to fetch them; this covers the case robots.txt
-  // cannot — a URL discovered from a link elsewhere, which is fetched and
-  // indexed without the rules file ever being consulted for it. A response
-  // header is the only way to say `noindex` about a response that is not HTML
-  // and has no head to put a meta tag in.
+  // Nothing is served under /api today. Kept for the same reason robots.ts
+  // keeps its rule: any endpoint added later is machinery rather than a page,
+  // and this covers the case robots.txt cannot — a URL discovered from a link
+  // elsewhere, fetched without the rules file being consulted for it. A
+  // response header is the only way to say `noindex` about a response that is
+  // not HTML and has no head to put a meta tag in.
   async headers() {
     return [
       {

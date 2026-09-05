@@ -2,8 +2,10 @@ import type { MetadataRoute } from "next";
 import { SITE_URL } from "@/content/site";
 
 /**
- * Everything public is crawlable; the JSON endpoints are not pages and have
- * nothing to index.
+ * Everything public is crawlable. `/api/` is disallowed although nothing is
+ * served under it today: the rule costs a line, and the failure it prevents is
+ * a JSON endpoint added later being crawled before anyone thinks to say it
+ * should not be.
  *
  * `/q` is deliberately *not* disallowed. A shared quote must stay out of the
  * index, and it does that with `noindex` in `app/q/layout.tsx` — which only
