@@ -7,7 +7,8 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 /**
- * The share band's entrance, and the fan of the pages beside it.
+ * The share band's entrance: the claim, the link, the page it opens, and the
+ * answer coming back.
  *
  * Same arrangement as the other reveals — a wrapper, so everything inside stays
  * server rendered and only the timeline ships — with two groups the house
@@ -20,26 +21,18 @@ gsap.registerPlugin(ScrollTrigger);
  *                      rather than here, so the split survives without script
  *                      and no text is ever re-written after hydration.
  *
- *   `data-share-page`  the three pages, scrubbed rather than played. They start
- *                      square on top of each other and open into the fan the
- *                      stylesheet already describes, so the pile spreads under
- *                      the reader's own scroll — the one gesture in the section
- *                      that is theirs and not ours.
+ *   `data-share-link`   the link chip, and
+ *   `data-share-sheet`  the page it opens. They arrive in that order, which is
+ *                      the order the thing happens in: the customer gets a
+ *                      link, then a quote.
  *
- * The fan's from-state is a counter-rotation, not a rotation: the outer element
- * of each page carries the final angle as a Tailwind class, and this turns the
- * inner one the opposite way to cancel it. That keeps the resting fan in CSS,
- * where it belongs and where it stays without JavaScript, and means nothing
- * here has to agree with a number written in the markup.
+ *   `data-share-answer` the accepted chip, scrubbed rather than played. It is
+ *                      the reply coming back, so it is the one thing here tied
+ *                      to the reader's own scroll rather than to a clock: it
+ *                      arrives as they settle on the section, and it is
+ *                      complete before the band is centred, so stopping there
+ *                      shows an answer and not half of one.
  */
-
-/** Per page, in DOM order: the turn that cancels its class, and how far in from
- *  its resting place it starts. The centre page only rises. */
-const COLLAPSED = [
-  { rotation: 6, x: 46, y: 26 },
-  { rotation: -6, x: -46, y: 26 },
-  { rotation: 0, x: 0, y: 0 },
-];
 
 export function ShareReveal({ children }: { children: React.ReactNode }) {
   const root = useRef<HTMLDivElement>(null);
@@ -49,14 +42,14 @@ export function ShareReveal({ children }: { children: React.ReactNode }) {
     if (!section) return;
 
     const ctx = gsap.context((self) => {
-      // Honour the OS setting by leaving everything where the server put it —
-      // which for the pages is the fan, already open.
+      // Honour the OS setting by leaving everything where the server put it,
+      // which is the finished picture: link, sheet and answer all in place.
       if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
       const words = self.selector!("[data-share-word]");
-      const chips = self.selector!("[data-share-chip]");
-      const stack = self.selector!("[data-share-stack]");
-      const pages = self.selector!("[data-share-page]");
+      const link = self.selector!("[data-share-link]");
+      const sheet = self.selector!("[data-share-sheet]");
+      const answer = self.selector!("[data-share-answer]");
 
       const tl = gsap.timeline({
         defaults: { ease: "power3.out" },
@@ -73,43 +66,30 @@ export function ShareReveal({ children }: { children: React.ReactNode }) {
         words,
         { opacity: 0, y: 28 },
         { opacity: 1, y: 0, duration: 0.9, stagger: 0.07 },
-      )
-        .fromTo(
-          chips,
-          { opacity: 0, y: 16, scale: 0.94 },
-          { opacity: 1, y: 0, scale: 1, duration: 0.55, stagger: 0.07 },
-          // Absolute, not sequential: the chips come up under the headline
-          // while it is still landing rather than queueing behind the last word.
-          0.3,
-        )
-        .fromTo(
-          stack,
-          { opacity: 0, y: 30 },
-          { opacity: 1, y: 0, duration: 0.9 },
-          0.15,
-        );
+      ).fromTo(
+        [...link, ...sheet],
+        { opacity: 0, y: 30 },
+        { opacity: 1, y: 0, duration: 0.9, stagger: 0.12 },
+        // Absolute, not sequential: the link and the sheet rise under the
+        // headline while it is still landing rather than queueing behind the
+        // last word.
+        0.15,
+      );
 
-      // The pile opens on scroll, over the stretch between the section
-      // appearing and it sitting properly in the window — finished before it is
-      // centred, so a reader who stops there sees the fan and not a half-turn.
+      // The reply, on the reader's own scroll. It comes in from under the sheet
+      // it overlaps, which is the direction a notification arrives from.
       gsap.fromTo(
-        pages,
+        answer,
+        { opacity: 0, y: 18, scale: 0.92 },
         {
-          rotation: (i: number) => COLLAPSED[i]?.rotation ?? 0,
-          x: (i: number) => COLLAPSED[i]?.x ?? 0,
-          y: (i: number) => COLLAPSED[i]?.y ?? 0,
-          scale: 0.94,
-        },
-        {
-          rotation: 0,
-          x: 0,
+          opacity: 1,
           y: 0,
           scale: 1,
           ease: "none",
           scrollTrigger: {
             trigger: section,
-            start: "top 85%",
-            end: "top 35%",
+            start: "top 70%",
+            end: "top 40%",
             scrub: 0.6,
             invalidateOnRefresh: true,
           },

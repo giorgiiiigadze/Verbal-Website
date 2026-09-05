@@ -32,9 +32,9 @@ export function Hero() {
             rather than on the section, which is padded like every other
             section on the site and should stay that way.
 
-            It does not go lower than this: the right-hand phone is pushed down
-            by `translate-y-8`, and the padding is what keeps that frame off the
-            headline of the block underneath. */}
+            It does not go lower than this: the phone and the sheet beside it
+            rest on the same bottom line, and the padding is what keeps that
+            line off the headline of the block underneath. */}
         <Container
           size="wide"
           className="grid items-center gap-16 pb-6 pt-28 sm:pb-10 sm:pt-36 lg:grid-cols-2 lg:gap-12"
@@ -116,52 +116,60 @@ export function Hero() {
           </div>
 
           {/*
-            Two filled device frames, nothing behind them. The second sits
-            lower than the first so the pair reads as a staggered pair rather
-            than a row. The screens are a quote and the client it was made
-            for, in that order: the quote first, because it is the thing the
-            headline just promised, and the client second, because it is where
-            the answer to it ends up.
+            The app on the left and what it sends on the right: the phone with
+            the quote open, and beside it the A4 page the client actually
+            receives. They overlap and share a bottom edge so the pair reads as
+            one object rather than two things placed side by side.
 
-            One light and one dark on purpose. The app follows the system
-            appearance, and showing both says so without a line of copy
-            claiming it.
+            The sheet is a placeholder. A rendered page of an example quote PDF
+            goes in it later — an <Image> filling the box, with the aspect ratio
+            and the paper edge below staying exactly as they are.
 
-            The standing offset is on the outer div and the entrance is on the
-            inner one: both are transforms, and GSAP animating the same element
-            would overwrite the Tailwind translate.
+            The entrance is on an inner div in each half rather than on the
+            halves themselves: GSAP animates transforms there, and the layout's
+            own offsets live on the outer element where they cannot be
+            overwritten.
           */}
-          {/* 280px is the size, not a safety rail: an even split of the wide
-              container leaves each frame exactly that at `lg`, and `max-w-xl`
-              leaves them the same below it, so the pair is one size everywhere
-              above a phone. Narrower viewports fall under it and scale with
-              `w-1/2`. Growing the frames means growing all three numbers. */}
-          <div className="flex w-full max-w-xl items-start justify-center gap-4 lg:max-w-none">
+          {/* The pair is sized in percentages of the column and overlapped by
+              one, so 46 + 60 - 6 lands on exactly 100 at every width: the phone
+              and the sheet keep their proportions and their contact point from
+              a 360px phone up to the wide container, with nothing to retune per
+              breakpoint. Resizing one means re-balancing all three numbers. */}
+          <div className="flex w-full max-w-xl items-end justify-center lg:max-w-none">
             {/* The left frame is the travel anchor, not part of the hero's own
                 phone entrance: PhoneTravel lifts a fixed copy of it down into
                 the section below on scroll, so this one has to hold a still
                 resting position for that copy to start from. It carries no
                 `data-hero-phone`, and on desktop PhoneTravel hides it and lets
                 the travelling copy stand in; on mobile, reduced-motion, or with
-                no script it simply shows as itself. */}
-            <div className="w-1/2 max-w-[280px]">
+                no script it simply shows as itself.
+
+                It is the front of the pair — `z-10` is what makes the sheet
+                tuck behind it rather than the other way round, which would put
+                a blank placeholder over the app screen. */}
+            <div className="relative z-10 w-[46%]">
               <div data-travel-anchor="hero">
                 <PhoneFrame
                   src="/phone/screen-quote.png"
                   alt="A quote open in Verbal, two of its line items still marked as needing a price."
-                  sizes="280px"
+                  sizes="(min-width: 1024px) 280px, 46vw"
                   eager
                 />
               </div>
             </div>
-            <div className="w-1/2 max-w-[280px] translate-y-6 sm:translate-y-8">
+            {/* Slid left under the phone's edge, and bottom-aligned with it by
+                the row's `items-end`, so the two objects rest on one line and
+                touch rather than floating apart. */}
+            <div className="-ml-[6%] w-[60%]">
               <div data-hero-phone>
-                <PhoneFrame
-                  src="/phone/screen-client-detail.png"
-                  alt="A client's page in Verbal in dark mode: what they were quoted, what they accepted and what was declined, above the quotes themselves."
-                  sizes="280px"
-                  eager
-                />
+                {/* A4 is 210x297mm, so the box holds that ratio and takes its
+                    height from whatever width the column gives it — the same
+                    page shape at every breakpoint. */}
+                <div className="flex aspect-[210/297] w-full items-center justify-center rounded-md border border-line bg-card p-3 shadow-[0_24px_50px_-28px_rgb(0_0_0/0.4)]">
+                  <div className="flex h-full w-full items-center justify-center rounded-sm border border-dashed border-line text-sm text-muted">
+                    Quote PDF (A4)
+                  </div>
+                </div>
               </div>
             </div>
           </div>

@@ -15,11 +15,12 @@ gsap.registerPlugin(ScrollTrigger);
  * with `fromTo` rather than in globals.css, because the block is below the fold
  * and nothing is left hidden if the script never runs.
  *
- * The phone in the right column carries `data-speak-reveal` too, so on mobile —
- * where nothing travels into it — it fades up with the rest. On desktop
- * PhoneTravel has already hidden it and the travelling copy lands in its place;
- * the opacity this writes has simply settled to 1 by the time the hand-off
- * shows the real frame, so the two never fight.
+ * The phone in the right column carries `data-speak-reveal` too, for the
+ * desktop case where motion is off and nothing travels into it. When the travel
+ * does run, PhoneTravel has already hidden the frame and the travelling copy
+ * lands in its place; the opacity this writes has simply settled to 1 by the
+ * time the hand-off shows the real frame, so the two never fight. Below `lg`
+ * the frame is not rendered and this selects the headline and the claims only.
  */
 export function SpeakSendReveal({ children }: { children: React.ReactNode }) {
   const root = useRef<HTMLDivElement>(null);

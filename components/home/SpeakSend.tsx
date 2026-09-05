@@ -37,6 +37,10 @@ const RULE =
  * the rest of the copy — the list carries on as a list and simply stops
  * saying anything, rather than the section ending on a hard edge.
  *
+ * `lg` and up with the phone they are balancing. Below that there is no second
+ * column to match, and two empty rules under the last claim are just the
+ * section trailing off into nothing.
+ *
  * They are `aria-hidden`, because an empty list item is a row a screen reader
  * would announce and there is nothing in it. Change this to 0 the moment there
  * is a fourth claim worth making: a real point is always better than a rule
@@ -61,10 +65,10 @@ const EMPTY_ROWS = 2;
  * gradient. Because it takes no space, the rows' `inset-x-0` rules still start
  * exactly on it and the two meet as a corner.
  *
- * `lg` and up only. Below that the phone drops under the column and the list
- * runs the full width of the page, where a vertical rule down the left is no
- * longer the inner edge of a two-column block — it is a line down the side of
- * the whole screen. Every `pl-6` that clears it is gated to `lg` with it, so on
+ * `lg` and up only. Below that there is no second column and the list runs the
+ * full width of the page, where a vertical rule down the left is no longer the
+ * inner edge of a two-column block — it is a line down the side of the whole
+ * screen. Every `pl-6` that clears it is gated to `lg` with it, so on
  * a phone the headline and the rows start on the section's own gutter rather
  * than 24px inside a column that is not being drawn.
  */
@@ -110,8 +114,9 @@ const POINTS: { text: string; Icon: Mark }[] = [
  * The right-hand phone is the docking point for PhoneTravel: on desktop the
  * fixed copy that started in the hero settles exactly over it and hands off, so
  * both frames must be the same screen (`screen-quote.png`) for the swap not to
- * flicker. On mobile, reduced-motion, or with no script, nothing travels and
- * this frame is simply the section's own image.
+ * flicker. With reduced motion or no script nothing travels and the frame is
+ * simply the section's own image. Below `lg` there is no frame at all — see the
+ * note on the dock.
  *
  * `data-speak-reveal` marks what SpeakSendReveal brings in on scroll, in the
  * order they appear; the layout holds if the attribute is removed.
@@ -203,7 +208,7 @@ export function SpeakSend() {
                   key={`rule-${i}`}
                   aria-hidden="true"
                   data-speak-reveal
-                  className={`relative flex items-center gap-4 py-6 lg:pl-6 ${RULE}`}
+                  className={`relative hidden items-center gap-4 py-6 lg:flex lg:pl-6 ${RULE}`}
                 >
                   <span className="block h-12 w-12 shrink-0" />
                 </li>
@@ -230,7 +235,15 @@ export function SpeakSend() {
               across on the way down, and this halves that. PhoneTravel reads
               both anchors with `getBoundingClientRect` on every frame, so it
               needs nothing from here when the dock moves. */}
-          <div className="flex justify-center">
+          {/* Desktop only. Stacked on a phone this frame had a column to
+              itself and took the full 320px, which put a 650px-tall screenshot
+              under three short claims and made the block read as a picture with
+              some text above it. It is also the same screen the hero is already
+              showing on that viewport — `screen-quote.png` in both places — so
+              on a phone it was the second printing of an image the reader met a
+              scroll ago. The claims are what this section has to say; on a
+              phone they say it on their own. */}
+          <div className="hidden justify-center lg:flex">
             <div
               data-speak-reveal
               data-travel-anchor="section"
@@ -239,7 +252,7 @@ export function SpeakSend() {
               <PhoneFrame
                 src="/phone/screen-quote.png"
                 alt="A quote open in Verbal, two of its line items still marked as needing a price."
-                sizes="(min-width: 1024px) 320px, 280px"
+                sizes="320px"
               />
             </div>
           </div>
