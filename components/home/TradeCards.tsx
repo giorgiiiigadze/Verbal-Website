@@ -45,23 +45,31 @@ const TRACKS = [
 ];
 
 /**
- * The four brand colours at 15%, cycling. Full strength with a white label was
- * what the job chips used and it measured under AA on three of the four; a
- * tint carries the same colour with the label in the site's own ink.
+ * The chips are unfilled: a dark hairline and a low shadow, so a row reads as
+ * outlines passing rather than as confetti. Four cycling colour tints read as
+ * a category the trades do not have — nothing makes a plumber blue. The border
+ * darkens on hover, the one thing here that answers a pointer.
  *
- * Whole class strings because Tailwind reads the source statically.
+ * The darkening is slow — half a second, eased out. The chips are moving, so a
+ * still pointer is passed over by one chip after another, and at the default
+ * speed each would snap to its dark border and back: a flicker travelling with
+ * the row rather than an answer to the pointer. Over half a second the border
+ * is still on its way in as the chip leaves, so what the row shows is a soft
+ * swell under the pointer instead of a line of chips blinking in turn.
  */
-const CHIP_TONES = [
-  "bg-[#0098F2]/15",
-  "bg-[#FF6363]/15",
-  "bg-[#5D9C06]/15",
-  "bg-[#6C56FC]/15",
-];
+const CHIP_CLASS =
+  "border border-black/15 bg-transparent " +
+  "shadow-[0_1px_2px_rgba(0,0,0,0.06),0_6px_14px_-6px_rgba(0,0,0,0.18)] " +
+  "transition-colors duration-500 ease-out hover:border-black/45";
 
 export function TradeCards() {
   return (
     <TradeCardsReveal>
-      <section className="bg-bg py-14 sm:py-20">
+      {/* Deeper than the house `py-14 sm:py-20` the other sections take. The
+          rows are full bleed and moving, so they need clear air above and below
+          to read as their own band — at the standard padding the marquee sits
+          close enough to the dark ShareBand under it to look like its lid. */}
+      <section className="bg-bg py-24 sm:py-36">
         {/* The heading is centred and set black. The colour rides on the wrapper
             rather than the h2 because SectionHeading takes no class for it — the
             eyebrow and lead set their own colours, so only the title inherits. */}
@@ -77,9 +85,15 @@ export function TradeCards() {
           </div>
         </Container>
 
-        <div className="trade-fade mt-14 space-y-3 sm:space-y-4">
+        <div className="trade-fade mt-14">
           {TRACKS.map(({ duration, reverse }, row) => (
-            <div key={duration} data-trade-row className="overflow-hidden">
+            /* The row clips the track it holds, and the padding is what keeps
+               the chips' shadow from being clipped with it: a row is exactly as
+               tall as a chip, so anything the shadow throws below the chip lands
+               outside the box and is cut. The padding sits inside the clipping
+               box, so it gives the shadow its room and spaces the rows at the
+               same time — which is why there is no `space-y` here. */
+            <div key={duration} data-trade-row className="overflow-hidden py-2">
               <ul
                 className={`trade-track flex w-max ${reverse ? "trade-track-reverse" : ""}`}
                 style={{ "--trade-duration": duration } as CSSProperties}
@@ -89,13 +103,11 @@ export function TradeCards() {
                     is hidden from assistive technology: it is the same fifteen
                     trades a second time and says nothing new. */}
                 {[0, 1].map((copy) =>
-                  rowTrades(row).map((trade, i) => (
+                  rowTrades(row).map((trade) => (
                     <li
                       key={`${copy}-${trade.name}`}
                       aria-hidden={copy === 1 ? true : undefined}
-                      className={`mr-3 whitespace-nowrap rounded-full px-5 py-2.5 text-sm font-medium text-text sm:mr-4 ${
-                        CHIP_TONES[i % CHIP_TONES.length]
-                      }`}
+                      className={`mr-3 whitespace-nowrap rounded-full px-6 py-2.5 text-base font-semibold text-text sm:mr-4 sm:px-7 sm:text-lg ${CHIP_CLASS}`}
                     >
                       {trade.name}
                     </li>

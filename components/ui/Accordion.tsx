@@ -17,12 +17,16 @@ import type { QA } from "@/content/faq";
  * So both are rendered, stacked, and crossfaded by `group-open`: still CSS
  * only, still no script, and the state change keeps the movement the rotation
  * used to give it.
+ *
+ * `faq-row` is what makes the answer slide rather than appear — see the rule on
+ * `::details-content` in globals.css. It lives there and not in a utility here
+ * because Tailwind has no variant for that pseudo-element.
  */
 export function Accordion({ items }: { items: QA[] }) {
   return (
     <div className="divide-y divide-line">
       {items.map((item) => (
-        <details key={item.q} className="group">
+        <details key={item.q} className="faq-row group">
           <summary className="flex cursor-pointer list-none items-center justify-between gap-4 py-6 text-left font-slab text-lg text-black [&::-webkit-details-marker]:hidden">
             {item.q}
             {/* The box is what holds the row's right edge steady: the two
@@ -36,7 +40,9 @@ export function Accordion({ items }: { items: QA[] }) {
               <MinusMark className="absolute inset-0 h-full w-full opacity-0 transition-opacity duration-200 group-open:opacity-100" />
             </span>
           </summary>
-          <p className="max-w-3xl pb-6 pr-8 leading-relaxed text-muted">{item.a}</p>
+          <p className="max-w-3xl pb-6 pr-8 leading-relaxed text-muted">
+            {item.a}
+          </p>
         </details>
       ))}
     </div>

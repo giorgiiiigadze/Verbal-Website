@@ -10,6 +10,7 @@ import {
   type Mark,
   TagMark,
 } from "@/components/ui/marks";
+import { NAV_ITEM } from "@/components/layout/navItem";
 import { NAV_FEATURES } from "@/content/features";
 
 /**
@@ -126,7 +127,15 @@ export function FeaturesMenu() {
         aria-expanded={open}
         aria-controls="features-menu"
         onClick={() => setOpen((v) => !v)}
-        className="whitespace-nowrap text-text"
+        // The same pill as its neighbours, and it stays lit while the panel is
+        // open: the pointer is on the panel by then, not on the word, and an
+        // item that goes cold under an open menu reads as having lost it.
+        //
+        // `cursor-pointer` because this is the one nav item that is a `button`
+        // and not a link: a button gets the arrow by default, so without this
+        // the pointer changes as it crosses from "Pricing" to "Features" and
+        // the one item that opens something looks like the one that is dead.
+        className={`cursor-pointer ${NAV_ITEM} ${open ? "bg-black/5" : ""}`}
       >
         Features
       </button>
@@ -176,7 +185,7 @@ export function FeaturesMenu() {
           <Link
             href="/#how"
             onClick={() => setOpen(false)}
-            className="mt-1 block border-t border-line px-3 pb-1 pt-3 text-[13px] font-medium text-[#0098F2]"
+            className="mt-1 block px-3 pb-1 pt-3 text-[13px] font-medium text-[#0098F2]"
           >
             See how the whole thing works →
           </Link>

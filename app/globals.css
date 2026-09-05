@@ -57,12 +57,18 @@
   --border: rgb(0 0 0 / 0.08);
 
   /* Filled controls, kept separate from the raw brand swatch so buttons can be
-     retuned without moving the brand. The resting fill is RoyalBlue500 — what
-     used to be the hover — because RoyalBlue600 read as near-black on the page
-     rather than as the brand's blue. Hover keeps the same direction it always
-     had: one step lighter again. */
-  --primary: #21348a;
-  --primary-hover: #2a41a8;
+     retuned without moving the brand — which is what this is: #007AFF is the
+     system blue an iPhone owner sees on every other button they press, and it
+     is not on the royal ramp. RoyalBlue500 was a navy at button size and read
+     as a dark shape with a blue cast rather than as something to tap.
+
+     Hover goes darker, reversing the direction the royal fills used: they were
+     navies and had room to lighten, and this does not. White on #007AFF is
+     4.05:1 — under AA for text below 18.66px bold, so the `sm` and `xs` buttons
+     sit just short of it; anything lighter on hover would take the rest of the
+     scale with them. #0062cc is 5.9:1 and clears it. */
+  --primary: #007aff;
+  --primary-hover: #0062cc;
 
   --accepted: #0f7b6c;
   --accepted-fill: #ddedea;
@@ -169,6 +175,78 @@ h1, h2, h3, .font-slab {
    first thing to go when they have asked for less of it. */
 @media (prefers-reduced-motion: reduce) {
   .trade-track { animation: none; }
+}
+
+/* ---------------------------------------------------------------------------
+   The FAQ rows
+--------------------------------------------------------------------------- */
+
+/* The answers slide open and shut rather than appearing and vanishing whole.
+
+   `<details>` is the element and it stays the element — the accordion has no
+   script and does not want one — so the animation goes on `::details-content`,
+   the box the browser wraps the non-summary children in. A wrapper div of our
+   own cannot stand in for it: a closed `<details>` hides its children outright,
+   so there would be nothing left in flow to give a height to.
+
+   The box is a grid one row tall and what animates is that row, `0fr` to `1fr`.
+   Not `block-size: 0` to `auto`, which was the first attempt: `auto` only
+   interpolates under `interpolate-size: allow-keywords`, so it did nothing at
+   all outside Chromium. Not a fixed max-height either — the answers run two or
+   three lines and one number would clip the long ones or open the short ones at
+   the tallest one's speed.
+
+   The two overrides under it are what make the closing direction work:
+
+   `content-visibility: visible` countermands the browser's own rule for a
+   closed `<details>`, which is to skip rendering the contents entirely. That
+   rule is why the close would not animate: an `fr` row is sized from its
+   contents, and contents that stopped being rendered the instant the `open`
+   attribute went are worth nothing, so the box hit zero in one frame while the
+   transition ran against nothing. The documented answer to that is to transition
+   `content-visibility` with `allow-discrete` so the flip waits for the end, and
+   it is honoured too unevenly to rely on. Overriding it is one line and behaves
+   the same everywhere.
+
+   `visibility` then does the hiding that `content-visibility` was doing, and it
+   is timed rather than eased: no duration, and a delay equal to the slide, so
+   it flips at the far end of the close and at the very start of the open. That
+   keeps a closed answer out of the tab order and out of a screen reader's way,
+   which a box merely clipped to zero height would not be.
+
+   Browsers with no `::details-content` — Safari before 18.4, Firefox before 139
+   — open the rows at once, as they always did. Nothing here is load-bearing.
+
+   Reduced motion is handled globally further down, where every transition on
+   the site is cut to nothing. */
+.faq-row::details-content {
+  content-visibility: visible;
+  visibility: hidden;
+  display: grid;
+  grid-template-rows: 0fr;
+  overflow: hidden;
+  /* Out fast, settle slow — the same shape of curve as a sheet coming to rest,
+     rather than `ease`, which spends its time in the middle of the move. */
+  transition:
+    grid-template-rows 320ms cubic-bezier(0.32, 0.72, 0, 1),
+    visibility 0s linear 320ms;
+}
+
+.faq-row[open]::details-content {
+  visibility: visible;
+  grid-template-rows: 1fr;
+  /* The same slide, but the row is readable from the first frame. */
+  transition:
+    grid-template-rows 320ms cubic-bezier(0.32, 0.72, 0, 1),
+    visibility 0s linear 0s;
+}
+
+/* A grid item's automatic minimum size is its content, so without this the row
+   bottoms out at one line of text instead of at nothing. It goes on the answer
+   itself: the wrapper is a pseudo-element and nothing inside it can be reached
+   through one. */
+.faq-row > :not(summary) {
+  min-block-size: 0;
 }
 
 /* Long-form legal prose. Re-points the typography plugin at the theme tokens so

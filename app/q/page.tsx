@@ -213,14 +213,18 @@ function QuoteBody({
     ? (quote.numberPrefix || "") + quote.number
     : null;
 
-  const contact = [
-    business.phone,
-    business.email,
-    business.address,
-    business.taxNumber,
-  ].filter((line) => line && String(line).trim());
+  // Mirrors QuoteDocument's split: contact lines (phone/email/address) read
+  // as one block under the business name, and the tax number gets its own
+  // line rather than sitting in the list unlabelled.
+  const businessContact = [business.phone, business.email, business.address]
+    .filter((line) => line && String(line).trim());
+  const taxNumber = business.taxNumber?.trim();
 
   const scope = (quote.scope || []).filter((s) => s && s.trim());
+  const items = quote.items || [];
+  const unpriced = items.filter(
+    (item) => item.unit_price === null || item.unit_price === undefined,
+  ).length;
 
   const banner = (() => {
     if (quote.status === "accepted") {
@@ -250,108 +254,124 @@ function QuoteBody({
     return null;
   })();
 
-  const terms = [business.terms, quote.notes, business.footerNote].filter(
-    (text) => text && String(text).trim(),
-  );
+  // Terms and notes print as their own labelled blocks in the PDF
+  // (QuoteDocumentPage.footerBlock) rather than run together.
+  const termsText = business.terms?.trim();
+  const notesText = [quote.notes, business.footerNote]
+    .filter((text) => text && String(text).trim())
+    .join(" ");
 
   return (
     <>
-      <header>
+      {/* Quote no. / Issued / Valid until — the PDF's header row. */}
+      <div className="doc-header">
         <div>
-          <p className="biz-name">{name}</p>
-          {contact.map((line, i) => (
-            <p className="biz-detail" key={i}>
+          <p className="field-label">Quote no.</p>
+          <p className="doc-meta-value">{number || "—"}</p>
+        </div>
+        <div className="doc-meta">
+          <div>
+            <p className="field-label">Issued</p>
+            <p className="doc-meta-value">{day(quote.createdAt)}</p>
+          </div>
+          {quote.validityDate && (
+            <div>
+              <p className="field-label">Valid until</p>
+              <p className="doc-meta-value">{day(quote.validityDate)}</p>
+            </div>
+          )}
+        </div>
+      </div>
+
+      <div className="rule" />
+
+      {/* From / To — the PDF's partiesRow, split by a vertical divider. */}
+      <div className="parties">
+        <div className="party">
+          <p className="field-label">From</p>
+          <p className="party-name">{name}</p>
+          {businessContact.map((line, i) => (
+            <p className="party-detail" key={i}>
               {line}
             </p>
           ))}
+          {taxNumber && <p className="party-detail">Tax no. {taxNumber}</p>}
         </div>
-        <div>
-          <div className="doc-label">QUOTE</div>
-          {number && <div className="doc-number">No. {number}</div>}
+        <div className="party-divider" aria-hidden="true" />
+        <div className="party">
+          <p className="field-label">To</p>
+          <p className="party-name">{quote.clientName || "Client"}</p>
         </div>
-      </header>
+      </div>
+
+      <div className="rule" />
 
       <h1>{quote.title || "Quote"}</h1>
       {banner}
 
-      <div className="parties">
-        {quote.clientName && (
-          <div>
-            <p className="label">For</p>
-            <p>{quote.clientName}</p>
-          </div>
-        )}
-        <div>
-          <p className="label">Date</p>
-          <p>{day(quote.createdAt)}</p>
+      {quote.jobSummary && (
+        <div className="field-block">
+          <p className="field-label">Job summary</p>
+          <p className="summary">{quote.jobSummary}</p>
         </div>
-        {quote.validityDate && (
-          <div>
-            <p className="label">Valid until</p>
-            <p>{day(quote.validityDate)}</p>
-          </div>
-        )}
-      </div>
-
-      {quote.jobSummary && <p className="summary">{quote.jobSummary}</p>}
+      )}
 
       {scope.length > 0 && (
-        <>
-          <h2>Scope of work</h2>
+        <div className="field-block">
+          <p className="field-label">Scope of work</p>
           <ul className="scope">
             {scope.map((s, i) => (
               <li key={i}>{s}</li>
             ))}
           </ul>
-        </>
+        </div>
       )}
 
-      <h2>Costs</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Item</th>
-            <th className="num">Amount</th>
-          </tr>
-        </thead>
-        <tbody>
-          {(quote.items || []).map((item, i) => {
-            const qty = item.quantity;
-            const priced =
-              item.unit_price !== null && item.unit_price !== undefined;
-            const lineTotal =
-              priced && qty !== null && qty !== undefined
-                ? qty * (item.unit_price as number)
-                : priced
-                  ? (item.unit_price as number)
-                  : null;
-            const qtyLabel =
-              qty === null || qty === undefined
-                ? ""
-                : (Number.isInteger(qty) ? qty : Number(qty).toFixed(2)) +
-                  (item.unit ? " " + item.unit : "");
-            return (
-              <tr key={i}>
-                <td>
-                  {item.description || "Item"}
-                  {qtyLabel && (
-                    <>
-                      <br />
-                      <span className="muted">{qtyLabel}</span>
-                    </>
-                  )}
-                </td>
-                {/* "TBC" rather than a zero: a price the tradesperson hasn't
-                    got yet is not a price of nothing, and printing 0 would
-                    promise it free. */}
-                <td className="num">
-                  {priced ? money(lineTotal, currency) : "TBC"}
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+      {items.length > 0 && (
+        <table>
+          <thead>
+            <tr>
+              <th>Description</th>
+              <th className="num">Qty</th>
+              <th className="num">Unit price</th>
+              <th className="num">Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            {items.map((item, i) => {
+              const qty = item.quantity;
+              const priced =
+                item.unit_price !== null && item.unit_price !== undefined;
+              const lineTotal =
+                priced && qty !== null && qty !== undefined
+                  ? qty * (item.unit_price as number)
+                  : priced
+                    ? (item.unit_price as number)
+                    : null;
+              const qtyLabel =
+                qty === null || qty === undefined
+                  ? "—"
+                  : (Number.isInteger(qty) ? qty : Number(qty).toFixed(2)) +
+                    (item.unit ? " " + item.unit : "");
+              return (
+                <tr key={i}>
+                  <td>{item.description || "Item"}</td>
+                  <td className="num">{qtyLabel}</td>
+                  <td className="num">
+                    {priced ? money(item.unit_price as number, currency) : "—"}
+                  </td>
+                  {/* "TBC" rather than a zero: a price the tradesperson hasn't
+                      got yet is not a price of nothing, and printing 0 would
+                      promise it free. */}
+                  <td className="num">
+                    {priced ? money(lineTotal, currency) : "TBC"}
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      )}
 
       <div className="totals">
         <div>
@@ -368,17 +388,25 @@ function QuoteBody({
           <span>Total</span>
           <span>{money(quote.total, currency)}</span>
         </div>
+        {unpriced > 0 && (
+          <p className="unpriced-note">
+            Excludes {unpriced} item{unpriced === 1 ? "" : "s"} still to be
+            confirmed
+          </p>
+        )}
       </div>
 
-      {terms.length > 0 && (
-        <>
-          <h2>Terms</h2>
-          {terms.map((text, i) => (
-            <p className="terms" key={i}>
-              {text}
-            </p>
-          ))}
-        </>
+      {termsText && (
+        <div className="field-block">
+          <p className="field-label">Terms</p>
+          <p className="terms">{termsText}</p>
+        </div>
+      )}
+      {notesText && (
+        <div className="field-block">
+          <p className="field-label">Notes</p>
+          <p className="terms">{notesText}</p>
+        </div>
       )}
 
       {quote.canDecide && (
@@ -403,50 +431,82 @@ function QuoteBody({
   );
 }
 
-/** The original renderer's styles, scoped under `.quote-root` so the receipt
- *  keeps its own system-font, light look independent of the marketing site. */
+/**
+ * Modelled on the real thing: Verbal/Views/Quotes/QuoteDocumentPage.swift,
+ * the SwiftUI view rendered to the PDF a quote ships as. Same ink accent
+ * (#192868, QuoteDocumentPage.ink), the same Quote no. / Issued / Valid
+ * until header, the From/To parties row with its vertical divider, the
+ * uppercase tracked field labels, and a four-column line-item table with
+ * a rule between every row rather than a plain HTML table border.
+ *
+ * Scoped under `.quote-root` so the sheet keeps its own light, print-styled
+ * look independent of the marketing site's theme.
+ */
 const CSS = `
 .quote-root { min-height: 100%; padding: 24px 16px 64px; background: #F9F9F7; color: #1C1C1E;
   font: 16px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   -webkit-text-size-adjust: 100%; }
 .quote-root * { box-sizing: border-box; }
 .quote-root .sheet { max-width: 640px; margin: 0 auto; background: #fff;
-  border: 1px solid rgba(0,0,0,.08); border-radius: 18px; padding: 28px 24px;
+  border: 1px solid rgba(0,0,0,.08); border-radius: 18px; padding: 32px 28px;
   box-shadow: 0 1px 3px rgba(0,0,0,.04); }
-.quote-root header { display: flex; justify-content: space-between; gap: 16px; align-items: flex-start; }
-.quote-root .biz-name { font-size: 19px; font-weight: 600; margin: 0 0 4px; }
-.quote-root .biz-detail, .quote-root .muted { color: #6b6b70; font-size: 13px; margin: 0; }
-.quote-root .doc-label { font-size: 20px; font-weight: 600; letter-spacing: .04em; text-align: right; }
-.quote-root .doc-number { color: #6b6b70; font-size: 13px; text-align: right; margin-top: 2px; }
-.quote-root h1 { font-family: inherit; font-weight: 700; font-size: 24px; line-height: 1.25; margin: 28px 0 12px; }
-.quote-root .parties { display: flex; flex-wrap: wrap; gap: 24px; margin: 20px 0 4px; }
-.quote-root .parties div { min-width: 140px; }
-.quote-root .parties p { margin: 0; }
-.quote-root .label { font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: #8a8a8f; margin: 0 0 2px; }
-.quote-root .summary { margin: 20px 0 0; }
-.quote-root h2 { font-family: inherit; font-weight: 700; font-size: 13px; text-transform: uppercase; letter-spacing: .06em; color: #8a8a8f; margin: 28px 0 8px; }
-.quote-root ul.scope { margin: 0; padding-left: 18px; }
-.quote-root ul.scope li { margin-bottom: 4px; }
-.quote-root table { width: 100%; border-collapse: collapse; margin-top: 4px; }
+
+/* fieldLabel — QuoteDocumentPage's fieldLabel: uppercase, tracked, faint. */
+.quote-root .field-label { font-size: 11px; font-weight: 600; letter-spacing: .07em;
+  text-transform: uppercase; color: rgba(0,0,0,.45); margin: 0 0 4px; }
+.quote-root .field-block { margin-top: 22px; }
+
+/* header — quoteNumber + headerMetadata. */
+.quote-root .doc-header { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap; }
+.quote-root .doc-meta { display: flex; gap: 24px; }
+.quote-root .doc-meta-value { font-size: 14px; font-weight: 600; color: rgba(0,0,0,.8); margin: 0; }
+
+/* sectionRule — a full-width divider between header / parties / body. */
+.quote-root .rule { height: 1px; background: rgba(0,0,0,.20); margin: 18px 0; }
+
+/* partiesRow — From / To, split by a vertical rule like the PDF's letterhead. */
+.quote-root .parties { display: flex; align-items: stretch; gap: 24px; }
+.quote-root .party { flex: 1 1 0; min-width: 0; }
+.quote-root .party-divider { width: 1px; background: rgba(0,0,0,.20); align-self: stretch; }
+.quote-root .party-name { font-size: 17px; font-weight: 600; color: #1C1C1E; margin: 0 0 6px; }
+.quote-root .party-detail { color: rgba(0,0,0,.65); font-size: 13px; margin: 0 0 2px; }
+
+.quote-root h1 { font-family: inherit; font-weight: 700; font-size: 22px; line-height: 1.25; margin: 22px 0 0; }
+.quote-root .summary { color: rgba(0,0,0,.75); margin: 0; }
+
+.quote-root ul.scope { margin: 0; padding: 0; list-style: none; }
+.quote-root ul.scope li { position: relative; padding-left: 16px; margin-bottom: 6px; color: rgba(0,0,0,.8); }
+.quote-root ul.scope li::before { content: "•"; position: absolute; left: 0; color: rgba(0,0,0,.5); }
+
+/* lineItemTable — Description / Qty / Unit price / Amount, a rule per row. */
+.quote-root table { width: 100%; border-collapse: collapse; margin-top: 24px; }
 .quote-root th { text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: .06em;
-  color: #8a8a8f; font-weight: 500; padding: 0 0 8px; }
+  color: rgba(0,0,0,.55); font-weight: 600; padding: 0 0 8px; border-bottom: 1px solid rgba(0,0,0,.18); }
 .quote-root th.num, .quote-root td.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
-.quote-root td { padding: 10px 0; border-top: 1px solid rgba(0,0,0,.07); vertical-align: top; }
-.quote-root .totals { margin-top: 12px; margin-left: auto; width: 100%; max-width: 280px; }
-.quote-root .totals div { display: flex; justify-content: space-between; padding: 6px 0; font-variant-numeric: tabular-nums; }
+.quote-root td { padding: 10px 0; border-top: 1px solid rgba(0,0,0,.10); vertical-align: top; font-size: 14px; color: rgba(0,0,0,.85); }
+
+/* totals — right-aligned, ink-coloured grand total, like QuoteDocumentPage.totals. */
+.quote-root .totals { margin-top: 16px; margin-left: auto; width: 100%; max-width: 280px; }
+.quote-root .totals div { display: flex; justify-content: space-between; padding: 5px 0; font-variant-numeric: tabular-nums;
+  color: rgba(0,0,0,.65); }
 .quote-root .totals .grand { border-top: 1px solid rgba(0,0,0,.12); margin-top: 4px; padding-top: 10px;
-  font-size: 18px; font-weight: 600; }
-.quote-root .banner { border-radius: 12px; padding: 12px 14px; margin: 0 0 20px; font-size: 14px; }
+  font-size: 17px; font-weight: 600; color: #192868; }
+.quote-root .unpriced-note { text-align: right; color: rgba(0,0,0,.5); font-size: 12px; margin: 4px 0 0; }
+
+.quote-root .banner { border-radius: 12px; padding: 12px 14px; margin: 20px 0 0; font-size: 14px; }
 .quote-root .banner.accepted { background: #E7F6EC; color: #1B5E33; }
 .quote-root .banner.declined { background: #FBEAEA; color: #8A2222; }
 .quote-root .banner.expired  { background: #F1F1EF; color: #5c5c60; }
+
 .quote-root .actions { display: flex; gap: 12px; margin-top: 32px; flex-wrap: wrap; }
 .quote-root .actions button { flex: 1 1 160px; min-height: 52px; border-radius: 14px; border: 0;
   font-size: 16px; font-weight: 600; cursor: pointer; font-family: inherit; }
 .quote-root .actions button[disabled] { opacity: .5; cursor: default; }
 .quote-root .accept { background: #192868; color: #fff; }
 .quote-root .decline { background: #fff; color: #8A2222; border: 1px solid rgba(138,34,34,.35); }
-.quote-root .terms { white-space: pre-wrap; color: #4a4a4f; font-size: 14px; margin: 0 0 10px; }
+
+.quote-root .terms { white-space: pre-wrap; color: rgba(0,0,0,.7); font-size: 13px; margin: 0; }
+.quote-root .muted { color: #6b6b70; font-size: 13px; margin: 0; }
 .quote-root .foot { max-width: 640px; margin: 20px auto 0; text-align: center; color: #9a9a9f; font-size: 12px; }
 @media print {
   .quote-root { background: #fff; padding: 0; }

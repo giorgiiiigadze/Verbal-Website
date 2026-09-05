@@ -3,6 +3,7 @@ import { APP_STORE_URL, NAV, SITE_NAME } from "@/content/site";
 import { FeaturesMenu } from "@/components/layout/FeaturesMenu";
 import { HeaderChrome } from "@/components/layout/HeaderChrome";
 import { MobileMenu } from "@/components/layout/MobileMenu";
+import { NAV_ITEM } from "@/components/layout/navItem";
 import { AppleMark } from "@/components/ui/AppleMark";
 import { Button } from "@/components/ui/Button";
 import { Logo } from "@/components/ui/Logo";
@@ -53,7 +54,7 @@ export function SiteHeader() {
           `auto` and lands dead centre whatever they hold. Below `lg` the nav is
           `display: none`, so it occupies no cell and the two-column template
           puts the CTA cluster straight after the mark. */}
-      <div className="relative mx-auto grid max-w-[75rem] grid-cols-[1fr_auto] items-center gap-3 border-b border-line bg-bg px-6 py-3 sm:gap-6 sm:px-8 lg:grid-cols-[1fr_auto_1fr] lg:rounded-full lg:border-0 lg:bg-card/85 lg:px-5 lg:backdrop-blur-md">
+      <div className="relative mx-auto grid max-w-[75rem] grid-cols-[1fr_auto] items-center gap-3 border-b border-line bg-bg px-6 py-2 sm:gap-6 sm:px-8 lg:grid-cols-[1fr_auto_1fr] lg:rounded-full lg:border-0 lg:bg-card/85 lg:px-5 lg:backdrop-blur-md">
         <HeaderChrome />
 
         <Link
@@ -71,14 +72,15 @@ export function SiteHeader() {
         </Link>
 
         <nav aria-label="Main" className="hidden justify-self-center lg:block">
-          <ul className="flex items-center gap-x-4 text-[13px] sm:gap-x-7 sm:text-sm">
+          {/* The gap closed from 28px to 8px when the items grew hover pills:
+              the pill's own 12px of side padding is now most of the space
+              between two words, and at the old gap they read as four separate
+              buttons rather than as one nav. */}
+          <ul className="flex items-center gap-x-1 text-[13px] sm:gap-x-2 sm:text-sm">
             <FeaturesMenu />
             {NAV.map((item) => (
               <li key={item.href}>
-                <Link
-                  href={item.href}
-                  className="whitespace-nowrap text-text"
-                >
+                <Link href={item.href} className={`block ${NAV_ITEM}`}>
                   {item.label}
                 </Link>
               </li>

@@ -49,7 +49,11 @@ export function FeaturesBand() {
           page's outermost line — the same edge the hero and "Effortless quotes"
           are set to, and 128px further left than a default section. It is also
           what gives the headline the width to be set this large. */}
-      <Section tone="bg" size="wide">
+      {/* Extra air at the top, on white, against the charcoal band above. This
+          section is the page's turn out of the share band and the headline is
+          the largest type on it — landing straight under the colour change read
+          as the dark band's caption rather than as a new movement. */}
+      <Section tone="bg" size="wide" className="pt-24 sm:pt-36">
         {/* Left, on the container's own edge. Held to max-w-6xl so the two
             lines break where they are written to and not where the measure
             runs out. */}
@@ -69,7 +73,7 @@ export function FeaturesBand() {
 
           <h2
             data-reveal
-            className="font-slab text-[clamp(1.75rem,8vw,6.5rem)] leading-[1.02] tracking-tight text-black"
+            className="font-slab text-[clamp(1.75rem,8vw,6.5rem)] leading-[1.02] tracking-tight text-text"
           >
             Works where you work,
             <br />
