@@ -4,6 +4,8 @@ import "./globals.css";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { ChromeGate } from "@/components/layout/ChromeGate";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { graph, organizationLd, websiteLd } from "@/lib/jsonLd";
 import { DESCRIPTION, SITE_NAME, SITE_URL, TAGLINE } from "@/content/site";
 
 /** The app's only font. Self-hosted at build time by next/font, so the page
@@ -52,6 +54,13 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           than pushed below it, and `main` guarantees its own full-screen
           minimum. See FooterReveal. */}
       <body className="min-h-full">
+        {/* Who publishes the site and what the site is, said once for every
+            page rather than per route. Both nodes carry an `@id`, so a page's
+            own structured data joins onto them by reference — see lib/jsonLd.
+            Page-specific nodes (the app itself, the FAQ, the breadcrumbs) are
+            emitted by the pages that can vouch for them. */}
+        <JsonLd data={graph(organizationLd(), websiteLd())} />
+
         {/* Chrome is gated so the shared quote pages under /q render as a bare
             receipt, without the site nav, CTA or footer. See ChromeGate. */}
         <ChromeGate>

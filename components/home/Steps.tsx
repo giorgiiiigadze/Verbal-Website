@@ -121,6 +121,14 @@ export function Steps() {
         // and the frame's size is bounded by what the window can hold.
         className="lg:flex lg:min-h-svh lg:items-center lg:justify-center lg:py-8"
       >
+        {/* The heading this band deliberately does not show.
+            `sr-only` keeps the design exactly as it is — nothing moves and
+            nothing is painted — while giving the three numbered steps a parent
+            in the document outline instead of leaving three H3s hanging off
+            whichever H2 happened to come before them. It is also what a screen
+            reader and a crawler get told this section is, and "how it works" is
+            the phrase every link on the site uses for it. */}
+        <h2 className="sr-only">How Verbal works</h2>
         {/*
           The pair is centred as a block rather than stretched across the whole
           container: at `max-w-6xl` the step lines would run past a comfortable

@@ -48,9 +48,10 @@ export const FAQ: QA[] = [
   {
     q: "What does it cost?",
     a:
-      "Two quotes a day are free, permanently. Verbal Pro is $19 a month and " +
-      "removes the daily limit. Quotes you have already made are always " +
-      "yours to read, edit and send, subscription or not.",
+      "Two quotes a day are free, permanently. Verbal Pro removes the daily " +
+      "limit and is $19 a month or $190 a year, which is two months cheaper " +
+      "than paying monthly. Quotes you have already made are always yours to " +
+      "read, edit and send, subscription or not.",
     featured: true,
   },
   {

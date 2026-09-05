@@ -1,5 +1,7 @@
 import Content from "@/content/privacy.mdx";
 import { Prose } from "@/components/ui/Prose";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { breadcrumbLd, graph } from "@/lib/jsonLd";
 import { pageMetadata } from "@/lib/metadata";
 
 export const metadata = pageMetadata({
@@ -12,8 +14,11 @@ export const metadata = pageMetadata({
 
 export default function PrivacyPage() {
   return (
-    <Prose>
-      <Content />
-    </Prose>
+    <>
+      <JsonLd data={graph(breadcrumbLd("Privacy Policy", "/privacy"))} />
+      <Prose>
+        <Content />
+      </Prose>
+    </>
   );
 }

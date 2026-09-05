@@ -35,9 +35,20 @@ export const SITE_URL = (
 
 export const SITE_NAME = "Verbal";
 export const TAGLINE = "Speak the job. Send the quote.";
+/**
+ * The site's one-line description: the meta description search engines print
+ * under the title, the fallback `og:description`, and the `description` on
+ * every structured-data node.
+ *
+ * Written for a search result rather than for the page, which is a different
+ * job from the headline: it names the thing being searched for ("quoting app",
+ * "quote", "tradespeople") in the first half, where a truncated result still
+ * shows it, and keeps the line that makes someone click in the second. Under
+ * 160 characters, which is roughly where Google stops printing.
+ */
 export const DESCRIPTION =
-  "Verbal turns a spoken description of a job into a written, priced quote. " +
-  "Built for tradespeople who would rather quote on the driveway than at 9pm.";
+  "Speak the job on site and Verbal writes the priced quote. A voice quoting " +
+  "app for tradespeople who would rather quote on the driveway than at 9pm.";
 
 export const SUPPORT_EMAIL = "gio.giorgigiorgadze20@gmail.com";
 

@@ -1,12 +1,15 @@
+import Link from "next/link";
 import { SUPPORT_EMAIL } from "@/content/site";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { Section } from "@/components/layout/Section";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { breadcrumbLd, graph } from "@/lib/jsonLd";
 import { pageMetadata } from "@/lib/metadata";
 
 export const metadata = pageMetadata({
-  title: "Support",
+  title: "Support and contact",
   description:
     "How to get help with Verbal, report a problem, cancel a subscription, " +
     "or delete your account.",
@@ -16,6 +19,8 @@ export const metadata = pageMetadata({
 export default function SupportPage() {
   return (
     <>
+      <JsonLd data={graph(breadcrumbLd("Support", "/support"))} />
+
       <PageHeader
         eyebrow="Support"
         title="One person reads these"
@@ -89,9 +94,9 @@ export default function SupportPage() {
               <p className="mt-3 text-sm leading-relaxed text-muted">
                 Email and ask. You can also ask us to correct it. Deletion is
                 built into the app and takes effect immediately. See the{" "}
-                <a href="/privacy" className="text-accent-text underline">
+                <Link href="/privacy" className="text-accent-text underline">
                   privacy policy
-                </a>{" "}
+                </Link>{" "}
                 for the full list of your rights.
               </p>
             </Card>
