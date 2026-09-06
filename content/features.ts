@@ -102,7 +102,7 @@ export const NAV_FEATURES = [
     icon: "rates",
     title: "A rate card that fills itself in",
     body: "Set up asks what you charge for the jobs your trade does most.",
-    href: "/#how",
+    href: "/#rates",
   },
   {
     icon: "clients",
@@ -114,7 +114,9 @@ export const NAV_FEATURES = [
     icon: "share",
     title: "Send a link, get an answer",
     body: "Your customer opens it on any phone and accepts or declines.",
-    href: "/#share",
+    // Step 03 of STEPS, which is where this is now shown: the band that used
+    // to draw the shared link is the rate card at /#rates.
+    href: "/#how",
   },
 ] as const;
 

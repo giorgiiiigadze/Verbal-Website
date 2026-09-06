@@ -94,6 +94,7 @@ export default function PricingPage() {
         tone="plain"
         align="center"
         size="lg"
+        titleFont="editorial"
         title="Two quotes a day, free. Forever."
         lead="Not a trial. The limit is on making new quotes: everything you have already made stays yours to read, edit and send."
       />

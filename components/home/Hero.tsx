@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { AppleMark } from "@/components/ui/AppleMark";
 import { CheckMark } from "@/components/ui/CheckMark";
@@ -37,7 +38,7 @@ export function Hero() {
             line off the headline of the block underneath. */}
         <Container
           size="wide"
-          className="grid items-center gap-16 pb-6 pt-28 sm:pb-10 sm:pt-36 lg:grid-cols-2 lg:gap-12"
+          className="grid items-center gap-16 pb-6 pt-28 sm:pb-10 sm:pt-36 lg:grid-cols-[1fr_1.2fr] lg:gap-12"
         >
           <div>
             <Link
@@ -118,23 +119,51 @@ export function Hero() {
           {/*
             The app on the left and what it sends on the right: the phone with
             the quote open, and beside it the A4 page the client actually
-            receives. They overlap and share a bottom edge so the pair reads as
-            one object rather than two things placed side by side.
+            receives. They sit on the same bottom line with a small gap, so the
+            pair reads as one object without either one covering the other.
 
-            The sheet is a placeholder. A rendered page of an example quote PDF
-            goes in it later — an <Image> filling the box, with the aspect ratio
-            and the paper edge below staying exactly as they are.
+            The sheet is a render of the first page of the example quote PDF,
+            filling an A4 box that keeps the page's proportions at every width.
 
             The entrance is on an inner div in each half rather than on the
             halves themselves: GSAP animates transforms there, and the layout's
             own offsets live on the outer element where they cannot be
             overwritten.
           */}
-          {/* The pair is sized in percentages of the column and overlapped by
-              one, so 46 + 60 - 6 lands on exactly 100 at every width: the phone
-              and the sheet keep their proportions and their contact point from
-              a 360px phone up to the wide container, with nothing to retune per
-              breakpoint. Resizing one means re-balancing all three numbers. */}
+          {/* The pair is sized in percentages of the column, and each set of
+              three lands on exactly 100 so the pair fills the column exactly:
+              40 + 4 + 56 stacked, 37 + 4 + 59 from `lg` up. Between them the
+              phone and the sheet keep their proportions and the gap between
+              them from a 360px phone up to the wide container. Resizing one
+              means re-balancing its set of three.
+
+              Two sets rather than one because the column only gets wider at
+              `lg`: below that the pair still shares a single stacked column, so
+              taking the sheet to 59 there would come straight off the phone
+              again. Stacked keeps the original split — the sheet is thumbnail
+              sized on a phone either way, so the width is better spent on the
+              app.
+
+              The phone used to sit 6% over the sheet, which read fine while the
+              sheet was an empty placeholder. Now that it carries the quote, an
+              overlap covered the page's left edge, so the two are parted
+              instead.
+
+              The sheet is the wider of the two on purpose: it is the thing the
+              client receives, and it is the half a reader has to be able to
+              read. Since the gap is fixed and the three sum to 100, growing the
+              sheet inside a 50/50 grid could only come off the phone — which is
+              why the row above it is 1fr/1.2fr rather than `grid-cols-2`. The
+              extra column width is what buys the sheet its size without the
+              phone paying for it: at the full 1280 container the right column
+              is 628px rather than 576, so the phone is 232px (a shade wider
+              than the 230 it had at 40% of the old column) and the sheet is
+              371px, up from 323.
+
+              What that costs is the headline column, down to 524px. It fits:
+              the h1's line breaks are hard-coded <br>s rather than wrapping, and
+              its longest line sets at 463px in the xl size. Growing the ratio
+              past about 1.2 is what would start breaking those lines. */}
           <div className="flex w-full max-w-xl items-end justify-center lg:max-w-none">
             {/* The left frame is the travel anchor, not part of the hero's own
                 phone entrance: PhoneTravel lifts a fixed copy of it down into
@@ -144,31 +173,54 @@ export function Hero() {
                 the travelling copy stand in; on mobile, reduced-motion, or with
                 no script it simply shows as itself.
 
-                It is the front of the pair — `z-10` is what makes the sheet
-                tuck behind it rather than the other way round, which would put
-                a blank placeholder over the app screen. */}
-            <div className="relative z-10 w-[46%]">
+                Nothing stacks here any more: with the sheet parted from it
+                there is no overlap for a z-index to order. */}
+            <div className="relative w-[43%] lg:w-[42%]">
               <div data-travel-anchor="hero">
                 <PhoneFrame
                   src="/phone/screen-quote.png"
                   alt="A quote open in Verbal, two of its line items still marked as needing a price."
-                  sizes="(min-width: 1024px) 280px, 46vw"
+                  sizes="(min-width: 1024px) 270px, 43vw"
                   eager
                 />
               </div>
             </div>
-            {/* Slid left under the phone's edge, and bottom-aligned with it by
-                the row's `items-end`, so the two objects rest on one line and
-                touch rather than floating apart. */}
-            <div className="-ml-[6%] w-[60%]">
+            {/* Set off from the phone by the gap above, and bottom-aligned
+                with it by the row's `items-end`, so the two objects still rest
+                on one line rather than floating apart. */}
+            <div className="ml-[3%] w-[55%] lg:w-[55%]">
               <div data-hero-phone>
                 {/* A4 is 210x297mm, so the box holds that ratio and takes its
                     height from whatever width the column gives it — the same
-                    page shape at every breakpoint. */}
-                <div className="flex aspect-[210/297] w-full items-center justify-center rounded-md border border-line bg-card p-3 shadow-[0_24px_50px_-28px_rgb(0_0_0/0.4)]">
-                  <div className="flex h-full w-full items-center justify-center rounded-sm border border-dashed border-line text-sm text-muted">
-                    Quote PDF (A4)
-                  </div>
+                    page shape at every breakpoint.
+
+                    The page image is a render of the first page of the example
+                    quote PDF kept beside it in public/images, at 1240x1754 —
+                    exactly this ratio, so `object-cover` has nothing to crop.
+                    Re-render it with:
+
+                      sips -s format png --resampleWidth 1240 \
+                        "public/images/Quote 0072 — James Bond.pdf" \
+                        --out public/images/quote-example.png
+
+                    There is no inner padding: the render carries the page's own
+                    white margin, so the border and shadow here are the paper
+                    edge and the image is the paper. Padding on top of that
+                    would mat the sheet and break the A4 ratio. */}
+                <div className="relative aspect-[210/297] w-full overflow-hidden rounded-md border border-line bg-card shadow-[0_24px_50px_-28px_rgb(0_0_0/0.4)]">
+                  {/* Above the fold, and on desktop the largest thing painted
+                      in the hero, so it is fetched like the phone beside it
+                      rather than lazily. `fill` + `sizes` keeps Next from
+                      shipping the full 1240px into a box a third that wide. */}
+                  <Image
+                    src="/images/quote-example.png"
+                    alt="The quote as the client receives it: an A4 page with the job summary, the scope of work, priced line items and a total of $4,000."
+                    fill
+                    loading="eager"
+                    fetchPriority="high"
+                    sizes="(min-width: 1024px) 360px, 55vw"
+                    className="object-cover"
+                  />
                 </div>
               </div>
             </div>

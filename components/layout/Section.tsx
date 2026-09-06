@@ -31,7 +31,7 @@ export function Section({
     // MainText (#37352f) turned into a background, which carried that colour's
     // brown cast across a whole band; #292929 is flatter and a shade cooler.
     // Anything inside it that was drawn for white has to be inverted by hand —
-    // see ShareBand's chips.
+    // see RateCardBand's chips.
     charcoal: "bg-charcoal text-white",
   } as const;
 

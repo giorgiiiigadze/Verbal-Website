@@ -5,7 +5,8 @@ import { Section } from "@/components/layout/Section";
 import { APP_STORE_URL } from "@/content/site";
 
 /**
- * The features opener, under the share band: a label, one line, and the way in.
+ * The features opener, under the rate card band: a label, one line, and the
+ * way in.
  *
  * It names nothing and asks for nothing new. There is no /features page to
  * send anyone to and no list here to read — the four things the menu holds are each explained somewhere
@@ -50,7 +51,7 @@ export function FeaturesBand() {
           are set to, and 128px further left than a default section. It is also
           what gives the headline the width to be set this large. */}
       {/* Extra air at the top, on white, against the charcoal band above. This
-          section is the page's turn out of the share band and the headline is
+          section is the page's turn out of the rate card band and the headline is
           the largest type on it — landing straight under the colour change read
           as the dark band's caption rather than as a new movement. */}
       <Section tone="bg" size="wide" className="pt-24 sm:pt-36">

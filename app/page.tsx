@@ -4,7 +4,7 @@ import { PhoneTravel } from "@/components/home/PhoneTravel";
 import { Steps } from "@/components/home/Steps";
 import { TradeCards } from "@/components/home/TradeCards";
 import { BlueBand } from "@/components/home/BlueBand";
-import { ShareBand } from "@/components/home/ShareBand";
+import { RateCardBand } from "@/components/home/RateCardBand";
 import { FeaturesBand } from "@/components/home/FeaturesBand";
 import { CalendarBand } from "@/components/home/CalendarBand";
 import { ClientsBand } from "@/components/home/ClientsBand";
@@ -55,7 +55,7 @@ export default function HomePage() {
       <BlueBand />
       <Steps />
       <TradeCards />
-      <ShareBand />
+      <RateCardBand />
       <FeaturesBand />
       <CalendarBand />
       <ClientsBand />

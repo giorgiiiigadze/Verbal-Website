@@ -145,7 +145,7 @@ export function SpeakSend() {
                 is no spine and no indent — see SPINE. */}
             <h2
               data-speak-reveal
-              className="font-slab text-3xl leading-[1.22] tracking-tight sm:text-5xl lg:pl-6"
+              className="font-editorial text-3xl leading-[1.05] tracking-tight sm:text-5xl lg:pl-6"
             >
               Effortless quotes,
               <br />

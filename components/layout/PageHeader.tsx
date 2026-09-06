@@ -23,6 +23,7 @@ export function PageHeader({
   tone = "tint",
   align = "left",
   size = "md",
+  titleFont = "slab",
   divider = true,
   tight = false,
 }: {
@@ -32,6 +33,8 @@ export function PageHeader({
   tone?: keyof typeof tones;
   align?: "left" | "center";
   size?: keyof typeof titleSizes;
+  /** The editorial face is reserved for a page's main statement. */
+  titleFont?: "slab" | "editorial";
   /** The hairline under the banner. Off where the block below it opens with a
    *  bordered panel of its own and the two rules stack up. */
   divider?: boolean;
@@ -62,7 +65,8 @@ export function PageHeader({
             badly past ~3xl, it just needs the leftover space split in two. */}
         <h1
           className={cn(
-            "max-w-3xl font-slab leading-tight",
+            "max-w-3xl leading-tight",
+            titleFont === "editorial" ? "font-editorial" : "font-slab",
             titleSizes[size],
             centred && "mx-auto",
           )}

@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Roboto_Slab } from "next/font/google";
+import { EB_Garamond, Roboto_Slab } from "next/font/google";
 import "./globals.css";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { SiteFooter } from "@/components/layout/SiteFooter";
@@ -14,6 +14,15 @@ const robotoSlab = Roboto_Slab({
   variable: "--font-roboto-slab",
   subsets: ["latin"],
   weight: ["400", "500", "600"],
+  display: "swap",
+});
+
+// Used only where the page needs a warmer, editorial voice — currently the
+// BlueBand statement. It remains self-hosted by Next alongside Roboto Slab.
+const ebGaramond = EB_Garamond({
+  variable: "--font-eb-garamond",
+  subsets: ["latin"],
+  weight: ["400", "500"],
   display: "swap",
 });
 
@@ -49,11 +58,18 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${robotoSlab.variable} h-full antialiased`}>
+    <html
+      lang="en"
+      className={`${robotoSlab.variable} ${ebGaramond.variable} h-full antialiased`}
+    >
       {/* Not a flex column any more: the footer is pinned behind `main` rather
           than pushed below it, and `main` guarantees its own full-screen
           minimum. See FooterReveal. */}
-      <body className="min-h-full">
+      {/* Extensions (password managers, wallets) stamp attributes onto the
+          body before React hydrates, which reads to React as a server/client
+          mismatch. The warning is suppressed one level deep only, so a real
+          mismatch inside the page still surfaces. */}
+      <body className="min-h-full" suppressHydrationWarning>
         {/* Who publishes the site and what the site is, said once for every
             page rather than per route. Both nodes carry an `@id`, so a page's
             own structured data joins onto them by reference — see lib/jsonLd.

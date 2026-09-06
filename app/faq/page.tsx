@@ -47,6 +47,7 @@ export default function FaqPage() {
         tone="plain"
         align="center"
         eyebrow="Questions"
+        titleFont="editorial"
         title="Frequently asked questions"
         lead="If the answer you want is not here, the answer is probably in the privacy policy or the terms. If it is not, email and ask."
       />

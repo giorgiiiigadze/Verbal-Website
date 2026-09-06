@@ -19,6 +19,7 @@
   --color-royal-800: #0a1130;
 
   --font-slab: var(--font-roboto-slab), ui-serif, Georgia, serif;
+  --font-editorial: var(--font-eb-garamond), ui-serif, Georgia, serif;
   --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
     "Helvetica Neue", Arial, sans-serif;
 
@@ -128,6 +129,10 @@ h1, h2, h3, .font-slab {
   font-weight: 400;
 }
 
+.font-editorial {
+  font-family: var(--font-editorial);
+}
+
 /* ---------------------------------------------------------------------------
    The trades marquee
 --------------------------------------------------------------------------- */
@@ -153,6 +158,196 @@ h1, h2, h3, .font-slab {
    than by writing a second pair of them. */
 .trade-track-reverse {
   animation-direction: reverse;
+}
+
+/* ---------------------------------------------------------------------------
+   The spoken-word flow in BlueBand
+--------------------------------------------------------------------------- */
+
+.blue-band-flow {
+  position: relative;
+  display: grid;
+  min-height: clamp(18rem, 34vw, 26rem);
+  place-items: center;
+  isolation: isolate;
+}
+
+.blue-band-flow__viewport {
+  position: absolute;
+  inset: 0 calc((100vw - 100%) / -2);
+  display: grid;
+  align-items: center;
+  overflow: hidden;
+  pointer-events: none;
+  mask-image: linear-gradient(to right, transparent, #000 9%, #000 91%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 9%, #000 91%, transparent);
+}
+
+.blue-band-flow__svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.blue-band-flow__text {
+  color: rgb(255 255 255 / 0.64);
+  fill: rgb(255 255 255 / 0.72);
+  font-family: var(--font-sans);
+  font-size: 33px;
+  font-weight: 600;
+  letter-spacing: -1px;
+}
+
+.blue-band-flow__text--still {
+  display: none;
+}
+
+.blue-band-flow__content {
+  position: relative;
+  z-index: 1;
+  padding: 3rem 0.75rem;
+  /* Only protect the headline itself. The words around it remain the visual
+     event instead of becoming a texture hidden by a broad dark veil. */
+  background: radial-gradient(ellipse at center, var(--charcoal) 0 34%, rgb(41 41 41 / 0) 62%);
+}
+
+/* ---------------------------------------------------------------------------
+   App-faithful rate-card rows
+--------------------------------------------------------------------------- */
+
+.rate-card-speaker {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: 0.35rem;
+  border-radius: 999px;
+  padding: 0.38rem 0.65rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.rate-card-speaker--blue { background: var(--tint-strong); color: var(--royal-600, #192868); }
+.rate-card-speaker--amber { background: var(--warning-fill); color: var(--warning); }
+.rate-card-speaker--green { background: var(--accepted-fill); color: var(--accepted); }
+
+/* A hint of each voice without reintroducing the bulky speaker-name pills. */
+.rate-card-accent {
+  width: 0.6rem;
+  height: 0.6rem;
+  flex: none;
+  border-radius: 999px;
+  box-shadow: 0 0 0 4px rgb(255 255 255 / 0.07);
+}
+
+.rate-card-accent--blue { background: #7f9cff; }
+.rate-card-accent--amber { background: #f5aa4f; }
+.rate-card-accent--green { background: #62c6b6; }
+
+/* RateCardView uses standalone 22px cards with a 40px surface tile, a fine
+   separator and a very soft 8px / 3px lift. This is that component's visual
+   language rather than a web table styled to look app-like. */
+.rate-card-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-height: 4.5rem;
+  border: 0.5px solid rgb(255 255 255 / 0.12);
+  border-radius: 22px;
+  padding: 1rem;
+  /* RateCardView.swift dark appearance: CardSurface #2E2C2C, with a
+     low-luminance separator and the same restrained 8px / 3px lift. */
+  background: #2e2c2c;
+  box-shadow: 0 3px 8px rgb(0 0 0 / 0.26);
+}
+
+.rate-card-stack {
+  position: relative;
+  height: 8.75rem;
+}
+
+.rate-card-stack__layer {
+  position: absolute;
+  inset-inline: 0;
+  transform-origin: center;
+}
+
+.rate-card-speech__stage {
+  position: relative;
+  height: clamp(10rem, 17vw, 13rem);
+  overflow: visible;
+}
+
+.rate-card-speech__line {
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  min-width: 0;
+}
+
+/* The rate-card timeline starts below the fold. Holding its two groups here
+   prevents a reload from painting every absolutely positioned transcript line
+   in the same place for one frame before GSAP establishes the sequence. */
+[data-rate-speech],
+[data-rate-card] {
+  opacity: 0;
+}
+
+.rate-card-item__icon {
+  display: grid;
+  width: 2.5rem;
+  height: 2.5rem;
+  flex: none;
+  place-items: center;
+  border: 0.5px solid rgb(255 255 255 / 0.12);
+  border-radius: 10px;
+  background: #2c2a2a;
+  color: #e6eaec;
+}
+
+/* On a phone the SVG must crop at its sides, not squeeze a 1600-unit path into
+   a 390px screen. `slice` above preserves the letterforms; these rules then
+   give the shorter mobile band enough room for the arc without its desktop
+   amount of empty air. */
+@media (max-width: 639px) {
+  .blue-band-flow {
+    min-height: 17rem;
+  }
+
+  .blue-band-flow__text {
+    font-size: 38px;
+    letter-spacing: -0.8px;
+  }
+
+  .blue-band-flow__content {
+    padding: 2.5rem 0.75rem;
+    background: radial-gradient(ellipse at center, var(--charcoal) 0 38%, rgb(41 41 41 / 0) 66%);
+  }
+
+  .rate-card-speech > div > div {
+    align-items: center;
+  }
+
+  .rate-card-speech__line {
+    justify-content: center;
+    text-align: center;
+  }
+
+  .rate-card-speech__line p {
+    text-align: center;
+  }
+
+  .rate-card-speaker {
+    margin-top: 0.25rem;
+  }
+
+  .rate-card-stack {
+    height: 9rem;
+  }
+
+  .rate-card-speech__stage {
+    height: 10rem;
+  }
 }
 
 /* The section's left and right edges. A mask rather than two gradient blocks
@@ -300,7 +495,17 @@ h1, h2, h3, .font-slab {
   /* Belt and braces: HeroReveal also checks the query, but if its script never
      runs the hero must not be left invisible. */
   [data-hero-reveal],
-  [data-hero-phone] {
+  [data-hero-phone],
+  [data-rate-speech],
+  [data-rate-card] {
     opacity: 1;
+  }
+
+  .blue-band-flow__text--motion {
+    display: none;
+  }
+
+  .blue-band-flow__text--still {
+    display: block;
   }
 }

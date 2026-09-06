@@ -39,6 +39,11 @@ const TRANSCRIPT =
   "two of them behind the units. And she’s asking about an EV charger, but " +
   "leave that one, I’ll price it after.";
 
+// The words need to be longer than the viewport before their second copy can
+// take over. Keeping the copy here, rather than as a CSS string, keeps it in
+// the document for readers and makes changing the example later painless.
+const FLOWING_TRANSCRIPT = `${TRANSCRIPT}  •  ${TRANSCRIPT}  •  ${TRANSCRIPT}  •  ${TRANSCRIPT}  •  `;
+
 export function BlueBand() {
   return (
     // Two motions, because one of them ends. Reveal is the house entrance — a
@@ -54,7 +59,7 @@ export function BlueBand() {
     // the parallax would be a trigger being translated by the tween that is
     // reading it.
     <Reveal>
-      <Section tone="charcoal">
+      <Section tone="charcoal" className="!py-8 sm:!py-12">
         {/* The band is as tall as what is in it. It used to be held open to
             60vh, which was the right call for a five-word line set at 10rem and
             the wrong one for a transcript a third that size — 60vh of charcoal
@@ -71,27 +76,53 @@ export function BlueBand() {
             as the band is leaving the window, by which point the edge it would
             have crossed is off screen. What is left is the small amount the
             quote needs mid-scroll. */}
-        <Parallax
-          from={96}
-          to={-96}
-          className="flex items-center justify-center py-4"
-        >
-          <div className="w-full max-w-4xl text-center">
+        <Parallax from={72} to={-72} className="py-4">
+          <div className="blue-band-flow">
+            {/* Decorative duplicate. The semantic version below is the one a
+                screen reader meets, so this moving ribbon never repeats a
+                long sentence out loud. */}
+            <div aria-hidden="true" className="blue-band-flow__viewport">
+              <svg
+                className="blue-band-flow__svg"
+                viewBox="0 0 1600 400"
+                preserveAspectRatio="xMidYMid slice"
+              >
+                <defs>
+                  <path
+                    id="blue-band-flow-path"
+                    d="M -260 235 C 170 70, 470 330, 800 205 S 1370 55, 1870 225"
+                  />
+                </defs>
+                <text className="blue-band-flow__text blue-band-flow__text--motion">
+                  <textPath href="#blue-band-flow-path" startOffset="0%">
+                    {FLOWING_TRANSCRIPT}
+                    <animate
+                      attributeName="startOffset"
+                      from="-50%"
+                      to="0%"
+                      dur="18s"
+                      repeatCount="indefinite"
+                    />
+                  </textPath>
+                </text>
+                {/* Still version shown only when the visitor asks for less motion. */}
+                <text className="blue-band-flow__text blue-band-flow__text--still">
+                  <textPath href="#blue-band-flow-path" startOffset="-18%">
+                    {FLOWING_TRANSCRIPT}
+                  </textPath>
+                </text>
+              </svg>
+            </div>
+
+            <div className="blue-band-flow__content w-full max-w-4xl text-center">
             <p
               data-reveal
-              className="font-slab text-[clamp(1.75rem,4.2vw,3.25rem)] leading-[1.25] tracking-tight"
+              className="font-editorial text-[clamp(2.15rem,5vw,4rem)] leading-[0.95] tracking-tight"
             >
-              {`“${TRANSCRIPT}”`}
+              Say it as it comes to you.
             </p>
-            {/* The caption, not an eyebrow: it lands after the quote because it
-                is the point of it, and a label above would have been read
-                before there was anything to label. */}
-            <p
-              data-reveal
-              className="mt-8 text-[15px] font-medium text-white/60 sm:text-base"
-            >
-              No form. No line items. No order to say it in.
-            </p>
+            <p className="sr-only">{TRANSCRIPT}</p>
+            </div>
           </div>
         </Parallax>
       </Section>

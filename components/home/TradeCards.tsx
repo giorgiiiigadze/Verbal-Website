@@ -68,7 +68,7 @@ export function TradeCards() {
       {/* Deeper than the house `py-14 sm:py-20` the other sections take. The
           rows are full bleed and moving, so they need clear air above and below
           to read as their own band — at the standard padding the marquee sits
-          close enough to the dark ShareBand under it to look like its lid. */}
+          close enough to the dark rate card band under it to look like its lid. */}
       <section className="bg-bg py-24 sm:py-36">
         {/* The heading is centred and set black. The colour rides on the wrapper
             rather than the h2 because SectionHeading takes no class for it — the

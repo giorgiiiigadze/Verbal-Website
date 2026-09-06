@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { Section } from "@/components/layout/Section";
 import { Reveal } from "@/components/ui/Reveal";
 
@@ -16,6 +17,7 @@ const PANELS = [
       "Placeholder copy. Book straight off an accepted quote — the job " +
       "keeps its price and its customer, no re-typing either.",
     wide: false,
+    image: "/images/calender_screenshot_sm.png",
   },
   {
     /** Placeholder. The wide box: a week or a day, laid out. */
@@ -24,6 +26,7 @@ const PANELS = [
       "Placeholder copy. An accepted quote becomes a job on the calendar, " +
       "so what you see booked is exactly what the customer said yes to.",
     wide: true,
+    image: null,
   },
 ];
 
@@ -86,14 +89,25 @@ export function CalendarBand() {
                   ratios are still ones you can name. Change either and the 9 or
                   the 16 in the template above changes with it. */}
               <div
-                aria-hidden="true"
-                className={`mt-6 flex items-center justify-center rounded-lg border border-dashed border-black/15 bg-surface ${
+                className={`relative mt-6 flex items-center justify-center overflow-hidden rounded-lg border ${
+                  panel.image ? "border-black/15 bg-[#1c1c1e]" : "border-dashed border-black/15 bg-surface"
+                } ${
                   panel.wide ? "aspect-video" : "aspect-[4/3] lg:aspect-square"
                 }`}
               >
-                <span className="text-sm font-medium text-muted">
-                  Photo to come
-                </span>
+                {panel.image ? (
+                  <Image
+                    src={panel.image}
+                    alt="Verbal's Calendar view, showing two scheduled visits for Mrs. Chen and James Bond."
+                    fill
+                    sizes="(min-width: 1024px) 430px, 100vw"
+                    className="object-cover object-[center_55%]"
+                  />
+                ) : (
+                  <span className="text-sm font-medium text-muted">
+                    Photo to come
+                  </span>
+                )}
               </div>
             </div>
           ))}

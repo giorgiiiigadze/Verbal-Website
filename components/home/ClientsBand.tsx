@@ -44,7 +44,7 @@ export function ClientsBand() {
   return (
     <Reveal stagger={0.08}>
       {/* A bottom rule only. The top one was drawn when this band followed the
-          charcoal share band, where it fell on a dark ground and was never
+          charcoal rate card band, where it fell on a dark ground and was never
           seen; with the features band above it now, it landed as a line across
           white between two sections that are meant to run together. */}
       {/* `wide` — the hero's width, max-w-7xl — rather than the page's default
