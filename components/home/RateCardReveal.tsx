@@ -16,9 +16,12 @@ export function RateCardReveal({ children }: { children: React.ReactNode }) {
     const ctx = gsap.context((self) => {
       if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-      const speech = self.selector!("[data-rate-speech]");
-      const cards = self.selector!("[data-rate-card]");
-      const speechStage = self.selector!(".rate-card-speech__stage")[0];
+      // GSAP's selector helper deliberately returns an untyped target list;
+      // these are DOM elements in this component, so make that boundary
+      // explicit for strict TypeScript and for the DOM measurements below.
+      const speech = self.selector!("[data-rate-speech]") as HTMLElement[];
+      const cards = self.selector!("[data-rate-card]") as HTMLElement[];
+      const speechStage = self.selector!(".rate-card-speech__stage")[0] as HTMLElement | undefined;
       if (!speechStage) return;
       const timeline = gsap.timeline({
         defaults: { ease: "power3.out" },
