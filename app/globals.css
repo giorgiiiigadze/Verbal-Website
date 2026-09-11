@@ -475,6 +475,36 @@ h1, h2, h3, .font-slab {
   white-space: nowrap;
 }
 
+/* The wishlist hero's scroll cue: a slow, small drift downward, which reads as
+   "there is more below" without the insistence of a bounce. The global
+   reduced-motion rule further down collapses its duration with !important, so
+   it holds still for anyone who asked for that. */
+@keyframes wishlist-cue-drift {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(3px); }
+}
+
+.wishlist-cue {
+  display: inline-block;
+  animation: wishlist-cue-drift 2.6s ease-in-out infinite;
+}
+
+/* Anchor jumps glide rather than cut. The wishlist hero's "See the list" cue
+   is the one that needs it most — it moves a whole viewport, and a hard jump
+   there reads as a page change rather than as scrolling down the same page.
+
+   On `html` because that is the scrolling element for document-level anchor
+   navigation; set on anything inside it, this does nothing. Every in-page
+   anchor on the site gets it, which is the consistent answer: "How it works"
+   in the nav was already the same kind of jump.
+
+   The reduced-motion block below already overrides this back to `auto` with
+   !important, so anyone who asked for less motion still gets the instant jump.
+   That rule predates this one, which is a fair sign this was always intended. */
+html {
+  scroll-behavior: smooth;
+}
+
 /* The hero's entrance starts here rather than in JavaScript. The hero is
    server rendered, so an element hidden after hydration would paint once and
    then blink out; holding it here means it has never been visible. HeroReveal
@@ -508,4 +538,26 @@ h1, h2, h3, .font-slab {
   .blue-band-flow__text--still {
     display: block;
   }
+}
+
+/* The toast that confirms a wishlist signup. It rises a little as it fades in,
+   which is what separates "this just happened" from an element that was always
+   there. The reduced-motion block above collapses both durations with
+   !important; the animationend that unmounts it still fires, so the toast
+   still leaves for anyone who asked for less movement. */
+@keyframes toast-in {
+  from { opacity: 0; transform: translateY(12px) scale(0.98); }
+  to   { opacity: 1; transform: none; }
+}
+
+@keyframes toast-out {
+  to { opacity: 0; transform: translateY(8px); }
+}
+
+.toast {
+  animation: toast-in 0.28s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.toast[data-leaving] {
+  animation: toast-out 0.22s ease-in forwards;
 }
