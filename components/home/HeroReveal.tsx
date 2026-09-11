@@ -12,8 +12,9 @@ gsap.registerPlugin(ScrollTrigger);
  * A wrapper rather than a rewrite of Hero: everything inside stays server
  * rendered, and this ships only the timeline. It animates three groups it finds
  * by attribute — `data-hero-reveal` for the text column, in DOM order,
- * `data-hero-phone` for the device frames, and `data-hero-parallax` for the
- * frames' drift as the hero scrolls away.
+ * `data-hero-phone` for the device frames, `data-hero-arrow` for the hand-drawn
+ * bridge between them, and `data-hero-parallax` for the frames' drift as the
+ * hero scrolls away.
  *
  * The starting state lives in globals.css, not here. The markup arrives from
  * the server already painted, so anything JavaScript hid would show for a frame
@@ -30,10 +31,14 @@ export function HeroReveal({ children }: { children: React.ReactNode }) {
     const ctx = gsap.context((self) => {
       const text = self.selector!("[data-hero-reveal]");
       const phones = self.selector!("[data-hero-phone]");
+      const arrow = self.selector!("[data-hero-arrow]");
 
       // Honour the OS setting by landing on the end state without playing it.
       if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-        gsap.set([...text, ...phones], { opacity: 1, clearProps: "filter" });
+        gsap.set([...text, ...phones, ...arrow], {
+          opacity: 1,
+          clearProps: "filter,clipPath,transform",
+        });
         return;
       }
 
@@ -68,6 +73,25 @@ export function HeroReveal({ children }: { children: React.ReactNode }) {
         );
       }
 
+      if (arrow.length) {
+        tl.fromTo(
+          arrow,
+          { opacity: 0, x: -10, clipPath: "inset(0 100% 0 0)" },
+          {
+            opacity: 1,
+            x: 0,
+            clipPath: "inset(0 0% 0 0)",
+            duration: 1.05,
+            ease: "power2.inOut",
+          },
+          0.34,
+        ).to(
+          arrow,
+          { y: -4, duration: 0.32, ease: "power2.out", yoyo: true, repeat: 1 },
+          1.08,
+        );
+      }
+
       // The frames drift up a little faster than the page as the hero leaves,
       // which reads as depth without moving anything in layout. The second one
       // travels further than the first, so the gap between them opens on the
@@ -99,7 +123,7 @@ export function HeroReveal({ children }: { children: React.ReactNode }) {
   return (
     <div ref={root}>
       <noscript>
-        <style>{`[data-hero-reveal],[data-hero-phone]{opacity:1!important}`}</style>
+        <style>{`[data-hero-reveal],[data-hero-phone],[data-hero-arrow]{opacity:1!important}`}</style>
       </noscript>
       {children}
     </div>

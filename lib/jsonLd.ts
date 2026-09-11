@@ -64,7 +64,7 @@ export function softwareApplicationLd() {
     applicationCategory: "BusinessApplication",
     operatingSystem: "iOS",
     publisher: { "@id": ORGANIZATION_ID },
-    screenshot: `${SITE_URL}/phone/screen-quote.png`,
+    screenshot: `${SITE_URL}/phone/step-check.png`,
     offers: [
       {
         "@type": "Offer",

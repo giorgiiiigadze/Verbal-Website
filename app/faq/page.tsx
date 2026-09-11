@@ -43,7 +43,12 @@ export default function FaqPage() {
     <>
       <JsonLd data={graph(faqLd, breadcrumbLd("FAQ", "/faq"))} />
 
+      {/* No hairline under the banner: the first thing below it is the
+          accordion, whose own rows are ruled, so the divider landed as a second
+          rule a short distance above the first one. */}
       <PageHeader
+        divider={false}
+        tight
         tone="plain"
         align="center"
         eyebrow="Questions"
@@ -53,7 +58,7 @@ export default function FaqPage() {
       />
 
       <Reveal>
-        <Section tone="bg">
+        <Section tone="bg" className="pt-4 sm:pt-6">
           {/* Left and wide, the same list the home page's FAQ block shows: the
               rows are ruled rather than boxed, so the questions start on the
               page's own left edge instead of inside a panel. */}

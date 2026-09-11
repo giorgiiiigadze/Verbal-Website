@@ -113,7 +113,7 @@ const POINTS: { text: string; Icon: Mark }[] = [
  *
  * The right-hand phone is the docking point for PhoneTravel: on desktop the
  * fixed copy that started in the hero settles exactly over it and hands off, so
- * both frames must be the same screen (`screen-quote.png`) for the swap not to
+ * both frames must be the same screen (`screen-quote-dark.png`) for the swap not to
  * flicker. With reduced motion or no script nothing travels and the frame is
  * simply the section's own image. Below `lg` there is no frame at all — see the
  * note on the dock.
@@ -239,7 +239,8 @@ export function SpeakSend() {
               itself and took the full 320px, which put a 650px-tall screenshot
               under three short claims and made the block read as a picture with
               some text above it. It is also the same screen the hero is already
-              showing on that viewport — `screen-quote.png` in both places — so
+              showing on that viewport — `screen-quote-dark.png` in both places,
+              because the travelling frame is literally the hero's own — so
               on a phone it was the second printing of an image the reader met a
               scroll ago. The claims are what this section has to say; on a
               phone they say it on their own. */}
@@ -250,8 +251,8 @@ export function SpeakSend() {
               className="w-full max-w-[320px]"
             >
               <PhoneFrame
-                src="/phone/screen-quote.png"
-                alt="A quote open in Verbal, two of its line items still marked as needing a price."
+                src="/phone/screen-quote-dark.png"
+                alt="A quote open in Verbal, priced line items and a running total, with one item still left without a price."
                 sizes="320px"
               />
             </div>

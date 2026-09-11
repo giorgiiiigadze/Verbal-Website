@@ -215,34 +215,26 @@ h1, h2, h3, .font-slab {
    App-faithful rate-card rows
 --------------------------------------------------------------------------- */
 
-.rate-card-speaker {
-  display: inline-flex;
-  flex: none;
-  align-items: center;
-  gap: 0.35rem;
-  border-radius: 999px;
-  padding: 0.38rem 0.65rem;
-  font-size: 0.75rem;
-  font-weight: 600;
-  line-height: 1;
-}
+/* The dash that opens each spoken line — the dialogue mark a transcript would
+   set in type, not a bullet beside it. It replaces a coloured dot in a ring of
+   white glow, which looked like a key to three categories and was not one: the
+   colours cycled down the list and meant nothing, a leftover from the
+   speaker-name pills this section used to carry.
 
-.rate-card-speaker--blue { background: var(--tint-strong); color: var(--royal-600, #192868); }
-.rate-card-speaker--amber { background: var(--warning-fill); color: var(--warning); }
-.rate-card-speaker--green { background: var(--accepted-fill); color: var(--accepted); }
-
-/* A hint of each voice without reintroducing the bulky speaker-name pills. */
+   A rule rather than a literal em dash so it holds its weight against the
+   editorial face beside it at any size, and so the entrance can draw it on. It
+   is the only mark on this side of the band, so it stays quiet: 2px of white at
+   just over a third strength. */
 .rate-card-accent {
-  width: 0.6rem;
-  height: 0.6rem;
+  width: 1.5rem;
+  height: 2px;
   flex: none;
-  border-radius: 999px;
-  box-shadow: 0 0 0 4px rgb(255 255 255 / 0.07);
+  border-radius: 1px;
+  background: rgb(255 255 255 / 0.38);
+  /* The entrance grows it from the end furthest from the words, so it reads as
+     a stroke drawn towards the sentence rather than a bar appearing. */
+  transform-origin: left center;
 }
-
-.rate-card-accent--blue { background: #7f9cff; }
-.rate-card-accent--amber { background: #f5aa4f; }
-.rate-card-accent--green { background: #62c6b6; }
 
 /* RateCardView uses standalone 22px cards with a 40px surface tile, a fine
    separator and a very soft 8px / 3px lift. This is that component's visual
@@ -250,20 +242,24 @@ h1, h2, h3, .font-slab {
 .rate-card-item {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.875rem;
   min-height: 4.5rem;
   border: 0.5px solid rgb(255 255 255 / 0.12);
   border-radius: 22px;
-  padding: 1rem;
-  /* RateCardView.swift dark appearance: CardSurface #2E2C2C, with a
-     low-luminance separator and the same restrained 8px / 3px lift. */
-  background: #2e2c2c;
+  padding: 1rem 1.125rem;
+  /* #2C2C2E — iOS's own secondary system background in dark mode, and a
+     cooler grey than the #2E2C2C CardSurface this was ported from, which
+     carried a brown cast onto a band that is already flat charcoal. The
+     low-luminance separator and the restrained 8px / 3px lift are unchanged. */
+  background: #2c2c2e;
   box-shadow: 0 3px 8px rgb(0 0 0 / 0.26);
 }
 
 .rate-card-stack {
   position: relative;
+  width: min(100%, 32rem);
   height: 8.75rem;
+  margin-inline: auto;
   /* The cards enter from 56px to the right (see RateCardReveal), and they are
      held at that offset until the ScrollTrigger fires rather than only passing
      through it. On a phone that parks three cards past the right edge of the
@@ -314,7 +310,7 @@ h1, h2, h3, .font-slab {
   place-items: center;
   border: 0.5px solid rgb(255 255 255 / 0.12);
   border-radius: 10px;
-  background: #2c2a2a;
+  background: rgb(255 255 255 / 0.045);
   color: #e6eaec;
 }
 
@@ -348,10 +344,6 @@ h1, h2, h3, .font-slab {
 
   .rate-card-speech__line p {
     text-align: center;
-  }
-
-  .rate-card-speaker {
-    margin-top: 0.25rem;
   }
 
   .rate-card-stack {
@@ -388,6 +380,121 @@ h1, h2, h3, .font-slab {
 /* ---------------------------------------------------------------------------
    The FAQ rows
 --------------------------------------------------------------------------- */
+
+.faq-list {
+  overflow: hidden;
+  border: 1px solid rgb(25 40 104 / 0.11);
+  border-radius: clamp(1.25rem, 3vw, 2rem);
+  background: var(--card);
+}
+
+.faq-row {
+  position: relative;
+  border-bottom: 1px solid var(--border);
+  transition: background-color 220ms ease;
+}
+
+.faq-row:last-child { border-bottom: 0; }
+
+.faq-summary {
+  display: grid;
+  grid-template-columns: 3rem minmax(0, 1fr) 2.25rem;
+  align-items: center;
+  gap: clamp(0.75rem, 2vw, 1.5rem);
+  min-height: 5.25rem;
+  padding: 1rem clamp(1rem, 3vw, 2rem);
+  cursor: pointer;
+  list-style: none;
+  text-align: left;
+}
+
+.faq-summary::-webkit-details-marker { display: none; }
+
+.faq-summary:focus-visible {
+  outline: 3px solid rgb(0 122 255 / 0.35);
+  outline-offset: -3px;
+}
+
+.faq-number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  height: 2.25rem;
+}
+
+.faq-number-digit {
+  width: 2rem;
+  height: 2rem;
+  object-fit: contain;
+}
+
+.faq-number-digit + .faq-number-digit {
+  margin-left: -0.85rem;
+}
+
+.faq-question {
+  color: var(--text);
+  font-family: var(--font-slab);
+  font-size: clamp(1.05rem, 1.4vw, 1.25rem);
+  line-height: 1.4;
+}
+
+.faq-toggle {
+  position: relative;
+  width: 2.25rem;
+  height: 2.25rem;
+  flex: none;
+  border: 1px solid rgb(25 40 104 / 0.12);
+  border-radius: 999px;
+  background: var(--tint);
+  color: var(--accent-text);
+  transition: background-color 200ms ease, color 200ms ease, transform 200ms ease;
+}
+
+.faq-row[open] .faq-toggle {
+  background: var(--accent-text);
+  color: white;
+  transform: rotate(-4deg);
+}
+
+.faq-row[open] .faq-toggle img {
+  filter: brightness(0) invert(1);
+}
+
+.faq-answer-wrap {
+  min-block-size: 0;
+  padding: 0 clamp(1rem, 3vw, 2rem) 0 calc(clamp(1rem, 3vw, 2rem) + 3rem + clamp(0.75rem, 2vw, 1.5rem));
+}
+
+.faq-answer {
+  max-width: 46rem;
+  padding: 0 3.75rem 1.75rem 0;
+  color: var(--text-muted);
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
+@media (hover: hover) {
+  .faq-row:not([open]):hover { background: rgb(238 242 251 / 0.45); }
+  .faq-row:not([open]):hover .faq-toggle { transform: scale(1.06); }
+}
+
+@media (max-width: 40rem) {
+  .faq-summary {
+    grid-template-columns: 2.5rem minmax(0, 1fr) 2.25rem;
+    gap: 0.625rem;
+    min-height: 4.75rem;
+  }
+
+  .faq-number-digit {
+    width: 1.75rem;
+    height: 1.75rem;
+  }
+
+  .faq-answer-wrap { padding-left: 4.125rem; }
+  .faq-answer { padding-right: 0.5rem; }
+}
 
 /* The answers slide open and shut rather than appearing and vanishing whole.
 
@@ -524,7 +631,8 @@ html {
    writes an inline opacity that overrides this from its first frame — see the
    note in that file about why the rule cannot be cleared afterwards. */
 [data-hero-reveal],
-[data-hero-phone] {
+[data-hero-phone],
+[data-hero-arrow] {
   opacity: 0;
 }
 
@@ -539,6 +647,7 @@ html {
      runs the hero must not be left invisible. */
   [data-hero-reveal],
   [data-hero-phone],
+  [data-hero-arrow],
   [data-rate-speech],
   [data-rate-card] {
     opacity: 1;

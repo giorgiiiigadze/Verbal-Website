@@ -9,12 +9,16 @@ import { PictureBand, type PicturePanel } from "@/components/home/PictureBand";
  * here where the narrow one leads there, so the two run as one alternating
  * pair rather than as the same row printed twice. The band used to draw a rule
  * along its bottom edge as well; the calendar band draws none, and that one
- * landed as a hairline across white with the royal privacy band starting
- * immediately under it, which is a colour change already.
+ * landed as a hairline across white with the next band starting immediately
+ * under it.
  *
- * The pictures do not exist yet, so the boxes draw as placeholders and the copy
- * below is written to be replaced. Both are marked as such; nothing here should
- * be mistaken for finished work.
+ * The wide box leads with one client opened up, and the narrow one follows
+ * with the list they came from — the detail before the index, because the
+ * detail is the picture that reads at 760px and the list is the one that still
+ * reads at 428px.
+ *
+ * Titles only, as in CalendarBand: the paragraph that used to sit under each
+ * title was saying in prose what the picture beneath it is there to show.
  *
  * Kept from the version this replaces, because it is what the section may not
  * claim: contact details. `ClientsView` in the app repo notes that the customers
@@ -24,22 +28,34 @@ import { PictureBand, type PicturePanel } from "@/components/home/PictureBand";
  */
 const PANELS: [PicturePanel, PicturePanel] = [
   {
-    /** Placeholder. The wider box: the client list, opened out. */
-    title: "The list builds itself",
-    body:
-      "Placeholder copy. A quote files itself under the name on it, so the " +
-      "history is there before you think to look for it.",
+    /** The wider box: one client, with their quotes under them. */
+    title: "Everything you quoted them",
     wide: true,
-    image: null,
+    image: {
+      src: "/images/bands/clients-wide.webp",
+      alt: "A client's page in Verbal, showing their total quoted, what they accepted, and the quotes underneath.",
+      // 3:2 into a 16:9 box, so the crop takes about 16% of the height off
+      // between the two edges. Held at 65% rather than centred, which slides
+      // the picture up in the frame: more of the phone and less of the empty
+      // sky above it. The whole travel is only a few percent of the height, so
+      // 65 is a nudge rather than a different crop.
+      className: "object-cover object-[center_65%]",
+    },
   },
   {
-    /** Placeholder. The narrow box: one client, with their quotes under them. */
-    title: "Everything you quoted them",
-    body:
-      "Placeholder copy. What you won, what is still waiting on an answer, " +
-      "and how often they say yes.",
+    /** The narrow box: the client list, opened out. */
+    title: "The list builds itself",
     wide: false,
-    image: null,
+    image: {
+      src: "/images/bands/clients-narrow.png",
+      // Keep the complete list visible at every breakpoint. The source is
+      // almost square while this panel becomes 4:3 below `lg`; `object-cover`
+      // cropped the lower rows there. Its dark canvas blends into the panel's
+      // matching fill, so the small amount of breathing room reads as part of
+      // the screenshot rather than as letterboxing.
+      alt: "Verbal's client list, each name carrying the number of quotes written for them.",
+      className: "object-contain",
+    },
   },
 ];
 

@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/layout/Container";
 import { HeroReveal } from "@/components/home/HeroReveal";
 import { PhoneFrame } from "@/components/ui/PhoneFrame";
+import { ScribbleMark } from "@/components/ui/marks";
 import { APP_CTA } from "@/content/site";
 
 /**
@@ -41,9 +42,13 @@ export function Hero() {
           className="grid items-center gap-16 pb-6 pt-28 sm:pb-10 sm:pt-36 lg:grid-cols-[1fr_1.2fr] lg:gap-12"
         >
           <div>
+            {/* The badge is a CTA like every other one on the page, so it goes
+                where they go: the wishlist while the app is unreleased, and the
+                App Store listing the moment `APP_STORE_URL` is set. It used to
+                drop to `/#how` further down this same page. */}
             <Link
               data-hero-reveal
-              href="/#how"
+              href={APP_CTA.href}
               className="group inline-flex items-center gap-2.5 rounded-full bg-[#F7F7F2] py-1.5 pl-1.5 pr-4 text-sm transition-colors hover:bg-[#ECECE4]"
             >
               <span className="rounded-full bg-[#0098F2] px-2.5 py-1 text-xs font-semibold text-white">
@@ -162,7 +167,43 @@ export function Hero() {
               the h1's line breaks are hard-coded <br>s rather than wrapping, and
               its longest line sets at 463px in the xl size. Growing the ratio
               past about 1.2 is what would start breaking those lines. */}
-          <div className="flex w-full max-w-xl items-end justify-center lg:max-w-none">
+          <div className="relative flex w-full max-w-xl items-end justify-center lg:max-w-none">
+            {/* The hand-drawn arrow, running over the top of the pair from the
+                phone towards the sheet: the phone is what was spoken, the sheet
+                is what the client opens, and the doodle is the sentence between
+                them that the hero does not have room to write again.
+
+                It sits in the one piece of clear space the row has. The two
+                rest on a common bottom line and the phone is the taller of
+                them, so the band above the sheet — everything right of the
+                phone and above the page's top edge — is empty, and the arrow
+                travels across it rather than through either object. The gap
+                between the two is `ml-[3%]`, about 19px, which is not a channel
+                anything can be drawn in.
+
+                `-scale-x-100 rotate-[135deg]` is what aims it, in that order:
+                CSS applies the individual `scale` property before `rotate`, so
+                the drawing is mirrored first and then turned. As drawn the tail
+                is at the bottom left and the head points up. Mirrored, it bows
+                the other way; at 135 degrees it lies over as an arch — rising
+                off the phone, over the top and down onto the sheet with the
+                head pointing into it. A quarter turn was the same journey stood
+                on end, climbing away from the page it is supposed to land on.
+
+                Drawn at every width. The whole position is in percentages of
+                the row, so it holds its place against the pair from a 360px
+                phone up: about 43px of ink sitting a shade above the two on a
+                phone, against 73px at the full container. The lift clears both
+                objects rather than landing on them, and there is a 64px gap
+                above the pair on a phone for it to sit in. */}
+            <span
+              aria-hidden="true"
+              className="pointer-events-none absolute -top-[10%] left-[42%] z-10 w-[13%] -scale-x-100 rotate-[155deg] text-primary"
+            >
+              <span data-hero-arrow className="block">
+                <ScribbleMark className="h-auto w-full" />
+              </span>
+            </span>
             {/* The left frame is the travel anchor, not part of the hero's own
                 phone entrance: PhoneTravel lifts a fixed copy of it down into
                 the section below on scroll, so this one has to hold a still
@@ -176,8 +217,8 @@ export function Hero() {
             <div className="relative w-[43%] lg:w-[42%]">
               <div data-travel-anchor="hero">
                 <PhoneFrame
-                  src="/phone/screen-quote.png"
-                  alt="A quote open in Verbal, two of its line items still marked as needing a price."
+                  src="/phone/screen-quote-dark.png"
+                  alt="A quote open in Verbal, priced line items and a running total, with one item still left without a price."
                   sizes="(min-width: 1024px) 270px, 43vw"
                   eager
                 />

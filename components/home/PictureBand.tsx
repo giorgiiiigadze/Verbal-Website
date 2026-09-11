@@ -12,14 +12,13 @@ import { Reveal } from "@/components/ui/Reveal";
  * the heading, the panels — are props.
  *
  * The shape: no visible section heading, two boxes of different widths, each
- * carrying its own line above its own picture. The claims are things you can
- * be shown rather than told, and a screenshot makes the argument faster than a
- * paragraph about it does; with a title over every box, a section title above
- * them was the same sentence twice.
+ * carrying one line above its own picture. Titles only, no copy under them —
+ * the claims are things you can be shown rather than told, and a screenshot
+ * makes the argument faster than a paragraph about it does; with a title over
+ * every box, a section title above them was the same sentence twice.
  */
 export type PicturePanel = {
   title: string;
-  body: string;
   /** Which of the two is the wide one. Exactly one should be. */
   wide: boolean;
   /** Null until the screenshot exists — the box draws as a placeholder. */
@@ -61,16 +60,16 @@ export function PictureBand({
       <Section id={id} size="wide" className={`scroll-mt-24 ${className ?? ""}`}>
         <h2 className="sr-only">{heading}</h2>
 
-        {/* Three rows, and each panel is a subgrid across all three, so the
-            title, the copy and the picture of one panel share a row with the
-            same part of the other. Stretching the boxes to a common bottom is
-            not enough on its own: the copy above them is a different number of
-            lines in each column, so the box that follows the shorter paragraph
-            used to start higher and end up taller than its neighbour.
+        {/* Two rows — a title and a picture — and each panel is a subgrid
+            across both, so the title of one panel shares a row with the title
+            of the other and the pictures start on the same line. Stretching the
+            boxes to a common bottom is not enough on its own: a title that
+            wraps to two lines in one column would otherwise push its picture
+            down and leave the two boxes ending at different heights.
 
             The row gap is zeroed at `lg` because the panels inherit it between
-            their own three rows; the spacing inside a panel stays `mt-2` and
-            `mt-6`, as it is on a phone. The column gap is 10px, far under the
+            their own rows; the spacing inside a panel stays `mt-6`, as it is on
+            a phone. The column gap is 10px, far under the
             page's own `8`: the two boxes are one picture and a detail of it, so
             they sit closer to each other than to anything else on the page. Any
             value works — the fr tracks split whatever is left after the gap, so
@@ -80,23 +79,26 @@ export function PictureBand({
             box is too small to be a picture of anything, so they stack full
             width. */}
         <div
-          className={`grid gap-8 ${columns} lg:grid-rows-[auto_auto_auto] lg:gap-x-2.5 lg:gap-y-0`}
+          className={`grid gap-8 ${columns} lg:grid-rows-[auto_auto] lg:gap-x-2.5 lg:gap-y-0`}
         >
           {panels.map((panel) => (
             <div
               key={panel.title}
               data-reveal
-              className="flex flex-col lg:row-span-3 lg:grid lg:grid-rows-subgrid"
+              className="flex flex-col lg:row-span-2 lg:grid lg:grid-rows-subgrid"
             >
               {/* The text sits above its picture rather than on it: whatever
                   the screenshots turn out to be, a caption over an unknown
                   image is a contrast risk that cannot be checked in advance. */}
               <h3 className="font-slab text-xl leading-snug">{panel.title}</h3>
-              <p className="mt-2 max-w-md leading-relaxed text-muted">
-                {panel.body}
-              </p>
 
-              {/* `rounded-lg` rather than the card radius the rest of the site
+              {/* No border on either state: the pictures carry their own edge,
+                  and a hairline around a screenshot that already ends in a
+                  rounded corner reads as a frame drawn over it. A panel still
+                  waiting on its picture is marked by the `surface` fill and the
+                  words in the middle of it rather than by a dashed outline.
+
+                  `rounded-lg` rather than the card radius the rest of the site
                   uses: 18px on a box this size reads as a rounded card holding
                   a picture, where the point is the picture, and 8px is barely a
                   corner at all.
@@ -109,10 +111,8 @@ export function PictureBand({
                   split changes with it. */}
               <div
                 aria-hidden={panel.image ? undefined : "true"}
-                className={`relative mt-6 flex items-center justify-center overflow-hidden rounded-lg border ${
-                  panel.image
-                    ? "border-black/15 bg-[#1c1c1e]"
-                    : "border-dashed border-black/15 bg-surface"
+                className={`relative mt-6 flex items-center justify-center overflow-hidden rounded-lg ${
+                  panel.image ? "bg-[#1c1c1e]" : "bg-surface"
                 } ${panel.wide ? "aspect-video" : "aspect-[4/3] lg:aspect-square"}`}
               >
                 {panel.image ? (

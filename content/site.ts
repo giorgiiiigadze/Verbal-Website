@@ -50,7 +50,7 @@ export const DESCRIPTION =
   "Speak the job on site and Verbal writes the priced quote. A voice quoting " +
   "app for tradespeople who would rather quote on the driveway than at 9pm.";
 
-export const SUPPORT_EMAIL = "gio.giorgigiorgadze20@gmail.com";
+export const SUPPORT_EMAIL = "support@theverbal.app";
 
 /**
  * Null until the app has an App Store listing — `AppInfo.appStoreID` is still

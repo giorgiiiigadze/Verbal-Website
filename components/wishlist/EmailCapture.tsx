@@ -9,9 +9,9 @@ import { cn } from "@/lib/cn";
 const INITIAL: SubscribeState = { status: "idle" };
 
 /**
- * The hero's one input. A single field and a button on one line at `sm` and
- * up, stacked below it, which is the only arrangement that survives a 375px
- * phone without the button turning into a sliver.
+ * The hero's one input. The field and button share one line at every width,
+ * including phones, so the action reads as part of the input rather than as a
+ * second detached control.
  *
  * The field is white and the button royal, inverting the page. On a royal
  * ground that pairing is what makes the control read as the one thing on the
@@ -32,12 +32,9 @@ export function EmailCapture() {
     <form action={action} className="mx-auto mt-8 w-full max-w-md text-left">
       <div
         className={cn(
-          "flex flex-col gap-3 sm:flex-row sm:items-center",
-          // One rounded shell holding both controls at `sm`, rather than two
-          // pills with a gap between them. Padding on the shell is what gives
-          // the button its inset, so the two never drift apart.
-          "sm:gap-1.5 sm:rounded-full sm:bg-white sm:p-1.5",
-          "sm:shadow-[0_14px_32px_-16px_rgb(0_0_0/0.5)]",
+          "flex items-center gap-1.5 rounded-full bg-white p-1.5",
+          "shadow-[0_14px_32px_-16px_rgb(0_0_0/0.5)]",
+          "focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-white",
         )}
       >
         <label htmlFor="hero-email" className="sr-only">
@@ -52,12 +49,9 @@ export function EmailCapture() {
           placeholder={HERO.emailPlaceholder}
           disabled={sent}
           className={cn(
-            "w-full min-w-0 rounded-full bg-white px-4 py-3 text-sm text-text",
+            "w-full min-w-0 rounded-full bg-transparent py-1.5 pl-3 pr-1 text-sm text-text sm:pl-4",
             "placeholder:text-muted",
-            "outline-none focus:outline-2 focus:outline-offset-2 focus:outline-white",
-            // Inside the shell the field is already on white, so it drops its
-            // own ring and lets the shell hold the shape.
-            "sm:bg-transparent sm:py-1.5 sm:pl-4 sm:focus:outline-offset-0",
+            "outline-none",
             "disabled:opacity-60",
           )}
         />
@@ -73,15 +67,9 @@ export function EmailCapture() {
           type="submit"
           disabled={pending || sent}
           className={cn(
-            "shrink-0 rounded-full px-5 py-3 text-sm font-medium transition-colors",
-            // Two grounds, so two buttons. Below `sm` there is no white shell:
-            // the button sits straight on the royal page, where a royal fill is
-            // the page's own colour and the control disappears. It is white
-            // there, and only becomes royal once it is inside the white pill.
-            "bg-white text-royal-400 hover:bg-tint",
-            "sm:bg-royal-400 sm:text-white sm:hover:bg-royal-500",
+            "shrink-0 rounded-full bg-royal-400 px-4 py-2.5 text-sm font-medium text-white transition-colors sm:px-5",
+            "hover:bg-royal-500",
             "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white",
-            "sm:py-2.5",
             "disabled:cursor-not-allowed disabled:opacity-60",
           )}
         >

@@ -8,7 +8,6 @@ import { RateCardBand } from "@/components/home/RateCardBand";
 import { FeaturesBand } from "@/components/home/FeaturesBand";
 import { CalendarBand } from "@/components/home/CalendarBand";
 import { ClientsBand } from "@/components/home/ClientsBand";
-import { PrivacyBand } from "@/components/home/PrivacyBand";
 import { FaqPreview } from "@/components/home/FaqPreview";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { graph, softwareApplicationLd } from "@/lib/jsonLd";
@@ -59,7 +58,6 @@ export default function HomePage() {
       <FeaturesBand />
       <CalendarBand />
       <ClientsBand />
-      <PrivacyBand />
       <FaqPreview />
     </>
   );

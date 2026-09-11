@@ -57,16 +57,16 @@ const STEP_MARKS: Record<string, Mark | undefined> = {
  */
 const SCREENS = [
   {
-    src: "/phone/screen-record.png",
-    alt: "Verbal's recording sheet on an iPhone, open and empty: an untitled quote, the prompt to tap the mic and describe the job in your own words, a mic button, a timer at 00:00 and a Generate button.",
+    src: "/phone/step-speak.png",
+    alt: "Verbal's recording screen with a spoken bathroom renovation brief transcribed and ready to generate into a quote.",
   },
   {
-    src: "/phone/screen-quote-review.png",
-    alt: "The quote that came back: a summary, a scope of work, line items priced from the rate card, three of them marked as needing a price, and a total that says it excludes those three.",
+    src: "/phone/step-check.png",
+    alt: "A bathroom renovation quote ready to review, with its summary, scope of work and line items priced from the rate card or marked as needing a price.",
   },
   {
-    src: "/phone/screen-quote.png",
-    alt: "A quote in Verbal, priced line by line, with two items marked as needing a price.",
+    src: "/phone/step-send.png",
+    alt: "Verbal's share panel for a bathroom renovation quote, offering Message, Share via, Copy link and View PDF options.",
   },
 ];
 

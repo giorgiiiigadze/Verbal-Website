@@ -68,10 +68,12 @@ export function RateCardReveal({ children }: { children: React.ReactNode }) {
             { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.3, stagger: 0.025, ease: "power2.out" },
             index === 0 ? `${beat}+=0.08` : `${beat}+=0.8`,
           )
+          // Drawn rather than popped: the mark is a rule now, and `left center`
+          // in the stylesheet puts its growing end away from the words.
           .fromTo(
             accent,
-            { opacity: 0, scale: 0.5 },
-            { opacity: 1, scale: 1, duration: 0.36, ease: "back.out(2)" },
+            { opacity: 0, scaleX: 0 },
+            { opacity: 1, scaleX: 1, duration: 0.36, ease: "power2.out" },
             index === 0 ? `${beat}+=0.08` : `${beat}+=0.8`,
           )
           .fromTo(

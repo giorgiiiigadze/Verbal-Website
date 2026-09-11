@@ -168,7 +168,7 @@ export function PhoneTravel({ children }: { children: React.ReactNode }) {
       >
         <div data-travel-inner>
           <PhoneFrame
-            src="/phone/screen-quote.png"
+            src="/phone/screen-quote-dark.png"
             alt=""
             sizes="320px"
           />

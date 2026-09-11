@@ -1,5 +1,38 @@
+import Image from "next/image";
 import { MinusMark, PlusMark } from "@/components/ui/marks";
 import type { QA } from "@/content/faq";
+
+const DIGIT_ICONS: Record<string, string> = {
+  "0": "/icons/faq-number-0.svg",
+  "1": "/icons/faq-number-1.svg",
+  "2": "/icons/faq-number-2.svg",
+  "3": "/icons/faq-number-3.svg",
+  "4": "/icons/faq-number-4.svg",
+  "5": "/icons/faq-number-5.svg",
+  "6": "/icons/faq-number-6.svg",
+  "7": "/icons/faq-number-7.svg",
+  "8": "/icons/faq-number-8.svg",
+  "9": "/icons/faq-number-9.svg",
+};
+
+function QuestionNumber({ value }: { value: number }) {
+  return (
+    <span className="faq-number" aria-hidden="true">
+      {String(value)
+        .split("")
+        .map((digit, digitIndex) => (
+          <Image
+            key={`${value}-${digitIndex}`}
+            src={DIGIT_ICONS[digit]}
+            alt=""
+            width={96}
+            height={96}
+            className="faq-number-digit"
+          />
+        ))}
+    </span>
+  );
+}
 
 /**
  * Built on <details>, deliberately. It is the one interactive thing on the
@@ -24,25 +57,20 @@ import type { QA } from "@/content/faq";
  */
 export function Accordion({ items }: { items: QA[] }) {
   return (
-    <div className="divide-y divide-line">
-      {items.map((item) => (
+    <div className="faq-list">
+      {items.map((item, index) => (
         <details key={item.q} className="faq-row group">
-          <summary className="flex cursor-pointer list-none items-center justify-between gap-4 py-6 text-left font-slab text-lg text-black [&::-webkit-details-marker]:hidden">
-            {item.q}
-            {/* The box is what holds the row's right edge steady: the two
-                drawings are different shapes, and letting either one size the
-                slot would shift the questions as rows open and close. */}
-            <span
-              aria-hidden="true"
-              className="relative block h-6 w-6 shrink-0"
-            >
-              <PlusMark className="absolute inset-0 h-full w-full transition-opacity duration-200 group-open:opacity-0" />
-              <MinusMark className="absolute inset-0 h-full w-full opacity-0 transition-opacity duration-200 group-open:opacity-100" />
+          <summary className="faq-summary">
+            <QuestionNumber value={index + 1} />
+            <span className="faq-question">{item.q}</span>
+            <span className="faq-toggle" aria-hidden="true">
+              <PlusMark className="absolute inset-2 h-5 w-5 transition-all duration-200 group-open:scale-75 group-open:opacity-0" />
+              <MinusMark className="absolute inset-2 h-5 w-5 scale-75 opacity-0 transition-all duration-200 group-open:scale-100 group-open:opacity-100" />
             </span>
           </summary>
-          <p className="max-w-3xl pb-6 pr-8 leading-relaxed text-muted">
-            {item.a}
-          </p>
+          <div className="faq-answer-wrap">
+            <p className="faq-answer">{item.a}</p>
+          </div>
         </details>
       ))}
     </div>

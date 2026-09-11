@@ -26,8 +26,9 @@ import { Section } from "@/components/layout/Section";
  * behaviour SpeakSend claims two sections above — "It never invents a price.
  * It flags the gaps." — said here by the tradesperson rather than by us.
  *
- * Nothing is claimed about where the audio goes. That is PrivacyBand's
- * sentence further down, and saying it twice would spend the surprise of it.
+ * Nothing is claimed about where the audio goes. The home page no longer makes
+ * that claim anywhere — the band that carried it is gone — and the privacy
+ * policy is where it is stated in full.
  *
  * Set at a third of what the old line was: a transcript is read, not glanced
  * at, and at 10rem three sentences of speech would have been a wall. White on

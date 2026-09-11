@@ -5,31 +5,33 @@ import { PictureBand, type PicturePanel } from "@/components/home/PictureBand";
  * heading of its own. The layout is `PictureBand`, which ClientsBand below it
  * draws reversed.
  *
- * The wide picture does not exist yet, so that box draws as a placeholder and
- * the copy is written to be replaced — same as ClientsBand's panels.
+ * Titles only: the boxes are screenshots, and the paragraph under each title
+ * was saying in prose what the picture beneath it already shows. ClientsBand
+ * dropped its copy for the same reason, so `PictureBand` no longer has a slot
+ * for any.
  */
 const PANELS: [PicturePanel, PicturePanel] = [
   {
     /** The narrow box: one job, with its quote attached. */
     title: "The date carries the quote",
-    body:
-      "Placeholder copy. Book straight off an accepted quote. The job keeps " +
-      "its price and its customer, with no re-typing either.",
     wide: false,
     image: {
-      src: "/images/calender_screenshot_sm.png",
+      src: "/images/bands/calendar-narrow.png",
       alt: "Verbal's Calendar view, showing two scheduled visits for Mrs. Chen and James Bond.",
       className: "object-cover object-[center_55%]",
     },
   },
   {
-    /** Placeholder. The wide box: a week or a day, laid out. */
+    /** The wide box: the quote list on a phone, the day's visits at the top. */
     title: "What's booked, at a glance",
-    body:
-      "Placeholder copy. An accepted quote becomes a job on the calendar, " +
-      "so what you see booked is exactly what the customer said yes to.",
     wide: true,
-    image: null,
+    image: {
+      src: "/images/bands/calendar-wide.webp",
+      alt: "Verbal on a phone, showing tomorrow's two booked visits above a list of sent quotes.",
+      // The source is 3:2 and the box is 16:9, so a centred crop takes an even
+      // slice off the top and bottom of the backdrop and leaves the phone whole.
+      className: "object-cover",
+    },
   },
 ];
 
@@ -39,6 +41,12 @@ export function CalendarBand() {
       id="calendar"
       heading="Booked jobs on the calendar"
       panels={PANELS}
+      /* A hairline across the top, full width like the header's and the
+         footer's rather than stopped at the container. FeaturesBand above ends
+         on the same white this starts on, and with no heading of its own to
+         announce it the band otherwise begins wherever its first picture
+         happens to. The line is `border-line`, the site's 8% black. */
+      className="border-t border-line"
     />
   );
 }
