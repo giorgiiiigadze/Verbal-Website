@@ -46,18 +46,27 @@ export function HeroReveal({ children }: { children: React.ReactNode }) {
         onComplete: () => gsap.set(text, { clearProps: "filter" }),
       });
 
-      tl.fromTo(
-        text,
-        { opacity: 0, y: 20, filter: "blur(8px)" },
-        { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.9, stagger: 0.08 },
-      ).fromTo(
-        phones,
-        { opacity: 0, y: 40, scale: 0.97 },
-        { opacity: 1, y: 0, scale: 1, duration: 1.1, stagger: 0.12 },
-        // Absolute, not sequential: the frames rise alongside the copy instead
-        // of waiting for it, and both groups settle on the same beat.
-        0.15,
-      );
+      if (text.length) {
+        tl.fromTo(
+          text,
+          { opacity: 0, y: 20, filter: "blur(8px)" },
+          { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.9, stagger: 0.08 },
+        );
+      }
+
+      // Guarded because this entrance is shared. The wishlist hero reuses it
+      // for its text and has no device frames at all, and GSAP warns once per
+      // tween ("target not found") when handed an empty selection.
+      if (phones.length) {
+        tl.fromTo(
+          phones,
+          { opacity: 0, y: 40, scale: 0.97 },
+          { opacity: 1, y: 0, scale: 1, duration: 1.1, stagger: 0.12 },
+          // Absolute, not sequential: the frames rise alongside the copy
+          // instead of waiting for it, and both settle on the same beat.
+          0.15,
+        );
+      }
 
       // The frames drift up a little faster than the page as the hero leaves,
       // which reads as depth without moving anything in layout. The second one

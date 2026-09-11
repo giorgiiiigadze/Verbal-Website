@@ -264,6 +264,19 @@ h1, h2, h3, .font-slab {
 .rate-card-stack {
   position: relative;
   height: 8.75rem;
+  /* The cards enter from 56px to the right (see RateCardReveal), and they are
+     held at that offset until the ScrollTrigger fires rather than only passing
+     through it. On a phone that parks three cards past the right edge of the
+     viewport, which gives the whole document a sideways scroll and — because a
+     fixed element resolves against the widened page — drags the site header out
+     with it.
+
+     `clip` rather than `hidden`: it contains the travel without making this a
+     scroll container, so nothing here can become focus-scrollable. The margin
+     is the cards' own drop shadow, which would otherwise be shaved off at
+     rest. */
+  overflow-x: clip;
+  overflow-clip-margin: 14px;
 }
 
 .rate-card-stack__layer {

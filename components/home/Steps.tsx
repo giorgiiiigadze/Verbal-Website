@@ -82,7 +82,9 @@ const SCREENS = [
  * That leaves the section without a name, so `id="how"` is the only thing
  * every "How it works" link on the site has to land on. There is no longer a
  * page behind that phrase — the footer, the mobile menu, the features menu and
- * all four "Download on iPhone" CTAs resolve to `/#how`, which is this section.
+ * the "How it works" nav link resolves to `/#how`, which is this section. The
+ * download CTAs used to land here too; they now go to `/wishlist` until there
+ * is a listing to send anyone to. See APP_CTA in content/site.
  * It has to stay.
  *
  * At `lg` the frame and the steps are placed explicitly into two columns, the

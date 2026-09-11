@@ -5,7 +5,7 @@
 
 # Privacy Policy
 
-**Last updated: 31 August 2026**
+**Last updated: 10 September 2026**
 
 Verbal turns a spoken description of a job into a written, priced quote. This
 policy explains what the app collects, where it goes, and how to get rid of it.
@@ -14,12 +14,25 @@ If anything here is unclear, email **gio.giorgigiorgadze20@gmail.com**.
 
 ---
 
-## Your voice never leaves your phone
+## How recording and the accuracy check work
 
 When you record a job, the audio is transcribed **on your device**, using
-Apple's built-in speech recognition. The recording itself is never uploaded and
-never saved — not to our servers, not anywhere. It exists only in memory while
-you are speaking, and is gone when you stop.
+Apple's built-in speech recognition. Verbal also keeps a temporary copy of the
+recording on your phone while you prepare the quote.
+
+If **Accuracy Check** is turned on in **Account → Record Preferences**, tapping
+Generate sends that temporary recording through our authenticated Supabase Edge
+Function to **AssemblyAI** for a second transcription pass. The active item
+names from your rate card may also be sent as listening hints. AssemblyAI sends
+the resulting transcript back to Verbal. After AssemblyAI completes or rejects
+the transcription, Verbal asks it to delete the transcript data and associated
+uploaded recording. The temporary copy on your phone is deleted after the
+attempt. The recording is not stored in Verbal's database.
+
+Accuracy Check is optional and can be turned off at any time. It is not used for
+pasted text or text you have edited manually. If the check is unavailable,
+takes too long, or fails, Verbal keeps the on-device transcript and continues
+building the quote.
 
 What does leave your phone is the **text** of what you said. That transcript is
 needed to build the quote, and is saved alongside the quote so you can view it
@@ -76,6 +89,7 @@ it needs.
 | Service | What it receives | Why |
 |---|---|---|
 | **Supabase** | Everything stored in your account | Hosts our database and sign-in |
+| **AssemblyAI** | Your temporary audio recording and active rate-card item names, when Accuracy Check is enabled | Produces a second transcript before the quote is generated |
 | **OpenAI** | Your transcript, trade, rate card, and currency code | Turns what you said into a structured quote |
 | **Google** | Your sign-in request | Authenticates you |
 | **Frankfurter** | A pair of currency codes | Daily exchange rates for converting a quote |
@@ -88,6 +102,15 @@ send your name, email, business contact details, or saved customer record with
 the request. A transcript may, however, contain personal information that you
 say aloud, such as a customer's name or address.
 
+A note on **AssemblyAI**: Accuracy Check uses AssemblyAI's asynchronous API in
+the United States. After a transcription completes or fails, Verbal sends a
+deletion request for the transcript data and its associated uploaded audio. If
+that immediate cleanup request cannot be completed — for example, because the
+provider is unavailable or the transcription is still processing when Verbal's
+request times out — AssemblyAI's account-level retention settings apply.
+AssemblyAI may keep limited metadata for logging and billing. Do not say
+sensitive personal information aloud unless it is needed for the quote.
+
 A note on **Frankfurter**: exchange-rate lookups contain only currency codes
 (for example, GBP to EUR). Nothing about you or your quote is included.
 
@@ -96,7 +119,9 @@ A note on **Frankfurter**: exchange-rate lookups contain only currency codes
 Your data is stored on Supabase infrastructure in **Seoul, South Korea**
 (`ap-northeast-2`). If you are located elsewhere — including the UK or the
 European Economic Area — your information is transferred to and stored in South
-Korea. OpenAI processes transcripts in the United States.
+Korea. OpenAI processes transcripts in the United States. When Accuracy Check
+is enabled, AssemblyAI also processes the recording and second transcript in
+the United States.
 
 ## How long we keep it
 
@@ -136,8 +161,11 @@ own clients — their name, and sometimes a phone number, email, or address.
 
 That information is **yours**, and you are responsible for it. We store and
 process it only to provide the app to you: it is never used for our own
-purposes, never shared with anyone beyond the services listed above, and never
-sent to OpenAI. When you delete a quote, or your account, that customer data is
+purposes or shared with anyone beyond the services listed above. We do not send
+the saved customer record to OpenAI or AssemblyAI as a separate record. A
+customer's details may still be included in the recording and transcript if you
+say them aloud, and those details will then be processed as described above.
+When you delete a quote, or your account, the customer data stored by Verbal is
 deleted with it.
 
 If you operate in the UK or EU, you are the data controller for your customers'

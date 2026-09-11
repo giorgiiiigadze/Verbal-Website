@@ -2,7 +2,7 @@ import { AppleMark } from "@/components/ui/AppleMark";
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
 import { Section } from "@/components/layout/Section";
-import { APP_STORE_URL } from "@/content/site";
+import { APP_CTA } from "@/content/site";
 
 /**
  * The features opener, under the rate card band: a label, one line, and the
@@ -86,16 +86,11 @@ export function FeaturesBand() {
                 weight the line above it is set at, where the site's royal blue
                 would read as a form control under a headline this size.
 
-                Points at the store the moment there is one; until then it goes
-                where the app is actually explained, so the CTA is never a dead
-                end. Same rule as the hero's and AppStoreBadge's. */}
-            <Button
-              href={APP_STORE_URL ?? "/#how"}
-              variant="charcoal"
-              size="lg"
-            >
+                Points at the store the moment there is one; until then at the
+                release wishlist. Same rule as the hero's, from APP_CTA. */}
+            <Button href={APP_CTA.href} variant="charcoal" size="lg">
               <AppleMark className="h-5 w-5" />
-              Download on iPhone
+              {APP_CTA.label}
             </Button>
           </div>
         </div>

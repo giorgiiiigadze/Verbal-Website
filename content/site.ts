@@ -60,6 +60,25 @@ export const SUPPORT_EMAIL = "gio.giorgigiorgadze20@gmail.com";
  */
 export const APP_STORE_URL: string | null = null;
 
+/**
+ * The one call to action that points at the app, in both of its states.
+ *
+ * Before launch there is no listing to send anyone to, so it points at the
+ * release wishlist: the page that says what the app does and does not do yet,
+ * and takes an address to write to when it ships. That is a far better answer
+ * to "download on iPhone" than an anchor back down the same page, which is
+ * where all of these used to go.
+ *
+ * Both halves read `APP_STORE_URL`, so launch day is still the one line above
+ * and every CTA on the site changes with it.
+ */
+export const APP_CTA = {
+  href: APP_STORE_URL ?? "/wishlist",
+  label: APP_STORE_URL ? "Download on iPhone" : "Coming soon on iPhone",
+  /** The header pill at phone width, where the full label overruns 375px. */
+  shortLabel: APP_STORE_URL ? "Get it" : "Coming soon",
+} as const;
+
 /** The header's plain links. "Features" is not among them: it is a menu, not
  *  a page, and SiteHeader renders it ahead of these. "How it works" moved into
  *  that menu's footer link — five items do not fit the pill on a phone. It is

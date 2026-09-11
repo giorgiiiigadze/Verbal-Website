@@ -1,12 +1,16 @@
-import { APP_STORE_URL } from "@/content/site";
+import { APP_CTA, APP_STORE_URL } from "@/content/site";
 import { AppleMark } from "./AppleMark";
 import { cn } from "@/lib/cn";
 
 /**
  * The app has no App Store listing yet (`AppInfo.appStoreID` is nil), so there
- * is no URL to point at. Rather than ship a dead link, this renders a plain
- * "coming soon" plate until `APP_STORE_URL` is set — at which point it becomes
- * a real link with no other change.
+ * is no store URL to point at. It stays a link either way: before launch it
+ * goes to the release wishlist, which is where someone who wants the app can
+ * actually do something about it. `APP_CTA` decides the target, so this badge
+ * and every button on the site move together when the listing appears.
+ *
+ * Nothing renders this today. It is kept because the plate is drawn and the
+ * listing is coming, not because something is waiting on it.
  */
 export function AppStoreBadge({
   className,
@@ -37,15 +41,9 @@ export function AppStoreBadge({
     className,
   );
 
-  if (!APP_STORE_URL) {
-    return (
-      <span className={cn(classes, "cursor-default select-none")}>{inner}</span>
-    );
-  }
-
   return (
     <a
-      href={APP_STORE_URL}
+      href={APP_CTA.href}
       className={cn(classes, "transition-opacity hover:opacity-90")}
     >
       {inner}

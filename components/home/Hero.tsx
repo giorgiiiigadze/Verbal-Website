@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/layout/Container";
 import { HeroReveal } from "@/components/home/HeroReveal";
 import { PhoneFrame } from "@/components/ui/PhoneFrame";
-import { APP_STORE_URL } from "@/content/site";
+import { APP_CTA } from "@/content/site";
 
 /**
  * Laid out after Granola's hero: announcement pill, an oversized headline, a
@@ -80,15 +80,13 @@ export function Hero() {
               data-hero-reveal
               className="mt-7 flex flex-wrap items-center gap-4"
             >
-              {/* Points at the store the moment there is one; until then it
-                  goes where the recording is actually explained, so the CTA is
-                  never a dead end. Same rule as AppStoreBadge. */}
-              <Button
-                href={APP_STORE_URL ?? "/#how"}
-                size="md"
-              >
+              {/* Points at the store the moment there is one; until then at
+                  the release wishlist, which is the honest answer while the
+                  app is unreleased. Label and target both come from APP_CTA,
+                  so the two can never disagree. */}
+              <Button href={APP_CTA.href} size="md">
                 <AppleMark className="h-4 w-4" />
-                Start recording on your own
+                {APP_CTA.label}
               </Button>
               <Button
                 href="/pricing"

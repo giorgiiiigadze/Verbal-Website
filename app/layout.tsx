@@ -60,6 +60,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
+      data-scroll-behavior="smooth"
       className={`${robotoSlab.variable} ${ebGaramond.variable} h-full antialiased`}
     >
       {/* Not a flex column any more: the footer is pinned behind `main` rather
